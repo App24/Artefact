@@ -10,7 +10,7 @@ namespace Artefact.InventorySystem
     [Serializable]
     class Inventory
     {
-        Dictionary<string, int> items = new Dictionary<string, int>();
+        List<ItemData> items = new List<ItemData>();
 
         public WeaponItem Weapon { get; private set; }
         public ArmorItem Helmet { get { Armor.TryGetValue(ArmorType.Helmet, out ArmorItem armorItem); return armorItem; } }
@@ -38,55 +38,64 @@ namespace Artefact.InventorySystem
             }
         }
 
-        public void AddItem(ItemData itemData, bool announce = false)
+        public void AddItem(ItemData item, bool announce = false)
         {
-            if(!items.TryGetValue(itemData.Item.Name, out int amount))
+            ItemData itemData = GetItem(item.Item);
+            if (itemData.Equals(default(ItemData)))
             {
-                amount = 0;
+                itemData = item;
             }
-            amount += itemData.Amount;
-            items.AddOrReplace(itemData.Item.Name, amount);
+            else
+            {
+                itemData.Amount += item.Amount;
+            }
+            items.AddOrInsert(itemData);
 
             if (announce)
             {
-                Utils.Type($"Acquired [green]{itemData.Amount}[/] [magenta]{itemData.Item}[/]");
+                Utils.Type($"Acquired [green]{item.Amount}[/] [magenta]{item.Item}[/]");
             }
         }
 
-        public void RemoveItem(ItemData itemData)
+        public void RemoveItem(ItemData item)
         {
-            if(items.TryGetValue(itemData.Item.Name, out int amount))
+            ItemData itemData = GetItem(item.Item);
+            if (!itemData.Equals(default(ItemData)))
             {
-                amount -= itemData.Amount;
-                if (amount <= 0)
+                itemData.Amount -= item.Amount;
+                if (itemData.Amount <= 0)
                 {
-                    items.Remove(itemData.Item.Name);
+                    items.Remove(itemData);
                 }
                 else
                 {
-                    items.AddOrReplace(itemData.Item.Name, amount);
+                    items.AddOrInsert(itemData);
                 }
             }
         }
 
         public bool HasItem(ItemData item, bool checkAmount = false)
         {
-            if(!checkAmount)
-                return items.ContainsKey(item.Item.Name);
-            if(!items.TryGetValue(item.Item.Name, out int amount))
+            ItemData itemData = GetItem(item.Item);
+            if (itemData.Equals(default(ItemData)))
             {
                 return false;
             }
-            return amount >= item.Amount;
+            if (checkAmount)
+            {
+                return itemData.Amount >= item.Amount;
+            }
+            return true;
         }
 
         public ItemData GetItem(string name)
         {
-            if(items.TryGetValue(name, out int amount))
-            {
-                return new ItemData(Item.GetItem(name), amount);
-            }
-            return default(ItemData);
+            return items.Find(i=>i.Item.Name.ToLower()==name.ToLower());
+        }
+
+        public ItemData GetItem(Item item)
+        {
+            return GetItem(item.Name);
         }
 
         public int GetAmount(Item item)
@@ -98,7 +107,7 @@ namespace Artefact.InventorySystem
 
         public List<ItemData> GetItems()
         {
-            return items.Map(i => new ItemData(Item.GetItem(i.Key), i.Value));
+            return items;
         }
 
         public void EquipItem(Item item)

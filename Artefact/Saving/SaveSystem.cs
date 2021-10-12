@@ -58,7 +58,7 @@ namespace Artefact.Saving
             stream.Close();
 
 #if !FORCE_LOAD
-            if (value.SaveVersion != Utils.GetDLLHash())
+            if (value.SaveVersion != Utils.DLLHash)
             {
                 return new LoadDetails<T>(LoadResult.InvalidVersion, null);
             }

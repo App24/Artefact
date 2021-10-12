@@ -13,7 +13,7 @@ namespace Artefact.Misc
 
         List<StringColor> stringColors;
 
-        const string RE_COLOR_SPLITTER = @"(\[[^\/\W][^\]]*\])([^\[]*)(\[[^\]]*\])?";
+        const string RE_COLOR_SPLITTER_PATTERN = @"(\[[^\/\W][^\]]*\])([^\[]*)(\[[^\]]*\])?";
 
         public StringColorBuilder(string message)
         {
@@ -23,7 +23,7 @@ namespace Artefact.Misc
 
         public void BuildString()
         {
-            var pieces = Regex.Split(FullMessage, RE_COLOR_SPLITTER);
+            var pieces = Regex.Split(FullMessage, RE_COLOR_SPLITTER_PATTERN);
             stringColors = new List<StringColor>();
             Message = "";
 
@@ -42,13 +42,13 @@ namespace Artefact.Misc
                 else if (piece.StartsWith("[") && piece.EndsWith("]"))
                 {
                     string color = piece.Substring(1, piece.Length - 2);
-                    try
+                    if (Enum.TryParse(typeof(ConsoleColor), color, true, out object e))
                     {
                         stringColors.Add(new StringColor(currentText, currentColor));
                         currentText = "";
-                        currentColor = (ConsoleColor)Enum.Parse(typeof(ConsoleColor), color, true);
+                        currentColor = (ConsoleColor)e;
                     }
-                    catch
+                    else
                     {
                         currentText += piece;
                         Message += piece;

@@ -13,8 +13,8 @@ namespace Artefact.Commands.Misc
     {
         static List<ICommand> commands = new List<ICommand>();
 
-        const string RE_ARG_MATCHER = @"""[^""\\]*(?:\\.[^""\\]*)*""|'[^'\\]*(?:\\.[^'\\]*)*'|\S+";
-        const string RE_QUOTE_STRIP = @"^""+|""+$|^'+|'+$";
+        const string RE_ARG_MATCHER_PATTERN = @"""[^""\\]*(?:\\.[^""\\]*)*""|'[^'\\]*(?:\\.[^'\\]*)*'|\S+";
+        const string RE_QUOTE_STRIP_PATTERN = @"^""+|""+$|^'+|'+$";
 
         static string[] noCommandResponses = new string[] {
             "You are not sure you can do that!",
@@ -53,7 +53,7 @@ namespace Artefact.Commands.Misc
 
         public static void OnCommand()
         {
-            Regex reg = new Regex(RE_ARG_MATCHER);
+            Regex reg = new Regex(RE_ARG_MATCHER_PATTERN);
             ICommand command = null;
             List<string> args = null;
             if (GlobalSettings.SimpleMode)
@@ -76,7 +76,7 @@ namespace Artefact.Commands.Misc
                         Console.WriteLine("Write arguments for the command");
                         string argsText = Console.ReadLine();
                         MatchCollection matches = reg.Matches(argsText);
-                        args = matches.Map(match => Regex.Replace(match.Value, RE_QUOTE_STRIP, ""));
+                        args = matches.Map(match => Regex.Replace(match.Value, RE_QUOTE_STRIP_PATTERN, ""));
                     }
                 }
                 else
@@ -98,7 +98,7 @@ namespace Artefact.Commands.Misc
                 string text = Console.ReadLine();
                 if (string.IsNullOrEmpty(text)) return;
                 MatchCollection matches = reg.Matches(text);
-                List<string> commandData = matches.Map(match => Regex.Replace(match.Value, RE_QUOTE_STRIP, ""));
+                List<string> commandData = matches.Map(match => Regex.Replace(match.Value, RE_QUOTE_STRIP_PATTERN, ""));
                 string commandName = commandData[0].ToLower();
                 args = commandData.GetRange(1, commandData.Count - 1);
 

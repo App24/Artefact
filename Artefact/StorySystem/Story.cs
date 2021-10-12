@@ -69,7 +69,8 @@ namespace Artefact.StorySystem
                             case 2:
                                 {
                                     NextStep();
-                                }break;
+                                }
+                                break;
                         }
                     }
                     break;
@@ -83,7 +84,8 @@ namespace Artefact.StorySystem
 
                         Dialog.Speak(Character.Clippy, "May I ask what your name is?");
                         NextStep();
-                    }break;
+                    }
+                    break;
                 case 3:
                     {
                         string name = null;
@@ -106,7 +108,8 @@ namespace Artefact.StorySystem
                         Map.SpawnPlayer();
 
                         NextStep();
-                    }break;
+                    }
+                    break;
                 case 4:
                     {
                         Dialog.Speak(Character.Clippy, "If you need help or want to ask further questions, I am here, just type [darkmagenta]HELP[/]");
@@ -121,7 +124,8 @@ namespace Artefact.StorySystem
                 case 5:
                     {
                         GameSettings.EnableCommands = true;
-                    }break;
+                    }
+                    break;
             }
         }
     }

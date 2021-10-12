@@ -21,5 +21,14 @@ namespace Artefact.InventorySystem
         {
             return $"[magenta]{Item}[/]: [green]{Amount}[/]";
         }
+
+        public override bool Equals(object obj)
+        {
+            if(obj is ItemData)
+            {
+                return Item == ((ItemData)obj).Item;
+            }
+            return false;
+        }
     }
 }
