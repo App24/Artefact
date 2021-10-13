@@ -13,6 +13,9 @@ namespace Artefact.StorySystem
     static class Story
     {
         public static int Step { get; set; }
+        public const int CPU_STEP = 99;
+        public const int RAM_STEP = 100;
+        public const int EMPTY_STEP = 1000;
 
         public static void NextStep()
         {
@@ -63,7 +66,7 @@ namespace Artefact.StorySystem
                                 {
                                     Dialog.Speak(Character.Clippy, "I am [cyan]Clippy");
                                     GameSettings.KnowsClippy = true;
-                                    Dialog.Speak(Character.Clippy, "I am, or was, a helpful piece of software that helped the [darkred]user[/] whenever he needed!");
+                                    Dialog.Speak(Character.Clippy, "I am, or was, a helpful piece of software that helped the [darkred]user[/] whenever them needed!");
                                 }
                                 break;
                             case 2:
@@ -124,6 +127,24 @@ namespace Artefact.StorySystem
                 case 5:
                     {
                         GameSettings.EnableCommands = true;
+                    }
+                    break;
+                case CPU_STEP:
+                    {
+                        Dialog.Speak(Character.Clippy, "This is the [darkcyan]CPU[/]!");
+                        Dialog.Speak(Character.Clippy, "This is where everything the [darkred]user[/] does is processed!");
+                        Dialog.Speak(Character.Clippy, "It is a marvel sight!");
+                        Dialog.Speak(Character.Clippy, "But it seems to be turned off right now, which is odd, since the [darkred]user[/] always has their computer turned on!");
+                        GameSettings.CPUVisited = true;
+                        Step = EMPTY_STEP;
+                    }
+                    break;
+                case RAM_STEP:
+                    {
+                        Dialog.Speak(Character.Clippy, "Here is the [darkcyan]RAM[/]");
+                        Dialog.Speak(Character.Clippy, "That is odd, there is no data in here, I guess that means that the [darkred]user[/] does not have the computer turned on!");
+                        GameSettings.RAMVisited = true;
+                        Step = EMPTY_STEP;
                     }
                     break;
             }

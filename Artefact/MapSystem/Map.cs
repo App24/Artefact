@@ -1,4 +1,5 @@
 ﻿using Artefact.Entities;
+using Artefact.Misc;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -15,6 +16,16 @@ namespace Artefact.MapSystem
 
         PlayerEntity player;
         List<Entity> entities = new List<Entity>();
+
+        static string map = @$"
+  _____________
+  |     |     |
+  | [darkcyan]{Location.CPU}[/] | [darkcyan]{Location.RAM}[/] |
+__|_____|_____|__
+|               |
+|      [darkcyan]{Location.GPU}[/]      |
+|_______________|
+";
 
         public Map()
         {
@@ -39,11 +50,19 @@ namespace Artefact.MapSystem
         {
             Entities.Remove(entity);
         }
+
+        public static string GetMapLocation(Location location)
+        {
+            return map.Replace(location.ToString(), new string[location.ToString().Length].Map(x=>"x").Join(""));
+        }
     }
 
     enum Location
     {
         GPU,
-        CPU
+        CPU,
+        RAM,
+
+        Room=50
     }
 }

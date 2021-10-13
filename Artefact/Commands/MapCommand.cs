@@ -1,4 +1,6 @@
 ﻿using Artefact.Commands.Misc;
+using Artefact.MapSystem;
+using Artefact.Misc;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -16,7 +18,8 @@ namespace Artefact.Commands
 
         public void OnRun(List<string> args)
         {
-            throw new CommandException("Command not finished");
+            Utils.WriteColor($"You are located in [darkcyan]{Map.Player.Location}");
+            Utils.WriteColor(Map.GetMapLocation(Map.Player.Location));
         }
     }
 }

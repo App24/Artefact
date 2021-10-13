@@ -40,6 +40,7 @@ namespace Artefact.Commands.Misc
             AddCommand(new CraftCommand());
             AddCommand(new EquipCommand());
             AddCommand(new TalkCommand());
+            AddCommand(new MoveCommand());
 #if DEBUG
             AddCommand(new GiveCommand());
 #endif
