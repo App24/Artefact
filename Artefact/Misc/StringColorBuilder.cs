@@ -13,7 +13,9 @@ namespace Artefact.Misc
 
         List<StringColor> stringColors;
 
-        const string RE_COLOR_SPLITTER_PATTERN = @"(\[[^\/\W][^\]]*\])([^\[]*)(\[[^\]]*\])?";
+        const string RE_COLOR_SPLITTER_PATTERN = @"(\[[^\[][^\]]*\])";
+        const string RE_COLOR_START_PATTERN = @"(\[[^\[\/][^\]]*\])";
+        const string RE_COLOR_END_PATTERN = @"(\[[\/][^\]]*\])";
 
         public StringColorBuilder(string message)
         {
@@ -33,20 +35,20 @@ namespace Artefact.Misc
             {
                 string piece = pieces[i];
 
-                if (piece.StartsWith("[/") && piece.EndsWith("]"))
+                if (Regex.IsMatch(piece, RE_COLOR_END_PATTERN))
                 {
                     stringColors.Add(new StringColor(currentText, currentColor));
                     currentText = "";
                     currentColor = ConsoleColor.White;
                 }
-                else if (piece.StartsWith("[") && piece.EndsWith("]"))
+                else if (Regex.IsMatch(piece, RE_COLOR_START_PATTERN))
                 {
-                    string color = piece.Substring(1, piece.Length - 2);
-                    if (Enum.TryParse(typeof(ConsoleColor), color, true, out object e))
+                    string colorString = piece.Substring(1, piece.Length - 2);
+                    if (Enum.TryParse(colorString, true, out ConsoleColor color))
                     {
                         stringColors.Add(new StringColor(currentText, currentColor));
                         currentText = "";
-                        currentColor = (ConsoleColor)e;
+                        currentColor = color;
                     }
                     else
                     {
@@ -71,7 +73,7 @@ namespace Artefact.Misc
 
         public void WriteLine()
         {
-            foreach(StringColor stringColor in stringColors)
+            foreach (StringColor stringColor in stringColors)
             {
                 Console.ForegroundColor = stringColor.Color;
                 Console.Write(stringColor.Text);

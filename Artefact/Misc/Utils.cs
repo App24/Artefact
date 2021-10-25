@@ -50,14 +50,11 @@ namespace Artefact.Misc
             while (index < 0 || index >= options.Length)
             {
                 string selection = Console.ReadLine();
-                try
+                if(!int.TryParse(selection, out index))
                 {
-                    index = int.Parse(selection) - 1;
+                    index = optionsList.FindIndex(o => o.ToLower() == selection.ToLower())+1;
                 }
-                catch
-                {
-                    index = optionsList.FindIndex(o => o.ToLower() == selection.ToLower());
-                }
+                index -= 1;
                 if (index < 0 || index >= options.Length)
                 {
                     Console.WriteLine("Please enter a valid choice!");

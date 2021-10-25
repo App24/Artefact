@@ -37,7 +37,7 @@ namespace Artefact.States
                 case 0:
                     {
                         string[] textSpeeds = Enum.GetNames(typeof(TextSpeed));
-                        GlobalSettings.TextSpeed = (TextSpeed)Enum.Parse(typeof(TextSpeed), textSpeeds[Utils.GetSelection(textSpeeds.Map((x, i) => $"[{textSpeedColors[i]}]{x}[/]").ToArray())], true);
+                        GlobalSettings.TextSpeed = Enum.Parse<TextSpeed>(textSpeeds[Utils.GetSelection(textSpeeds.Map((x, i) => $"[{textSpeedColors[i]}]{x}[/]").ToArray())], true);
                     }break;
                 case 1:
                     {

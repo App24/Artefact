@@ -24,6 +24,7 @@ namespace Artefact.Commands
                 if (SaveSystem.LoadGame() == LoadResult.Success)
                 {
                     Thread.Sleep(1500);
+                    Console.Clear();
                 }
             }
         }

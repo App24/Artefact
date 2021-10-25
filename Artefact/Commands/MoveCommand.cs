@@ -16,7 +16,7 @@ namespace Artefact.Commands
 
         public bool HasArguments => false;
 
-        public string NoArgsResponse => "(Location)";
+        public string NoArgsResponse => "(Direction)";
 
         public void OnRun(List<string> args)
         {
@@ -32,32 +32,24 @@ namespace Artefact.Commands
                     return;
                 }
 
-                if(!Enum.TryParse(typeof(Location), args[0], true, out object temp))
+                if(!Enum.TryParse(args[0], true, out Direction direction))
                 {
-                    Utils.WriteColor("[red]That is not a valid location!");
+                    Utils.WriteColor("[red]That is not a valid direction! (north/south/east/west)");
                     return;
                 }
-
-                Location location = (Location)temp;
-
-                if (location == Location.Room)
+                (bool moved, Location location)=Map.Move(direction, Map.Player.Location);
+                if (!moved)
                 {
-                    Utils.WriteColor("[red]That is not a valid location!");
+                    Utils.WriteColor("[red]You can't move that direction!");
                     return;
                 }
-
-                if (Map.Player.Location == location)
-                {
-                    Utils.WriteColor($"[yellow]You are already in {location}");
-                    return;
-                }
-                Utils.WriteColor($"[green]Moved to {location}");
                 Map.Player.Location = location;
+                Utils.WriteColor($"Moved to: [darkcyan]{Map.Player.Location}");
                 if (location == Location.CPU && !GameSettings.CPUVisited)
                 {
                     Story.Step = Story.CPU_STEP;
                 }
-                if (location == Location.RAM && !GameSettings.RAMVisited)
+                else if (location == Location.RAM && !GameSettings.RAMVisited)
                 {
                     Story.Step = Story.RAM_STEP;
                 }

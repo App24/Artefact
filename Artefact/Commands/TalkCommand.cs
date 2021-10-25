@@ -20,9 +20,7 @@ namespace Artefact.Commands
         {
             string characterName = args.Join(" ");
 
-            Character character;
-
-            if(!Enum.TryParse(typeof(Character), characterName, true, out object c)){
+            if(!Enum.TryParse(characterName, true, out Character character)){
                 if (characterName.ToLower() == GameSettings.PlayerName.ToLower())
                     character = Character.Player;
                 else
@@ -30,10 +28,6 @@ namespace Artefact.Commands
                     Console.WriteLine("That character is not near the vicinity");
                     return;
                 }
-            }
-            else
-            {
-                character = (Character)c;
             }
 
             switch (character)
