@@ -30,13 +30,6 @@ namespace Artefact.InventorySystem
                 return defense;
             }
         }
-        public int AttackDamage
-        {
-            get
-            {
-                return Weapon == null ? 1 : Weapon.Damage;
-            }
-        }
 
         public void AddItem(ItemData item, bool announce = false)
         {

@@ -22,7 +22,7 @@ namespace Artefact.Commands
         {
             PlayerEntity player = Map.Player;
             Utils.WriteColor($"Player Name: [cyan]{GameSettings.PlayerName}[/]");
-            Utils.WriteColor($"Health: {Utils.CreateHealthBar(player.Health/(float)player.MaxHealth)} [darkgreen]{player.Health}[/]/[darkgreen]{player.MaxHealth}[/]");
+            Utils.WriteColor($"Health: {Utils.CreateHealthBar(player)}");
 
             if (player.Inventory.Weapon != null)
             {
@@ -34,7 +34,7 @@ namespace Artefact.Commands
                 Utils.WriteColor($"{keyValuePair.Key} Equipped: [magenta]{keyValuePair.Value}[/]");
             }
 
-            Utils.WriteColor($"Attack Damage: [darkgreen]{player.Inventory.AttackDamage}[/]");
+            Utils.WriteColor($"Attack Damage: [darkgreen]{player.HitDamage}[/]");
             Utils.WriteColor($"Defense Amount: [darkgreen]{player.Inventory.Defense}[/]");
         }
     }

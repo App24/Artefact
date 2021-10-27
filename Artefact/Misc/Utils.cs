@@ -1,4 +1,5 @@
-﻿using Artefact.Settings;
+﻿using Artefact.Entities;
+using Artefact.Settings;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -105,21 +106,7 @@ namespace Artefact.Misc
             Console.ResetColor();
         }
 
-        public static string CreateProgressBar(float percentage, int width = 20)
-        {
-            string text = "[";
-            for (int i = 0; i < width; i++)
-            {
-                if ((i + 1) / (float)width <= percentage)
-                    text += "#";
-                else
-                    text += "-";
-            }
-            text += "]";
-            return text;
-        }
-
-        public static string CreateHealthBar(float percentage, int width = 20)
+        public static string CreateProgressBar(float percentage, int width = 20, ConsoleColor barColor=ConsoleColor.Green)
         {
             string text = "";
             for (int i = 0; i < width; i++)
@@ -129,8 +116,15 @@ namespace Artefact.Misc
                 else
                     text += "-";
             }
-            text = text.Map(x => { if (x == '#') return $"[green]{x}[/]"; return $"[red]{x}[/]"; }).Join("");
+            text = text.Map(x => { if (x == '#') return $"[{barColor}]{x}[/]"; return x.ToString(); }).Join("");
             return $"[{text}]";
+        }
+
+        public static string CreateHealthBar(Entity entity, int width=20, ConsoleColor barcolor = ConsoleColor.Green)
+        {
+            string progressBar = CreateProgressBar(entity.Health / (float)entity.MaxHealth, width, barcolor);
+            progressBar += $" [{barcolor}]{entity.Health}[/]/[{barcolor}]{entity.MaxHealth}[/]";
+            return progressBar;
         }
 
         public static void WriteColor(string message)

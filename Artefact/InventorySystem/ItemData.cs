@@ -19,7 +19,14 @@ namespace Artefact.InventorySystem
 
         public string ToColoredString()
         {
-            return $"[magenta]{Item}[/]: [green]{Amount}[/]";
+            string text = $"[magenta]{Item}[/]: [green]{Amount}[/]";
+
+            if(Item is IUsable)
+            {
+                text += " - [green]Usable[/]";
+            }
+
+            return text;
         }
 
         public override bool Equals(object obj)

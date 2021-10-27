@@ -14,14 +14,16 @@ namespace Artefact.Entities
         public int Health { get; protected set; }
         public Location Location { get; set; }
 
-        public virtual int HitDamage { get; protected set; }
+        public virtual HitDamageRange HitDamage { get; protected set; }
+        public virtual int Defense { get; protected set; }
+        public float DefenseModifier { get; set; } = 1f;
+        public Move Move { get; set; }
 
-        public Entity(int maxHealth, int hitDamage)
+        public Entity(int maxHealth)
         {
             UUID = Guid.NewGuid().ToString();
             MaxHealth = maxHealth;
             Health = MaxHealth;
-            HitDamage = hitDamage;
         }
 
         public static bool operator ==(Entity entity1, Entity entity2)
@@ -53,11 +55,16 @@ namespace Artefact.Entities
                 return;
             }
 
-            Health -= amount;
+            Health -= (int)Math.Ceiling(amount * GetNormalisedDefense());
             if (Health <= 0)
             {
                 Kill();
             }
+        }
+
+        public float GetNormalisedDefense()
+        {
+            return 1 - ((Defense / 100f) * DefenseModifier);
         }
 
         public void Heal(int amount)
@@ -71,5 +78,39 @@ namespace Artefact.Entities
             Health += amount;
             if (Health > MaxHealth) Health = MaxHealth;
         }
+
+        public int GetRandomDamage()
+        {
+            Random random = new Random();
+            return random.Next(HitDamage.Min, HitDamage.Max + 1);
+        }
+    }
+
+    [Serializable]
+    struct HitDamageRange
+    {
+        public int Min { get; }
+        public int Max { get; }
+
+        public HitDamageRange(int min, int max)
+        {
+            Min = min;
+            Max = max;
+        }
+
+        public HitDamageRange(int amount) : this(amount, amount) { }
+
+        public override string ToString()
+        {
+            if (Min == Max) return $"{Min}";
+            return $"{Min}-{Max}";
+        }
+    }
+
+    enum Move
+    {
+        Attack,
+        Defend,
+        SweepAttack
     }
 }

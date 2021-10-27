@@ -1,4 +1,5 @@
 ﻿using Artefact.Items;
+using Artefact.Misc;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -18,7 +19,7 @@ namespace Artefact.Entities
          * https://ascii.co.uk/
          */
 
-        public EnemyEntity(EnemyType enemyType) : base(1, 1)
+        public EnemyEntity(EnemyType enemyType) : base(1)
         {
             EnemyType = enemyType;
             switch (enemyType)
@@ -26,7 +27,8 @@ namespace Artefact.Entities
                 case EnemyType.Virus:
                     {
                         MaxHealth = 10;
-                        HitDamage = 2;
+                        Defense = 1;
+                        HitDamage = new HitDamageRange(1, 2);
                         ItemDrops.Add(new ItemDropData(Item.BinaryItem, 5));
                         ASCIIRepresentation = @"
      ,-^-.
@@ -42,7 +44,8 @@ namespace Artefact.Entities
                 case EnemyType.Trojan:
                     {
                         MaxHealth = 8;
-                        HitDamage = 1;
+                        Defense = 0;
+                        HitDamage = new HitDamageRange(1, 1);
                         ItemDrops.Add(new ItemDropData(Item.BinaryItem, 8));
                         ASCIIRepresentation= @"
                _(\
@@ -56,13 +59,20 @@ namespace Artefact.Entities
                     break;
                 case EnemyType.RansomWare:
                     {
-                        MaxHealth = 15;
-                        HitDamage = 5;
+                        MaxHealth = 4;
+                        Defense = 3;
+                        HitDamage = new HitDamageRange(3, 5);
                         ItemDrops.Add(new ItemDropData(Item.BinaryItem, 12, 3));
                     }
                     break;
             }
             Health = MaxHealth;
+        }
+
+        public new void Damage(int amount)
+        {
+            Utils.WriteColor($"You dealt [green]{amount}[/] damage to [blue]{EnemyType}[/]");
+            base.Damage(amount);
         }
     }
 

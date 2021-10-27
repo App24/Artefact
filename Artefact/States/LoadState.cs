@@ -44,7 +44,6 @@ namespace Artefact.States
                         Thread.Sleep(1500);
                         if (loadResult == LoadResult.Success)
                         {
-                            GlobalSettings.JustLoaded = true;
                             StateMachine.RemoveState();
                             StateMachine.AddState(new GameState());
                         }

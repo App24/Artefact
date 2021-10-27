@@ -30,26 +30,6 @@ namespace Artefact.Commands.Misc
 
         public static CommandHandler Instance { get; set; }
 
-        /*public static void Init()
-        {
-            AddCommand(new ExitCommand());
-            AddCommand(new SettingsCommand());
-            AddCommand(new MapCommand());
-            AddCommand(new SaveCommand());
-            AddCommand(new LoadCommand());
-            AddCommand(new StatusCommand());
-            AddCommand(new InventoryCommand());
-            AddCommand(new CraftCommand());
-            AddCommand(new EquipCommand());
-            AddCommand(new TalkCommand());
-            AddCommand(new MoveCommand());
-#if DEBUG
-            AddCommand(new GiveCommand());
-            AddCommand(new ForceFightCommand());
-#endif
-            AddCommand(new HelpCommand(commands));
-        }*/
-
         public static void AddDefaultCommands(CommandHandler commandHandler)
         {
             commandHandler.AddCommand(new ExitCommand());
@@ -63,6 +43,7 @@ namespace Artefact.Commands.Misc
             commandHandler.AddCommand(new EquipCommand());
             commandHandler.AddCommand(new TalkCommand());
             commandHandler.AddCommand(new MoveCommand());
+            commandHandler.AddCommand(new UseCommand());
 #if DEBUG
             commandHandler.AddCommand(new GiveCommand());
             commandHandler.AddCommand(new ForceFightCommand());
@@ -75,7 +56,12 @@ namespace Artefact.Commands.Misc
             commands.Add(command);
         }
 
-        public void OnCommand()
+        public List<ICommand> GetCommands()
+        {
+            return commands;
+        }
+
+        public bool OnCommand()
         {
             Regex reg = new Regex(RE_ARG_MATCHER_PATTERN);
             ICommand command = null;
@@ -115,13 +101,13 @@ namespace Artefact.Commands.Misc
                     {
                         pageIndex--;
                     }
-                    return;
+                    return false;
                 }
             }
             else
             {
                 string text = Console.ReadLine();
-                if (string.IsNullOrEmpty(text)) return;
+                if (string.IsNullOrEmpty(text)) return false;
                 MatchCollection matches = reg.Matches(text);
                 List<string> commandData = matches.Map(match => Regex.Replace(match.Value, RE_QUOTE_STRIP_PATTERN, ""));
                 string commandName = commandData[0].ToLower();
@@ -135,12 +121,13 @@ namespace Artefact.Commands.Misc
                 if (command.HasArguments && args.Count <= 0)
                 {
                     Console.WriteLine($"{command.NoArgsResponse}");
-                    return;
+                    return false;
                 }
                 fails = 0;
                 try
                 {
                     command.OnRun(args);
+                    return true;
                 }
                 catch (CommandException e)
                 {
@@ -161,6 +148,7 @@ namespace Artefact.Commands.Misc
                     Dialog.Speak(Character.Clippy, "You seem to be struggeling, you can type [darkmagenta]HELP[/] to get a list of commands, or switch to simple mode in [darkmagenta]SETTINGS[/]!");
                 }
             }
+            return false;
         }
     }
 }

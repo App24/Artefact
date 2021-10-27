@@ -1,5 +1,7 @@
-﻿using Artefact.InventorySystem;
+﻿using Artefact.Entities;
+using Artefact.InventorySystem;
 using Artefact.Items.Equipables;
+using Artefact.Items.Potions;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -13,15 +15,20 @@ namespace Artefact.Items
 
         public List<ItemData> CraftItems { get; }
 
-        public static BasicItem MapItem { get; } = new BasicItem("Map");
-        public static BasicItem BinaryItem { get; } = new BasicItem("Binary");
-        public static BasicItem RecipeBookItem { get; } = new BasicItem("Recipe Book");
+        public static Item MapItem { get; } = new Item("Map");
+        public static Item BinaryItem { get; } = new Item("Binary");
+        public static Item RecipeBookItem { get; } = new Item("Recipe Book");
 
-        //Weapons
-        public static WeaponItem BinarySwordItem { get; } = new WeaponItem("Binary Sword", 2, new ItemData(BinaryItem, 3));
+        // Weapons
+        public static WeaponItem BinarySwordItem { get; } = new WeaponItem("Binary Sword", new HitDamageRange(2, 3), new ItemData(BinaryItem, 3));
 
-        //Armor
+        // Armor
         public static ArmorItem BinaryHelmetItem { get; } = new ArmorItem("Binary Helmet", 2, ArmorType.Helmet, new ItemData(BinaryItem, 5));
+
+        // Potions
+        public static HealthPotionItem SmallHealthPotion { get; } = new HealthPotionItem(HealthPotionType.Small, new ItemData(BinaryItem, 2));
+        public static HealthPotionItem MediumHealthPotion { get; } = new HealthPotionItem(HealthPotionType.Medium, new ItemData(BinaryItem, 5));
+        public static HealthPotionItem LargeHealthPotion { get; } = new HealthPotionItem(HealthPotionType.Large, new ItemData(BinaryItem, 8));
 
         public bool IsCraftable { get { return CraftItems.Count > 0; } }
 

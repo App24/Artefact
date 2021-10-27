@@ -96,6 +96,7 @@ namespace Artefact.Saving
                 GameSettings.Instance = save.GameSettings;
                 Story.Step = save.StoryStep;
                 Map.Instance = save.Map;
+                GlobalSettings.JustLoaded = true;
             }
             else
             {

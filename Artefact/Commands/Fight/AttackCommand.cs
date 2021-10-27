@@ -1,4 +1,9 @@
 ﻿using Artefact.Commands.Misc;
+using Artefact.Entities;
+using Artefact.MapSystem;
+using Artefact.Misc;
+using Artefact.Settings;
+using Artefact.States;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -17,7 +22,7 @@ namespace Artefact.Commands.FightCommands
 
         public void OnRun(List<string> args)
         {
-            throw new CommandException("Not finished");
+            Map.Player.Move = Move.Attack;
         }
     }
 }
