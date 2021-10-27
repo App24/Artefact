@@ -6,9 +6,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Artefact.Crafting
+namespace Artefact.CraftingSystem
 {
-    static class CraftSystem
+    static class Crafting
     {
         public static void CraftItem(string itemName)
         {

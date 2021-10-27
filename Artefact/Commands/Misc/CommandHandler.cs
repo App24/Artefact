@@ -9,26 +9,28 @@ using System.Threading;
 
 namespace Artefact.Commands.Misc
 {
-    static class CommandHandler
+    class CommandHandler
     {
-        static List<ICommand> commands = new List<ICommand>();
+        List<ICommand> commands = new List<ICommand>();
 
         const string RE_ARG_MATCHER_PATTERN = @"""[^""\\]*(?:\\.[^""\\]*)*""|'[^'\\]*(?:\\.[^'\\]*)*'|\S+";
         const string RE_QUOTE_STRIP_PATTERN = @"^""+|""+$|^'+|'+$";
 
-        static string[] noCommandResponses = new string[] {
+        string[] noCommandResponses = new string[] {
             "You are not sure you can do that!",
             "How do you do that again?",
             "Impossible to do that!"
         };
 
-        static int fails = 0;
+        int fails = 0;
 
-        static int pageIndex = 0;
+        int pageIndex = 0;
 
-        const int MAX_COMMANDS_PER_PAGE = 15;
+        const int MAX_COMMANDS_PER_PAGE = 5;
 
-        public static void Init()
+        public static CommandHandler Instance { get; set; }
+
+        /*public static void Init()
         {
             AddCommand(new ExitCommand());
             AddCommand(new SettingsCommand());
@@ -43,22 +45,44 @@ namespace Artefact.Commands.Misc
             AddCommand(new MoveCommand());
 #if DEBUG
             AddCommand(new GiveCommand());
+            AddCommand(new ForceFightCommand());
 #endif
             AddCommand(new HelpCommand(commands));
+        }*/
+
+        public static void AddDefaultCommands(CommandHandler commandHandler)
+        {
+            commandHandler.AddCommand(new ExitCommand());
+            commandHandler.AddCommand(new SettingsCommand());
+            commandHandler.AddCommand(new MapCommand());
+            commandHandler.AddCommand(new SaveCommand());
+            commandHandler.AddCommand(new LoadCommand());
+            commandHandler.AddCommand(new StatusCommand());
+            commandHandler.AddCommand(new InventoryCommand());
+            commandHandler.AddCommand(new CraftCommand());
+            commandHandler.AddCommand(new EquipCommand());
+            commandHandler.AddCommand(new TalkCommand());
+            commandHandler.AddCommand(new MoveCommand());
+#if DEBUG
+            commandHandler.AddCommand(new GiveCommand());
+            commandHandler.AddCommand(new ForceFightCommand());
+#endif
+            commandHandler.AddCommand(new HelpCommand(commandHandler.commands));
         }
 
-        public static void AddCommand(ICommand command)
+        public void AddCommand(ICommand command)
         {
             commands.Add(command);
         }
 
-        public static void OnCommand()
+        public void OnCommand()
         {
             Regex reg = new Regex(RE_ARG_MATCHER_PATTERN);
             ICommand command = null;
             List<string> args = null;
             if (GlobalSettings.SimpleMode)
             {
+                Console.WriteLine();
                 List<ICommand> visibleCommands = commands;
                 List<ICommand> newCommands = visibleCommands.GetRange(pageIndex * MAX_COMMANDS_PER_PAGE, Math.Min(MAX_COMMANDS_PER_PAGE, visibleCommands.Count - pageIndex * MAX_COMMANDS_PER_PAGE));
 
@@ -74,7 +98,7 @@ namespace Artefact.Commands.Misc
                     command = newCommands[selection];
                     if (command.HasArguments)
                     {
-                        Console.WriteLine("Write arguments for the command");
+                        Console.WriteLine($"Write arguments for the command {command.NoArgsResponse}");
                         string argsText = Console.ReadLine();
                         MatchCollection matches = reg.Matches(argsText);
                         args = matches.Map(match => Regex.Replace(match.Value, RE_QUOTE_STRIP_PATTERN, ""));

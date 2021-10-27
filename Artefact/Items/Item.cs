@@ -7,7 +7,7 @@ using System.Text;
 namespace Artefact.Items
 {
     [Serializable]
-    abstract class Item
+    class Item
     {
         public string Name { get; }
 

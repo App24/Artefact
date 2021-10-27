@@ -1,5 +1,9 @@
 ﻿using Artefact.Entities;
+using Artefact.FightSystem;
 using Artefact.Misc;
+using Artefact.Settings;
+using Artefact.States;
+using Artefact.StorySystem;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -19,26 +23,26 @@ namespace Artefact.MapSystem
 
         static List<Room> rooms = new List<Room>()
         {
-            new Room(Location.GPU, Location.CPU),
+            new Room(Location.GPU, Location.CPU, east: Location.HDD),
             new Room(Location.CPU, south: Location.GPU, east: Location.RAM),
-            new Room(Location.RAM, west: Location.CPU)
+            new Room(Location.RAM, west: Location.CPU, south:Location.HDD),
+            new Room(Location.HDD, west: Location.GPU, north: Location.RAM)
         };
 
-        static string map = @$"
-           _____________
-           |     |     |
-           | [darkcyan]{Location.CPU}[/] | [darkcyan]{Location.RAM}[/] |
-          _|_____|_____|
-    N     |       |
-    ^     |       |
-    |     |       |
-W <- -> E |       |
-    |     |  [darkcyan]{Location.GPU}[/]  |
-    V     |       |
-    S     |       |
-          |       |
-          |_______|
-";
+        static string map = "\n"+
+ "           _____________\n"+
+ "           |     |     |\n"+
+$"           | [darkcyan]{Location.CPU}[/] | [darkcyan]{Location.RAM}[/] |\n"+
+ "          _|_____|_____|_\n"+
+ "    N     |       |     |\n"+
+$"    ^     |       | [darkcyan]{Location.HDD}[/] |\n" +
+$"    |     |       |_____|\n"+
+ "W <—+—> E |       |\n" +
+$"    |     |  [darkcyan]{Location.GPU}[/]  |\n"+
+ "    V     |       |\n"+
+ "    S     |       |\n"+
+ "          |       |\n"+
+ "          |_______|\n";
 
         public Map()
         {
@@ -52,11 +56,12 @@ W <- -> E |       |
             Player.Location = Location.GPU;
         }
 
-        public static void SpawnEnemy(EnemyType enemyType, Location location)
+        public static EnemyEntity SpawnEnemy(EnemyType enemyType, Location location)
         {
             EnemyEntity enemyEntity = new EnemyEntity(enemyType);
             enemyEntity.Location = location;
             Entities.Add(enemyEntity);
+            return enemyEntity;
         }
 
         public static void RemoveEntity(Entity entity)
@@ -66,7 +71,48 @@ W <- -> E |       |
 
         public static string GetMapLocation(Location location)
         {
-            return map.Replace(location.ToString(), new string[location.ToString().Length].Map(x=>"x").Join(""));
+            return map.Replace(location.ToString(), new string[location.ToString().Length].Map(x => "x").Join(""));
+        }
+
+        public static bool MovePlayer(Direction direction, bool disableSpawn = false, bool forceSpawn = false)
+        {
+            (bool moved, Location location) = Move(direction, Player.Location);
+
+            if (moved)
+            {
+                MovePlayer(location, disableSpawn, forceSpawn);
+
+                return true;
+            }
+            return false;
+        }
+
+        public static void MovePlayer(Location location, bool disableSpawn = false, bool forceSpawn = false)
+        {
+
+            Player.Location = location;
+            Utils.WriteColor($"Moved to: [darkcyan]{Player.Location}");
+
+            if (location == Location.CPU && !GameSettings.CPUVisited)
+            {
+                Story.Step = Story.CPU_STEP;
+                disableSpawn = true;
+            }
+            else if (location == Location.RAM && !GameSettings.RAMVisited)
+            {
+                Story.Step = Story.RAM_STEP;
+                disableSpawn = true;
+            }
+
+            if (!disableSpawn || forceSpawn)
+            {
+                Random random = new Random();
+                int probablity = random.Next(30);
+                if (probablity <= 0 || forceSpawn)
+                {
+                    Fight.StartFight(location, EnemyType.Virus | EnemyType.Trojan | EnemyType.RansomWare);
+                }
+            }
         }
 
         public static (bool, Location) Move(Direction direction, Location currentLocation)
@@ -91,7 +137,7 @@ W <- -> E |       |
             return (nextLocation != Location.None, nextLocation);
         }
 
-        static Room GetRoom(Location location)
+        public static Room GetRoom(Location location)
         {
             return rooms.Find(room => room.Location == location);
         }
@@ -111,7 +157,8 @@ W <- -> E |       |
         GPU,
         CPU,
         RAM,
+        HDD,
 
-        Room=50
+        Room = 50
     }
 }

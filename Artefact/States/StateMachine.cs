@@ -29,13 +29,13 @@ namespace Artefact.States
         {
             if (isRemove && !IsEmpty)
             {
-                //ActiveState.Remove();
+                ActiveState.Remove();
 
                 states.Pop();
 
                 if (!IsEmpty)
                 {
-                    //ActiveState.Resume();
+                    ActiveState.Resume();
                 }
 
                 isRemove = false;
@@ -47,17 +47,16 @@ namespace Artefact.States
                 {
                     if (isReplace)
                     {
-                        //ActiveState.Remove();
+                        ActiveState.Remove();
                         states.Pop();
                     }
                     else
                     {
-                        //ActiveState.Pause();
+                        ActiveState.Pause();
                     }
                 }
 
                 states.Push(newState);
-                //World.CurrentWorld = ActiveState.World;
                 ActiveState.Init();
                 isAdd = false;
             }

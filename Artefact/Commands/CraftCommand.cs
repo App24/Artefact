@@ -1,4 +1,4 @@
-﻿using Artefact.Crafting;
+﻿using Artefact.CraftingSystem;
 using Artefact.Items;
 using Artefact.Misc;
 using Artefact.Settings;
@@ -22,7 +22,7 @@ namespace Artefact.Commands
             {
                 List<Item> craftableItems = Item.Items.FindAll((i) => i.IsCraftable);
                 int selection = Utils.GetSelection(craftableItems.Map(i => i.Name).ToArray());
-                CraftSystem.CraftItem(craftableItems[selection].Name);
+                Crafting.CraftItem(craftableItems[selection].Name);
             }
             else
             {
@@ -33,7 +33,7 @@ namespace Artefact.Commands
                 }
                 string itemName = args.Join(" ");
 
-                CraftSystem.CraftItem(itemName);
+                Crafting.CraftItem(itemName);
             }
         }
     }

@@ -1,7 +1,6 @@
 ﻿using Artefact.MapSystem;
 using Artefact.Misc;
 using Artefact.Settings;
-using Artefact.StorySystem;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -20,11 +19,8 @@ namespace Artefact.Commands
 
         public void OnRun(List<string> args)
         {
-            if (GlobalSettings.SimpleMode)
-            {
-
-            }
-            else
+            Direction direction;
+            if (!GlobalSettings.SimpleMode)
             {
                 if (args.Count <= 0)
                 {
@@ -32,28 +28,22 @@ namespace Artefact.Commands
                     return;
                 }
 
-                if(!Enum.TryParse(args[0], true, out Direction direction))
+                if (!Enum.TryParse(args[0], true, out direction))
                 {
                     Utils.WriteColor("[red]That is not a valid direction! (north/south/east/west)");
                     return;
                 }
-                (bool moved, Location location)=Map.Move(direction, Map.Player.Location);
-                if (!moved)
-                {
-                    Utils.WriteColor("[red]You can't move that direction!");
-                    return;
-                }
-                Map.Player.Location = location;
-                Utils.WriteColor($"Moved to: [darkcyan]{Map.Player.Location}");
-                if (location == Location.CPU && !GameSettings.CPUVisited)
-                {
-                    Story.Step = Story.CPU_STEP;
-                }
-                else if (location == Location.RAM && !GameSettings.RAMVisited)
-                {
-                    Story.Step = Story.RAM_STEP;
-                }
             }
+            else
+            {
+                string[] directions = Enum.GetNames(typeof(Direction));
+
+                Utils.WriteColor("Please select a direction");
+                direction = (Direction)Utils.GetSelection(directions);
+            }
+
+            if(!Map.MovePlayer(direction))
+                Utils.WriteColor("[red]You can't move that direction!");
         }
     }
 }

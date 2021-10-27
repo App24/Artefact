@@ -10,6 +10,8 @@ namespace Artefact.States
 {
     class GameState : State
     {
+        CommandHandler instance;
+
         public override void Init()
         {
 
@@ -25,8 +27,18 @@ namespace Artefact.States
             Story.DoStep();
             if (GameSettings.EnableCommands)
             {
-                CommandHandler.OnCommand();
+                CommandHandler.Instance.OnCommand();
             }
+        }
+
+        public override void Pause()
+        {
+            instance = CommandHandler.Instance;
+        }
+
+        public override void Resume()
+        {
+            CommandHandler.Instance = instance;
         }
     }
 }

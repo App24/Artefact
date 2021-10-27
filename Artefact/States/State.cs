@@ -8,5 +8,9 @@ namespace Artefact.States
     {
         public abstract void Init();
         public abstract void Update();
+
+        public virtual void Pause() { }
+        public virtual void Resume() { }
+        public virtual void Remove() { }
     }
 }

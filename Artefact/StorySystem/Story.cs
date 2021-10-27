@@ -1,4 +1,5 @@
 ﻿using Artefact.DialogSystem;
+using Artefact.FightSystem;
 using Artefact.InventorySystem;
 using Artefact.Items;
 using Artefact.MapSystem;
@@ -7,6 +8,7 @@ using Artefact.Settings;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 
 namespace Artefact.StorySystem
 {
@@ -96,7 +98,7 @@ namespace Artefact.StorySystem
                         while (string.IsNullOrEmpty(name))
                         {
                             name = Console.ReadLine();
-                            if(!Utils.GetCharacterConfirmation(Dialog.GetCharacterVoiceLine(Character.Clippy, $"So your name is [cyan]{name}[/]"))){
+                            if(!Utils.GetCharacterConfirmation(Dialog.GetCharacterVoiceLine(Character.Clippy, $"So your name is [cyan]{name}[/]?"))){
                                 name = null;
                                 Dialog.Speak(Character.Clippy, "What is your name then?");
                             }
@@ -135,8 +137,16 @@ namespace Artefact.StorySystem
                         Dialog.Speak(Character.Clippy, "This is where everything the [darkred]user[/] does is processed!");
                         Dialog.Speak(Character.Clippy, "It is a marvel sight!");
                         Dialog.Speak(Character.Clippy, "But it seems to be turned off right now, which is odd, since the [darkred]user[/] always has their computer turned on!");
+                        Dialog.Speak(Character.Clippy, "................");
+                        Dialog.Speak(Character.Clippy, "Wha-what is that?!?");
+                        Dialog.Speak(Character.Clippy, "RUN, IT'S A TROJAN!!!");
+#if !BYPASS
+                        Thread.Sleep((int)GlobalSettings.TextSpeed * 15);
+#endif
+                        GameSettings.EnableCommands = false;
+                        Fight.StartFight(Map.Player.Location, Entities.EnemyType.Trojan, 1);
                         GameSettings.CPUVisited = true;
-                        Step = EMPTY_STEP;
+                        //Step = EMPTY_STEP;
                     }
                     break;
                 case RAM_STEP:

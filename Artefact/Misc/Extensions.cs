@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Artefact.Misc
@@ -58,22 +59,20 @@ namespace Artefact.Misc
             return Array.Exists(array, val => action(val));
         }
 
-        public static T Next<T>(this T src) where T : struct
+        public static List<T> GetSetFlags<T>(this T src) where T : struct
         {
-            if (!typeof(T).IsEnum) throw new ArgumentException(String.Format("Argument {0} is not an Enum", typeof(T).FullName));
+            if (!typeof(T).IsEnum) throw new ArgumentException($"Argument {typeof(T).FullName} is not an Enum");
 
-            T[] Arr = (T[])Enum.GetValues(src.GetType());
-            int j = Array.IndexOf<T>(Arr, src) + 1;
-            return (Arr.Length == j) ? Arr[0] : Arr[j];
-        }
+            List<T> flags = new List<T>();
 
-        public static T Previous<T>(this T src) where T : struct
-        {
-            if (!typeof(T).IsEnum) throw new ArgumentException(String.Format("Argument {0} is not an Enum", typeof(T).FullName));
-
-            T[] Arr = (T[])Enum.GetValues(src.GetType());
-            int j = Array.IndexOf<T>(Arr, src) - 1;
-            return (j < 0) ? Arr[Arr.Length - 1] : Arr[j];
+            long lValue = Convert.ToInt64(src);
+            foreach (T flag in Enum.GetValues(typeof(T)).Cast<T>())
+            {
+                long lFlag = Convert.ToInt64(flag);
+                if ((lValue & lFlag) != 0)
+                    flags.Add(flag);
+            }
+            return flags;
         }
 
         public static void AddOrInsert<T>(this IList<T> list, T value)

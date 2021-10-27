@@ -40,6 +40,11 @@ namespace Artefact.Entities
             return entity1.UUID != entity2.UUID;
         }
 
+        public void Kill()
+        {
+            Map.RemoveEntity(this);
+        }
+
         public void Damage(int amount)
         {
             if (amount < 0)
@@ -49,9 +54,9 @@ namespace Artefact.Entities
             }
 
             Health -= amount;
-            if (Health < 0)
+            if (Health <= 0)
             {
-                Map.RemoveEntity(this);
+                Kill();
             }
         }
 

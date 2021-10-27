@@ -23,7 +23,7 @@ namespace Artefact.Saving
             value.SaveVersion = Utils.DLLHash;
 
             FileStream stream = File.Create(fileName);
-            var formatter = new BinaryFormatter();
+            BinaryFormatter formatter = new BinaryFormatter();
             formatter.Serialize(stream, value);
             stream.Close();
         }
@@ -47,7 +47,7 @@ namespace Artefact.Saving
 
             try
             {
-                var formatter = new BinaryFormatter();
+                BinaryFormatter formatter = new BinaryFormatter();
                 value = (T)formatter.Deserialize(stream);
             }
             catch
