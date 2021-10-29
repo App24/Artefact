@@ -61,5 +61,14 @@ namespace Artefact.States
                 isAdd = false;
             }
         }
+
+        public static void CleanStates()
+        {
+            for (int i = 0; i < states.Count; i++)
+            {
+                RemoveState();
+                ProcessStateChanges();
+            }
+        }
     }
 }

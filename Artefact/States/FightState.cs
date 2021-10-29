@@ -7,6 +7,7 @@ using Artefact.InventorySystem;
 using Artefact.Items;
 using Artefact.MapSystem;
 using Artefact.Misc;
+using Artefact.Saving;
 using Artefact.Settings;
 using Artefact.StorySystem;
 using System;
@@ -26,6 +27,8 @@ namespace Artefact.States
 
         public override void Init()
         {
+            SaveSystem.SaveGame(SaveSystem.CHECKPOINT_FILE);
+
             Console.Clear();
 
             CommandHandler commandHandler = new CommandHandler();

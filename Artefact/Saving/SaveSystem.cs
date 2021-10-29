@@ -17,6 +17,7 @@ namespace Artefact.Saving
     {
         const string SETTINGS_FILE = "settings.dat";
         const string SAVE_FILE = "save.dat";
+        public const string CHECKPOINT_FILE = "checkpoint.dat";
 
         static void SaveClass<T>(string fileName, T value) where T : Saveable
         {
@@ -81,14 +82,14 @@ namespace Artefact.Saving
                 new GlobalSettings();
         }
 
-        public static void SaveGame()
+        public static void SaveGame(string fileName=SAVE_FILE)
         {
-            SaveClass(SAVE_FILE, new Save());
+            SaveClass(fileName, new Save());
         }
 
-        public static LoadResult LoadGame()
+        public static LoadResult LoadGame(string fileName = SAVE_FILE)
         {
-            LoadDetails<Save> loadDetails = LoadClass<Save>(SAVE_FILE);
+            LoadDetails<Save> loadDetails = LoadClass<Save>(fileName);
             if (loadDetails.LoadResult==LoadResult.Success)
             {
                 Utils.WriteColor("[green]Save loaded successfully!");

@@ -83,6 +83,7 @@ namespace Artefact.Entities
         RansomWare=4
     }
 
+    [Serializable]
     struct ItemDropData
     {
         public Item Item { get; }
