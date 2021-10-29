@@ -20,7 +20,7 @@ namespace Artefact.Items
         public static Item RecipeBookItem { get; } = new Item("Recipe Book");
 
         // Weapons
-        public static WeaponItem BinarySwordItem { get; } = new WeaponItem("Binary Sword", new HitDamageRange(2, 3), new ItemData(BinaryItem, 3));
+        public static WeaponItem BinarySwordItem { get; } = new WeaponItem("Binary Sword", new HitDamageRange(8, 10), new ItemData(BinaryItem, 3));
 
         // Armor
         public static ArmorItem BinaryHelmetItem { get; } = new ArmorItem("Binary Helmet", 2, ArmorType.Helmet, new ItemData(BinaryItem, 5));

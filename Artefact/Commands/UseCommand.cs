@@ -1,4 +1,5 @@
-﻿using Artefact.Items;
+﻿using Artefact.Commands.Misc;
+using Artefact.Items;
 using Artefact.MapSystem;
 using Artefact.Misc;
 using System;
@@ -31,7 +32,7 @@ namespace Artefact.Commands
             int selection = Utils.GetSelection(options.ToArray());
             if (selection >= usableItems.Count)
             {
-                return;
+                throw new CommandException("");
             }
 
             Item item = usableItems[selection];

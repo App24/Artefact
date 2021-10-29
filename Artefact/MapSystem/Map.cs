@@ -30,19 +30,19 @@ namespace Artefact.MapSystem
         };
 
         static string map = "\n"+
- "           _____________\n"+
- "           |     |     |\n"+
-$"           | [darkcyan]{Location.CPU}[/] | [darkcyan]{Location.RAM}[/] |\n"+
- "          _|_____|_____|_\n"+
- "    N     |       |     |\n"+
-$"    ^     |       | [darkcyan]{Location.HDD}[/] |\n" +
-$"    |     |       |_____|\n"+
- "W <—+—> E |       |\n" +
-$"    |     |  [darkcyan]{Location.GPU}[/]  |\n"+
- "    V     |       |\n"+
- "    S     |       |\n"+
- "          |       |\n"+
- "          |_______|\n";
+ "            _____________\n"+
+ "            |     |     |\n"+
+$"            | [darkcyan]{Location.CPU}[/] | [darkcyan]{Location.RAM}[/] |\n"+
+ "           _|_____|_____|_\n"+
+ "     N     |       |     |\n"+
+$"     ^     |       | [darkcyan]{Location.HDD}[/] |\n" +
+$"     |     |       |_____|\n"+
+ "W <——+——> E|       |\n" +
+$"     |     |  [darkcyan]{Location.GPU}[/]  |\n"+
+ "     V     |       |\n"+
+ "     S     |       |\n"+
+ "           |       |\n"+
+ "           |_______|\n";
 
         public Map()
         {

@@ -26,9 +26,9 @@ namespace Artefact.Entities
             {
                 case EnemyType.Virus:
                     {
-                        MaxHealth = 10;
+                        MaxHealth = 50;
                         Defense = 1;
-                        HitDamage = new HitDamageRange(1, 2);
+                        HitDamage = new HitDamageRange(5, 8);
                         ItemDrops.Add(new ItemDropData(Item.BinaryItem, 5));
                         ASCIIRepresentation = @"
      ,-^-.
@@ -43,9 +43,9 @@ namespace Artefact.Entities
                     break;
                 case EnemyType.Trojan:
                     {
-                        MaxHealth = 8;
+                        MaxHealth = 60;
                         Defense = 0;
-                        HitDamage = new HitDamageRange(1, 1);
+                        HitDamage = new HitDamageRange(5, 7);
                         ItemDrops.Add(new ItemDropData(Item.BinaryItem, 8));
                         ASCIIRepresentation= @"
                _(\
@@ -59,9 +59,9 @@ namespace Artefact.Entities
                     break;
                 case EnemyType.RansomWare:
                     {
-                        MaxHealth = 4;
+                        MaxHealth = 30;
                         Defense = 3;
-                        HitDamage = new HitDamageRange(3, 5);
+                        HitDamage = new HitDamageRange(7, 10);
                         ItemDrops.Add(new ItemDropData(Item.BinaryItem, 12, 3));
                     }
                     break;

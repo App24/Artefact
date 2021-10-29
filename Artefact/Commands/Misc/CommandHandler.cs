@@ -61,6 +61,8 @@ namespace Artefact.Commands.Misc
             return commands;
         }
 
+        // Right click crashes it. what?????
+        // OHHHHH, it just pastes your clipboard
         public bool OnCommand()
         {
             Regex reg = new Regex(RE_ARG_MATCHER_PATTERN);
@@ -110,6 +112,7 @@ namespace Artefact.Commands.Misc
                 if (string.IsNullOrEmpty(text)) return false;
                 MatchCollection matches = reg.Matches(text);
                 List<string> commandData = matches.Map(match => Regex.Replace(match.Value, RE_QUOTE_STRIP_PATTERN, ""));
+                if (commandData.Count <= 0) return false;
                 string commandName = commandData[0].ToLower();
                 args = commandData.GetRange(1, commandData.Count - 1);
 
@@ -131,9 +134,13 @@ namespace Artefact.Commands.Misc
                 }
                 catch (CommandException e)
                 {
-                    Console.ForegroundColor = ConsoleColor.DarkRed;
-                    Console.WriteLine(e.Message);
-                    Console.ForegroundColor = ConsoleColor.White;
+                    if (!string.IsNullOrEmpty(e.Message))
+                    {
+                        Console.ForegroundColor = ConsoleColor.DarkRed;
+                        Console.WriteLine(e.Message);
+                        Console.ForegroundColor = ConsoleColor.White;
+                    }
+                    return false;
                 }
             }
             else

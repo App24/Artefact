@@ -12,10 +12,10 @@ namespace Artefact.Entities
     {
         public Inventory Inventory { get; }
 
-        public override HitDamageRange HitDamage => Inventory.Weapon == null ? new HitDamageRange(1) : Inventory.Weapon.Damage;
+        public override HitDamageRange HitDamage => Inventory.Weapon == null ? new HitDamageRange(3, 5) : Inventory.Weapon.Damage;
         public override int Defense => Inventory.Defense;
 
-        public PlayerEntity() : base(20)
+        public PlayerEntity() : base(100)
         {
             Inventory = new Inventory();
         }

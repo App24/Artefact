@@ -25,29 +25,29 @@ namespace Artefact.Items.Potions
                 return false;
             }
 
-            int healthAmount = 0;
+            int healthAmount;
             switch (HealthPotionType)
             {
                 case HealthPotionType.Small:
                     {
-                        healthAmount = 2;
+                        healthAmount = 10;
                     }
                     break;
                 case HealthPotionType.Medium:
                     {
-                        healthAmount = 5;
+                        healthAmount = 25;
                     }
                     break;
                 case HealthPotionType.Large:
                     {
-                        healthAmount = 10;
+                        healthAmount = 50;
                     }
                     break;
                 default:
                     {
                         Utils.WriteColor($"[darkred]{HealthPotionType} does not have set health regeneration!");
                         return false;
-                    }break;
+                    }
             }
 
             Map.Player.Heal(healthAmount);
