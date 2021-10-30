@@ -16,10 +16,18 @@ namespace Artefact.States
 
         public override void Update()
         {
-            Utils.WriteColor("[darkred]YOU DIED!");
+            Utils.WriteCenter(@"[darkred]
+ __     __           _____  _          _ _ 
+ \ \   / /          |  __ \(_)        | | |
+  \ \_/ ___  _   _  | |  | |_  ___  __| | |
+   \   / _ \| | | | | |  | | |/ _ \/ _` | |
+    | | (_) | |_| | | |__| | |  __| (_| |_|
+    |_|\___/ \__,_| |_____/|_|\___|\__,_(_)
+                                           
+                                           ");
 
             Utils.WriteColor("Would you like to restart from checkpoint?");
-            int selection = Utils.GetSelection("Yes", "No");
+            int selection = Utils.GetSelection($"[{ColorConstants.GOOD_COLOR}]Yes", $"[{ColorConstants.BAD_COLOR}]No");
             if (selection == 0)
             {
                 LoadResult loadResult = SaveSystem.LoadGame(SaveSystem.CHECKPOINT_FILE);

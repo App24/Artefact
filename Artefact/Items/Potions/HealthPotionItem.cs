@@ -21,7 +21,7 @@ namespace Artefact.Items.Potions
         {
             if (Map.Player.Health >= Map.Player.MaxHealth)
             {
-                Utils.WriteColor("You are at max health already!");
+                Utils.WriteColor($"[{ColorConstants.BAD_COLOR}]You are at max health already!");
                 return false;
             }
 
@@ -45,7 +45,7 @@ namespace Artefact.Items.Potions
                     break;
                 default:
                     {
-                        Utils.WriteColor($"[darkred]{HealthPotionType} does not have set health regeneration!");
+                        Utils.WriteColor($"[{ColorConstants.ERROR_COLOR}]{HealthPotionType} does not have set health regeneration!");
                         return false;
                     }
             }

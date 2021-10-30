@@ -30,7 +30,7 @@ namespace Artefact.Commands
 
                 if (!Enum.TryParse(args[0], true, out direction))
                 {
-                    Utils.WriteColor("[red]That is not a valid direction! (north/south/east/west)");
+                    Utils.WriteColor($"[{ColorConstants.BAD_COLOR}]That is not a valid direction! (north/south/east/west)");
                     return;
                 }
             }
@@ -43,7 +43,7 @@ namespace Artefact.Commands
             }
 
             if(!Map.MovePlayer(direction))
-                Utils.WriteColor("[red]You can't move that direction!");
+                Utils.WriteColor($"[{ColorConstants.BAD_COLOR}]You can't move that direction!");
         }
     }
 }

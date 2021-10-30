@@ -9,9 +9,9 @@ namespace Artefact.Items.Equipables
     [Serializable]
     class WeaponItem : EquipableItem
     {
-        public HitDamageRange Damage { get; }
+        public IntRange Damage { get; }
 
-        public WeaponItem(string name, HitDamageRange damage, params ItemData[] crafting) : base(name, crafting)
+        public WeaponItem(string name, IntRange damage, params ItemData[] crafting) : base(name, EquipableType.Weapon, crafting)
         {
             Damage = damage;
         }

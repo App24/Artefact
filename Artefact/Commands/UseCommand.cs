@@ -23,11 +23,11 @@ namespace Artefact.Commands
             List<Item> usableItems = Map.Player.Inventory.GetItems().FindAll(i => i.Item is IUsable).Map(i => i.Item);
             if (usableItems.Count <= 0)
             {
-                Utils.WriteColor("[red]You do not have any usable items in your inventory!");
-                return;
+                Utils.WriteColor($"[{ColorConstants.BAD_COLOR}]You do not have any usable items in your inventory!");
+                throw new CommandException("");
             }
 
-            List<string> options = usableItems.Map(i => i.Name);
+            List<string> options = usableItems.Map(i => $"[{ColorConstants.ITEM_COLOR}]{i.Name}[/]");
             options.Add("Exit");
             int selection = Utils.GetSelection(options.ToArray());
             if (selection >= usableItems.Count)

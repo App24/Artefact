@@ -21,7 +21,10 @@ namespace Artefact.Commands
             if (GlobalSettings.SimpleMode)
             {
                 List<Item> craftableItems = Item.Items.FindAll((i) => i.IsCraftable);
-                int selection = Utils.GetSelection(craftableItems.Map(i => i.Name).ToArray());
+                List<string> options = craftableItems.Map(i => $"[{ColorConstants.ITEM_COLOR}]{i.Name}[/]");
+                options.Add("Exit");
+                int selection = Utils.GetSelection(options.ToArray());
+                if (selection >= craftableItems.Count) return;
                 Crafting.CraftItem(craftableItems[selection].Name);
             }
             else

@@ -25,7 +25,7 @@ namespace Artefact.Commands
                     character = Character.Player;
                 else
                 {
-                    Console.WriteLine("That character is not near the vicinity");
+                    Utils.WriteColor($"[{ColorConstants.BAD_COLOR}]That character is not near the vicinity");
                     return;
                 }
             }
@@ -45,12 +45,12 @@ namespace Artefact.Commands
                         {
                             case 0:
                                 {
-                                    Dialog.Speak(Character.Clippy, "I do not know.\nI just found you here.\nMaybe the [darkred]user[/] deleted you too? ^-^");
+                                    Dialog.Speak(Character.Clippy, $"I do not know.\nI just found you here.\nMaybe the [{ColorConstants.USER_COLOR}]user[/] deleted you too? ^-^");
                                     OnRun(args);
                                 }break;
                             case 1:
                                 {
-                                    Dialog.Speak(Character.Clippy, "I am not exactly sure, one day I felt myself lighter and then appeared right outside my home, being unable to enter it.\nI think the [darkred]user[/] deleted me :'(");
+                                    Dialog.Speak(Character.Clippy, $"I am not exactly sure, one day I felt myself lighter and then appeared right outside my home, being unable to enter it.\nI think the [{ColorConstants.USER_COLOR}]user[/] deleted me :'(");
                                     OnRun(args);
                                 }
                                 break;

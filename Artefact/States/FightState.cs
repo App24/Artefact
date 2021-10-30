@@ -13,12 +13,15 @@ using Artefact.StorySystem;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 
 namespace Artefact.States
 {
     class FightState : State
     {
         public static List<EnemyEntity> Enemies { get; private set; }
+
+        public const float RUN_PROBABILITY = 0.1f;
 
         public FightState(params EnemyEntity[] enemies)
         {
@@ -38,14 +41,16 @@ namespace Artefact.States
             commandHandler.AddCommand(new AttackCommand());
             commandHandler.AddCommand(new DefendCommand());
             commandHandler.AddCommand(new SweepAttackCommand());
+            if (CanHaveRunCommand())
+                commandHandler.AddCommand(new RunCommand());
             #endregion
 
             CommandHandler.Instance = commandHandler;
 
-            Utils.WriteColor($"[red]{Enemies.Count}[/] enem{(Enemies.Count == 1 ? "y" : "ies")} appear{(Enemies.Count == 1 ? "s" : "")}!");
+            Utils.WriteColor($"[{ColorConstants.BAD_COLOR}]{Enemies.Count}[/] enem{(Enemies.Count == 1 ? "y" : "ies")} appear{(Enemies.Count == 1 ? "s" : "")}!");
             foreach (EnemyEntity enemy in Enemies)
             {
-                Utils.WriteColor($"Type: [blue]{enemy.EnemyType}[/]\nHealth: [red]{enemy.Health}[/]\nHit Damage: [red]{enemy.HitDamage}[/]\nDefense: [red]{enemy.Defense}[/]");
+                Utils.WriteColor($"Type: [{ColorConstants.ENEMY_COLOR}]{enemy.EnemyType}[/]\nHealth: [{ColorConstants.BAD_COLOR}]{enemy.Health}[/]\nHit Damage: [{ColorConstants.BAD_COLOR}]{enemy.HitDamage}[/]\nDefense: [{ColorConstants.BAD_COLOR}]{enemy.Defense}[/]");
                 if(!string.IsNullOrEmpty(enemy.ASCIIRepresentation))
                 Utils.WriteColor(enemy.ASCIIRepresentation);
                 Console.WriteLine();
@@ -54,23 +59,24 @@ namespace Artefact.States
 
         public override void Update()
         {
-            Utils.WriteColor($"[cyan]{GameSettings.PlayerName}[/] Health: {Utils.CreateHealthBar(Map.Player)}");
-            Enemies.ForEach(e => Utils.WriteColor($"[blue]{e.EnemyType}[/] Health: {Utils.CreateHealthBar(e, barcolor: ConsoleColor.Red)}"));
+            Utils.WriteColor($"[{ColorConstants.CHARACTER_COLOR}]{GameSettings.PlayerName}[/] Health: {Utils.CreateHealthBar(Map.Player)}");
+            Enemies.ForEach(e => Utils.WriteColor($"[{ColorConstants.ENEMY_COLOR}]{e.EnemyType}[/] Health: {Utils.CreateHealthBar(e, barColor: ColorConstants.BAD_COLOR)}"));
 
-            //Player Turn
-            PlayerTurn();
+            if (PlayerTurn())
+            {
 
-            //Enemies Turn
-            EnemiesTurn();
+                EnemiesTurn();
+
+            }
 
             CheckForDeaths();
 
             if (Story.Step == Story.CPU_STEP)
             {
-                if (Map.Player.Health < 5)
+                if (Map.Player.Health < 20)
                 {
                     Dialog.Speak(Character.Clippy, "Here, you need this!");
-                    Map.Player.Heal(5 - Map.Player.Health);
+                    Map.Player.Heal(20 - Map.Player.Health);
                 }
             }
 
@@ -79,16 +85,19 @@ namespace Artefact.States
             if (Enemies.Count <= 0)
             {
                 StateMachine.RemoveState();
-                Utils.WriteColor("[green]Defeated all enemies!");
+                Utils.WriteColor($"[{ColorConstants.GOOD_COLOR}]Defeated all enemies!");
+#if !BYPASS
+                Thread.Sleep((int)GlobalSettings.TextSpeed * 15);
+#endif
             }
         }
 
-        void PlayerTurn()
+        bool PlayerTurn()
         {
             Map.Player.DefenseModifier = 1f;
             while (true)
             {
-                Utils.WriteColor($"Are you going to {CommandHandler.Instance.GetCommands().Map(c => $"[darkmagenta]{c.Name}[/]").Join(", ")}?");
+                Utils.WriteColor($"Are you going to {CommandHandler.Instance.GetCommands().Map(c => $"[{ColorConstants.COMMAND_COLOR}]{c.Name}[/]").Join(", ")}?");
                 if (CommandHandler.Instance.OnCommand()) break;
             }
             Console.WriteLine();
@@ -122,7 +131,27 @@ namespace Artefact.States
                         });
                     }
                     break;
+                case Move.Run:
+                    {
+                        Random random = new Random();
+                        float probability = (float)random.NextDouble();
+                        if (probability < RUN_PROBABILITY)
+                        {
+                            StateMachine.RemoveState();
+                            Utils.WriteColor($"[{ColorConstants.GOOD_COLOR}]You successfully ran away!");
+#if !BYPASS
+                Thread.Sleep((int)GlobalSettings.TextSpeed * 15);
+#endif
+                            return false;
+                        }
+                        else
+                        {
+                            Utils.WriteColor($"[{ColorConstants.BAD_COLOR}]You were unable to run away!");
+                        }
+                    }
+                    break;
             }
+            return true;
         }
 
         void EnemiesTurn()
@@ -137,13 +166,13 @@ namespace Artefact.States
                 {
                     case Move.Attack:
                         {
-                            Utils.WriteColor($"[blue]{enemy.EnemyType}[/] attacked!");
+                            Utils.WriteColor($"[{ColorConstants.ENEMY_COLOR}]{enemy.EnemyType}[/] attacked!");
                             Map.Player.Damage(enemy.GetRandomDamage());
                         }
                         break;
                     case Move.Defend:
                         {
-                            Utils.WriteColor($"[blue]{enemy.EnemyType}[/] is defending!");
+                            Utils.WriteColor($"[{ColorConstants.ENEMY_COLOR}]{enemy.EnemyType}[/] is defending!");
                             enemy.DefenseModifier = 1.25f;
                         }
                         break;
@@ -166,17 +195,19 @@ namespace Artefact.States
         {
             if (Enemies.Contains(enemy))
             {
-                Utils.WriteColor($"Killed [blue]{enemy.EnemyType}");
+                Utils.WriteColor($"Killed [{ColorConstants.ENEMY_COLOR}]{enemy.EnemyType}");
                 Random random = new Random();
                 foreach(ItemDropData itemDropData in enemy.ItemDrops)
                 {
                     float per = (float)random.NextDouble();
-                    if (per <= itemDropData.Chance)
+                    if (per < itemDropData.Chance)
                     {
-                        int amount = random.Next((int)itemDropData.Min, (int)itemDropData.Max);
+                        int amount = random.Next((int)itemDropData.Min, (int)itemDropData.Max + 1);
                         Map.Player.Inventory.AddItem(new ItemData(itemDropData.Item, amount), true);
                     }
                 }
+                int xpAmount = random.Next(enemy.XPRange.Min, enemy.XPRange.Min + 1);
+                Map.Player.AddXP(xpAmount);
                 enemy.Kill();
                 Enemies.Remove(enemy);
             }
@@ -190,9 +221,14 @@ namespace Artefact.States
                 Dialog.Speak(Character.Clippy, $"Phew, that was a close one!");
                 Dialog.Speak(Character.Clippy, "You should use these to regenerate your health!");
                 Map.Player.Inventory.AddItem(new ItemData(Item.SmallHealthPotion, 3), true);
-                Dialog.Speak(Character.Clippy, "Use the command [darkmagenta]USE[/] to utilise those potions!");
+                Dialog.Speak(Character.Clippy, $"Use the command [{ColorConstants.COMMAND_COLOR}]USE[/] to utilise those potions!");
                 Story.Step = Story.EMPTY_STEP;
             }
+        }
+
+        bool CanHaveRunCommand()
+        {
+            return Story.Step != Story.CPU_STEP;
         }
     }
 }

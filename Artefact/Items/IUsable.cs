@@ -6,6 +6,6 @@ namespace Artefact.Items
 {
     interface IUsable
     {
-        public bool OnUse();
+        bool OnUse();
     }
 }

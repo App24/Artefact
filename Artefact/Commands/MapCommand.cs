@@ -18,7 +18,7 @@ namespace Artefact.Commands
 
         public void OnRun(List<string> args)
         {
-            Utils.WriteColor($"You are located in [darkcyan]{Map.Player.Location}");
+            Utils.WriteColor($"You are located in [{ColorConstants.LOCATION_COLOR}]{Map.Player.Location}");
             Utils.WriteColor(Map.GetMapLocation(Map.Player.Location));
         }
     }

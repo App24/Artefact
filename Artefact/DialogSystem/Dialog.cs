@@ -21,7 +21,7 @@ namespace Artefact.DialogSystem
                     break;
             }
             string name = showName ? characterName : "???";
-            return $"[cyan]{name}[/]: {text}";
+            return $"[{ColorConstants.CHARACTER_COLOR}]{name}[/]: {text}";
         }
 
         public static void Speak(Character character, string text, bool showName = true)

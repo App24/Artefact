@@ -11,7 +11,7 @@ namespace Artefact.Items.Equipables
         public int Defense { get; }
         public ArmorType ArmorType { get; }
 
-        public ArmorItem(string name, int defense, ArmorType armorType, params ItemData[] crafting) : base(name, crafting)
+        public ArmorItem(string name, int defense, ArmorType armorType, params ItemData[] crafting) : base(name, EquipableType.Armor, crafting)
         {
             Defense = defense;
             ArmorType = armorType;

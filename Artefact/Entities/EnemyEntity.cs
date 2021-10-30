@@ -15,6 +15,8 @@ namespace Artefact.Entities
 
         public string ASCIIRepresentation { get; }
 
+        public IntRange XPRange { get; }
+
         /* Ascii Art got from:
          * https://ascii.co.uk/
          */
@@ -28,7 +30,8 @@ namespace Artefact.Entities
                     {
                         MaxHealth = 50;
                         Defense = 1;
-                        HitDamage = new HitDamageRange(5, 8);
+                        HitDamage = new IntRange(5, 8);
+                        XPRange = new IntRange(2, 5);
                         ItemDrops.Add(new ItemDropData(Item.BinaryItem, 5));
                         ASCIIRepresentation = @"
      ,-^-.
@@ -45,7 +48,8 @@ namespace Artefact.Entities
                     {
                         MaxHealth = 60;
                         Defense = 0;
-                        HitDamage = new HitDamageRange(5, 7);
+                        HitDamage = new IntRange(5, 7);
+                        XPRange = new IntRange(3, 8);
                         ItemDrops.Add(new ItemDropData(Item.BinaryItem, 8));
                         ASCIIRepresentation= @"
                _(\
@@ -61,8 +65,24 @@ namespace Artefact.Entities
                     {
                         MaxHealth = 30;
                         Defense = 3;
-                        HitDamage = new HitDamageRange(7, 10);
+                        HitDamage = new IntRange(7, 10);
+                        XPRange = new IntRange(2, 9);
                         ItemDrops.Add(new ItemDropData(Item.BinaryItem, 12, 3));
+
+                        ASCIIRepresentation = @"
+     .--------.
+    / .------. \
+   / /        \ \
+   | |        | |
+  _| |________| |_
+.' |_|        |_| '.
+'._____ ____ _____.'
+|     .'____'.     |
+'.__.'.'    '.'.__.'
+'.__  | YALE |  __.'
+|   '.'.____.'.'   |
+'.____'.____.'____.'
+'.________________.'";
                     }
                     break;
             }
@@ -71,7 +91,7 @@ namespace Artefact.Entities
 
         public new void Damage(int amount)
         {
-            Utils.WriteColor($"You dealt [green]{amount}[/] damage to [blue]{EnemyType}[/]");
+            Utils.WriteColor($"You dealt [{ColorConstants.GOOD_COLOR}]{amount}[/] damage to [{ColorConstants.ENEMY_COLOR}]{EnemyType}[/]");
             base.Damage(amount);
         }
     }

@@ -14,10 +14,12 @@ namespace Artefact.Entities
         public int Health { get; protected set; }
         public Location Location { get; set; }
 
-        public virtual HitDamageRange HitDamage { get; protected set; }
+        public virtual IntRange HitDamage { get; protected set; }
         public virtual int Defense { get; protected set; }
         public float DefenseModifier { get; set; } = 1f;
         public Move Move { get; set; }
+        public int Level { get; private set; } = 1;
+        public int XP { get; private set; }
 
         public Entity(int maxHealth)
         {
@@ -84,26 +86,51 @@ namespace Artefact.Entities
             Random random = new Random();
             return random.Next(HitDamage.Min, HitDamage.Max + 1);
         }
+
+        public int GetLevelXP()
+        {
+            return Level * 50;
+        }
+
+        public void AddXP(int amount)
+        {
+            AddXP(amount, IncreaseLevel);
+        }
+
+        protected void AddXP(int amount, Action addXp)
+        {
+            XP += amount;
+            while (XP >= GetLevelXP())
+            {
+                XP -= GetLevelXP();
+                addXp();
+            }
+        }
+
+        public void IncreaseLevel()
+        {
+            Level++;
+        }
     }
 
     [Serializable]
-    struct HitDamageRange
+    struct IntRange
     {
         public int Min { get; }
         public int Max { get; }
 
-        public HitDamageRange(int min, int max)
+        public IntRange(int min, int max)
         {
             Min = min;
             Max = max;
         }
 
-        public HitDamageRange(int amount) : this(amount, amount) { }
+        public IntRange(int amount) : this(amount, amount) { }
 
         public override string ToString()
         {
             if (Min == Max) return $"{Min}";
-            return $"{Min}-{Max}";
+            return $"{Min} - {Max}";
         }
     }
 
@@ -111,6 +138,7 @@ namespace Artefact.Entities
     {
         Attack,
         Defend,
-        SweepAttack
+        SweepAttack,
+        Run
     }
 }

@@ -15,27 +15,6 @@ namespace Artefact.Misc
     {
         public static string[] ValidYes { get; } = new string[] { "y", "yes", "yeah", "yea" };
         public static string[] ValidNo { get; } = new string[] { "n", "no", "nah" };
-        public static string DLLHash
-        {
-            get
-            {
-                if (string.IsNullOrEmpty(dllHash))
-                {
-                    FileStream stream = new FileStream(Assembly.GetExecutingAssembly().Location, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
-
-                    MD5CryptoServiceProvider md5 = new MD5CryptoServiceProvider();
-
-                    md5.ComputeHash(stream);
-
-                    stream.Close();
-                    dllHash = string.Join("", md5.Hash);
-                }
-
-                return dllHash;
-            }
-        }
-
-        static string dllHash;
 
         /// <summary>
         /// Get the user to select an option from an array, they are also able to type the name of the item to select it
@@ -46,19 +25,18 @@ namespace Artefact.Misc
         {
             int index = -1;
             List<string> optionsList = new List<string>(options);
-            StringColorBuilder stringColorBuilder = new StringColorBuilder(options.Map((option, i) => $"{i + 1}. {option}").Join("\n"));
-            stringColorBuilder.WriteLine();
+            WriteColor(options.Map((option, i) => $"{i + 1}. {option}[/]").Join("\n"));
             while (index < 0 || index >= options.Length)
             {
                 string selection = Console.ReadLine();
-                if(!int.TryParse(selection, out index))
+                if (!int.TryParse(selection, out index))
                 {
-                    index = optionsList.FindIndex(o => o.ToLower() == selection.ToLower())+1;
+                    index = optionsList.FindIndex(o => o.ToLower() == selection.ToLower()) + 1;
                 }
                 index -= 1;
                 if (index < 0 || index >= options.Length)
                 {
-                    Console.WriteLine("Please enter a valid choice!");
+                    WriteColor($"[{ColorConstants.BAD_COLOR}]Please enter a valid choice!");
                 }
             }
             return index;
@@ -74,7 +52,8 @@ namespace Artefact.Misc
                 if (ValidYes.Contains(response))
                 {
                     return true;
-                }else if (ValidNo.Contains(response))
+                }
+                else if (ValidNo.Contains(response))
                 {
                     return false;
                 }
@@ -91,12 +70,11 @@ namespace Artefact.Misc
 
         public static void WriteCenter(string text)
         {
-            string[] lines = text.Split("\n");
-            foreach (string line in lines)
+            StringColorBuilder stringColorBuilder = new StringColorBuilder(text);
+            foreach(List<StringColor> stringColors in stringColorBuilder.Split("\n"))
             {
-                StringColorBuilder stringColorBuilder = new StringColorBuilder(line);
-                Console.SetCursorPosition((Console.WindowWidth - stringColorBuilder.Message.Length) / 2, Console.CursorTop);
-                foreach (StringColor stringColor in stringColorBuilder.GetStringColors())
+                Console.SetCursorPosition((Console.WindowWidth - stringColors.Map(s=>s.Text).Join(" ").Length) / 2, Console.CursorTop);
+                foreach (StringColor stringColor in stringColors)
                 {
                     Console.ForegroundColor = stringColor.Color;
                     Console.Write(stringColor.Text);
@@ -106,32 +84,11 @@ namespace Artefact.Misc
             Console.ResetColor();
         }
 
-        public static string CreateProgressBar(float percentage, int width = 20, ConsoleColor barColor=ConsoleColor.Green)
-        {
-            string text = "";
-            for (int i = 0; i < width; i++)
-            {
-                if ((i + 1) / (float)width <= percentage)
-                    text += "#";
-                else
-                    text += "-";
-            }
-            text = text.Map(x => { if (x == '#') return $"[{barColor}]{x}[/]"; return x.ToString(); }).Join("");
-            return $"[{text}]";
-        }
-
-        public static string CreateHealthBar(Entity entity, int width=20, ConsoleColor barcolor = ConsoleColor.Green)
-        {
-            string progressBar = CreateProgressBar(entity.Health / (float)entity.MaxHealth, width, barcolor);
-            progressBar += $" [{barcolor}]{entity.Health}[/]/[{barcolor}]{entity.MaxHealth}[/]";
-            return progressBar;
-        }
-
         public static void WriteColor(string message)
         {
             StringColorBuilder stringColorBuilder = new StringColorBuilder(message);
 
-            foreach(StringColor stringColor in stringColorBuilder.GetStringColors())
+            foreach (StringColor stringColor in stringColorBuilder.GetStringColors())
             {
                 Console.ForegroundColor = stringColor.Color;
                 Console.Write(stringColor.Text);
@@ -140,6 +97,37 @@ namespace Artefact.Misc
             Console.WriteLine();
 
             Console.ResetColor();
+        }
+
+        public static string CreateProgressBar(float percentage, int width = 30, ConsoleColor barColor = ConsoleColor.Green)
+        {
+            string text = "";
+            for (int i = 0; i < width; i++)
+            {
+                if (((i + 1) / (float)width) <= percentage)
+                    text += "#";
+                else
+                    text += "-";
+            }
+            text = text.Map(x => { if (x == '#') return $"[{barColor}]{x}[/]"; return x.ToString(); }).Join("");
+            return $"[{text}]";
+        }
+
+        public static string CreateProgressBar(float value, float maxValue, int width = 30, ConsoleColor barColor = ConsoleColor.Green)
+        {
+            string progressBar = CreateProgressBar(value / maxValue, width, barColor);
+            progressBar += $" [{barColor}]{value}[/]/[{barColor}]{maxValue}[/]";
+            return progressBar;
+        }
+
+        public static string CreateHealthBar(Entity entity, int width = 30, ConsoleColor barColor = ConsoleColor.Green)
+        {
+            return CreateProgressBar(entity.Health, entity.MaxHealth, width, barColor);
+        }
+
+        public static string CreateXPBar(Entity entity, int width = 30, ConsoleColor barColor = ColorConstants.XP_COLOR)
+        {
+            return CreateProgressBar(entity.XP, entity.GetLevelXP(), width, barColor);
         }
 
         public static void Type(string text)

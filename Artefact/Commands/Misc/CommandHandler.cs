@@ -47,6 +47,8 @@ namespace Artefact.Commands.Misc
 #if DEBUG
             commandHandler.AddCommand(new GiveCommand());
             commandHandler.AddCommand(new ForceFightCommand());
+            commandHandler.AddCommand(new GiveXpCommand());
+            commandHandler.AddCommand(new DieCommand());
 #endif
             commandHandler.AddCommand(new HelpCommand(commandHandler.commands));
         }
@@ -54,6 +56,10 @@ namespace Artefact.Commands.Misc
         public void AddCommand(ICommand command)
         {
             commands.Add(command);
+            commands.Sort((c1, c2) =>
+            {
+                return c1.Name.CompareTo(c2.Name);
+            });
         }
 
         public List<ICommand> GetCommands()
@@ -75,7 +81,7 @@ namespace Artefact.Commands.Misc
                 List<ICommand> newCommands = visibleCommands.GetRange(pageIndex * MAX_COMMANDS_PER_PAGE, Math.Min(MAX_COMMANDS_PER_PAGE, visibleCommands.Count - pageIndex * MAX_COMMANDS_PER_PAGE));
 
                 List<string> texts = new List<string>();
-                texts.AddRange(newCommands.Map((c) => c.Name));
+                texts.AddRange(newCommands.Map((c) => $"[{ColorConstants.COMMAND_COLOR}]{c.Name}[/]"));
                 if (pageIndex+1 < Math.Ceiling(visibleCommands.Count / (float)MAX_COMMANDS_PER_PAGE)) texts.Add("Next");
                 if (pageIndex > 0) texts.Add("Previous");
 
@@ -86,7 +92,7 @@ namespace Artefact.Commands.Misc
                     command = newCommands[selection];
                     if (command.HasArguments)
                     {
-                        Console.WriteLine($"Write arguments for the command {command.NoArgsResponse}");
+                        Utils.WriteColor($"Write arguments for the command {command.NoArgsResponse}");
                         string argsText = Console.ReadLine();
                         MatchCollection matches = reg.Matches(argsText);
                         args = matches.Map(match => Regex.Replace(match.Value, RE_QUOTE_STRIP_PATTERN, ""));
@@ -136,9 +142,7 @@ namespace Artefact.Commands.Misc
                 {
                     if (!string.IsNullOrEmpty(e.Message))
                     {
-                        Console.ForegroundColor = ConsoleColor.DarkRed;
-                        Console.WriteLine(e.Message);
-                        Console.ForegroundColor = ConsoleColor.White;
+                        Utils.WriteColor($"[{ColorConstants.ERROR_COLOR}]{e.Message}");
                     }
                     return false;
                 }
@@ -146,13 +150,11 @@ namespace Artefact.Commands.Misc
             else
             {
                 Random random = new Random();
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine(noCommandResponses[random.Next(noCommandResponses.Length)]);
-                Console.ForegroundColor = ConsoleColor.White;
+                Utils.WriteColor($"[{ColorConstants.BAD_COLOR}]{noCommandResponses[random.Next(noCommandResponses.Length)]}");
                 fails++;
                 if (random.Next(101) <= fails)
                 {
-                    Dialog.Speak(Character.Clippy, "You seem to be struggeling, you can type [darkmagenta]HELP[/] to get a list of commands, or switch to simple mode in [darkmagenta]SETTINGS[/]!");
+                    Dialog.Speak(Character.Clippy, $"You seem to be struggeling, you can type [{ColorConstants.COMMAND_COLOR}]HELP[/] to get a list of commands, or switch to simple mode in [{ColorConstants.COMMAND_COLOR}]SETTINGS[/]!");
                 }
             }
             return false;

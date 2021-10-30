@@ -18,18 +18,6 @@ namespace Artefact.InventorySystem
         public ArmorItem Leggings { get { Armor.TryGetValue(ArmorType.Leggings, out ArmorItem armorItem); return armorItem; } }
         public ArmorItem Boots { get { Armor.TryGetValue(ArmorType.Boots, out ArmorItem armorItem); return armorItem; } }
         public Dictionary<ArmorType, ArmorItem> Armor { get; } = new Dictionary<ArmorType, ArmorItem>();
-        public int Defense
-        {
-            get
-            {
-                int defense = 0;
-                foreach (KeyValuePair<ArmorType, ArmorItem> keyValuePair in Armor)
-                {
-                    defense += keyValuePair.Value.Defense;
-                }
-                return defense;
-            }
-        }
 
         public void AddItem(ItemData item, bool announce = false)
         {
@@ -46,7 +34,7 @@ namespace Artefact.InventorySystem
 
             if (announce)
             {
-                Utils.Type($"Acquired [green]{item.Amount}[/] [magenta]{item.Item}[/]");
+                Utils.Type($"Acquired [{ColorConstants.GOOD_COLOR}]{item.Amount}[/] [{ColorConstants.ITEM_COLOR}]{item.Item}[/]");
             }
         }
 
@@ -83,7 +71,7 @@ namespace Artefact.InventorySystem
 
         public ItemData GetItem(string name)
         {
-            return items.Find(i=>i.Item.Name.ToLower()==name.ToLower());
+            return items.Find(i => i.Item.Name.ToLower() == name.ToLower());
         }
 
         public ItemData GetItem(Item item)
@@ -105,31 +93,41 @@ namespace Artefact.InventorySystem
 
         public void EquipItem(Item item)
         {
-            if (!(item is EquipableItem)) return;
+            if (!(item is EquipableItem equipableItem)) return;
 
-            if(item is WeaponItem)
+            switch (equipableItem.EquipableType)
             {
-                if (HasItem(new ItemData(item)))
-                {
-                    RemoveItem(new ItemData(item));
-                    if (Weapon != null)
+                case EquipableType.Weapon:
                     {
-                        AddItem(new ItemData(Weapon));
+                        if (HasItem(new ItemData(item)))
+                        {
+                            RemoveItem(new ItemData(item));
+                            if (Weapon != null)
+                            {
+                                AddItem(new ItemData(Weapon));
+                            }
+                            Weapon = (WeaponItem)item;
+                        }
                     }
-                    Weapon = (WeaponItem)item;
-                }
-            }else if(item is ArmorItem)
-            {
-                ArmorItem armorItem = (ArmorItem)item;
-                if(HasItem(new ItemData(item)))
-                {
-                    RemoveItem(new ItemData(item));
-                    if (Armor.ContainsKey(armorItem.ArmorType))
+                    break;
+                case EquipableType.Armor:
                     {
-                        AddItem(new ItemData(item));
+                        if (HasItem(new ItemData(item)))
+                        {
+                            ArmorItem armorItem = (ArmorItem)item;
+                            RemoveItem(new ItemData(item));
+                            if (Armor.ContainsKey(armorItem.ArmorType))
+                            {
+                                AddItem(new ItemData(item));
+                            }
+                            Armor.AddOrReplace(armorItem.ArmorType, armorItem);
+                        }
                     }
-                    Armor.AddOrReplace(armorItem.ArmorType, armorItem);
-                }
+                    break;
+                default:
+                    {
+                        Utils.WriteColor($"[{ColorConstants.ERROR_COLOR}]No equip definition for {equipableItem.EquipableType}");
+                    }break;
             }
         }
     }

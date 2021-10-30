@@ -1,7 +1,4 @@
-﻿#if DEBUG
-#define FORCE_LOAD
-#endif
-using Artefact.MapSystem;
+﻿using Artefact.MapSystem;
 using Artefact.Misc;
 using Artefact.Settings;
 using Artefact.StorySystem;
@@ -19,17 +16,15 @@ namespace Artefact.Saving
         const string SAVE_FILE = "save.dat";
         public const string CHECKPOINT_FILE = "checkpoint.dat";
 
-        static void SaveClass<T>(string fileName, T value) where T : Saveable
+        static void SaveClass<T>(string fileName, T value)
         {
-            value.SaveVersion = Utils.DLLHash;
-
             FileStream stream = File.Create(fileName);
             BinaryFormatter formatter = new BinaryFormatter();
             formatter.Serialize(stream, value);
             stream.Close();
         }
 
-        static LoadDetails<T> LoadClass<T>(string fileName) where T : Saveable
+        static LoadDetails<T> LoadClass<T>(string fileName) where T : class
         {
             if (!File.Exists(fileName))
             {
@@ -44,7 +39,7 @@ namespace Artefact.Saving
                 return new LoadDetails<T>(LoadResult.InvalidFile, null);
             }
 
-            T value = null;
+            T value;
 
             try
             {
@@ -58,13 +53,6 @@ namespace Artefact.Saving
             }
             stream.Close();
 
-#if !FORCE_LOAD
-            if (value.SaveVersion != Utils.DLLHash)
-            {
-                return new LoadDetails<T>(LoadResult.InvalidVersion, null);
-            }
-#endif
-
             return new LoadDetails<T>(LoadResult.Success, value);
         }
 
@@ -76,13 +64,13 @@ namespace Artefact.Saving
         public static void LoadSettings()
         {
             LoadDetails<GlobalSettings> loadDetails = LoadClass<GlobalSettings>(SETTINGS_FILE);
-            if (loadDetails.LoadResult==LoadResult.Success)
+            if (loadDetails.LoadResult == LoadResult.Success)
                 GlobalSettings.Instance = loadDetails.Saveable;
             else
                 new GlobalSettings();
         }
 
-        public static void SaveGame(string fileName=SAVE_FILE)
+        public static void SaveGame(string fileName = SAVE_FILE)
         {
             SaveClass(fileName, new Save());
         }
@@ -90,9 +78,9 @@ namespace Artefact.Saving
         public static LoadResult LoadGame(string fileName = SAVE_FILE)
         {
             LoadDetails<Save> loadDetails = LoadClass<Save>(fileName);
-            if (loadDetails.LoadResult==LoadResult.Success)
+            if (loadDetails.LoadResult == LoadResult.Success)
             {
-                Utils.WriteColor("[green]Save loaded successfully!");
+                Utils.WriteColor($"[{ColorConstants.GOOD_COLOR}]Save loaded successfully!");
                 Save save = loadDetails.Saveable;
                 GameSettings.Instance = save.GameSettings;
                 Story.Step = save.StoryStep;
@@ -101,22 +89,22 @@ namespace Artefact.Saving
             }
             else
             {
-                Utils.WriteColor("[darkred]There was a problem loading the save game!");
+                Utils.WriteColor($"[{ColorConstants.ERROR_COLOR}]There was a problem loading the save game!");
                 switch (loadDetails.LoadResult)
                 {
                     case LoadResult.InvalidFile:
                         {
-                            Utils.WriteColor("[darkred]Save file is an invalid file!");
+                            Utils.WriteColor($"[{ColorConstants.ERROR_COLOR}]Save file is an invalid file!");
                         }
                         break;
                     case LoadResult.NoFile:
                         {
-                            Utils.WriteColor("[darkred]There is no save file!");
+                            Utils.WriteColor($"[{ColorConstants.ERROR_COLOR}]There is no save file!");
                         }
                         break;
                     case LoadResult.InvalidVersion:
                         {
-                            Utils.WriteColor("[darkred]The save version is not a match!");
+                            Utils.WriteColor($"[{ColorConstants.ERROR_COLOR}]The save version is not a match!");
                         }
                         break;
                 }
@@ -132,7 +120,7 @@ namespace Artefact.Saving
         }
     }
 
-    class LoadDetails<T> where T : Saveable
+    class LoadDetails<T>
     {
         public LoadResult LoadResult { get; }
         public T Saveable { get; }

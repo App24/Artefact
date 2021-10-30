@@ -18,9 +18,9 @@ namespace Artefact.Commands
 
         public void OnRun(List<string> args)
         {
-            if(Utils.GetConfirmation("You sure you want to [darkred]exit[/]?"))
+            if(Utils.GetConfirmation($"You sure you want to [{ColorConstants.BAD_COLOR}]exit[/]?"))
             {
-                if(Utils.GetConfirmation("Do you want to [darkgreen]save[/]?"))
+                if(Utils.GetConfirmation($"Do you want to [{ColorConstants.GOOD_COLOR}]save[/]?"))
                 {
                     SaveSystem.SaveGame();
                 }

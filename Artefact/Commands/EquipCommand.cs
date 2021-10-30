@@ -36,26 +36,39 @@ namespace Artefact.Commands
             {
                 List<Item> availableEquipableItems = inventory.GetItems().Map(i => i.Item).FindAll(i => i is EquipableItem);
 
-                int selection = Utils.GetSelection(availableEquipableItems.Map(i => $"[magenta]{i.Name}[/]").ToArray());
+                if (availableEquipableItems.Count <= 0)
+                {
+                    Utils.WriteColor($"[{ColorConstants.BAD_COLOR}]You do not have any equipable items!");
+                    return;
+                }
+
+                List<string> options = availableEquipableItems.Map(i => $"[{ColorConstants.ITEM_COLOR}]{i.Name}[/]");
+                options.Add("Exit");
+                int selection = Utils.GetSelection(options.ToArray());
+
+                if (selection >= availableEquipableItems.Count)
+                {
+                    return;
+                }
 
                 item = availableEquipableItems[selection];
             }
 
             if (!inventory.HasItem(new ItemData(item, 0)))
             {
-                Utils.WriteColor("[red]You do not have that item in your inventory!");
+                Utils.WriteColor($"[{ColorConstants.BAD_COLOR}]You do not have that item in your inventory!");
                 return;
             }
 
             if (!(item is EquipableItem))
             {
-                Utils.WriteColor("[red]That item is not equipable!");
+                Utils.WriteColor($"[{ColorConstants.BAD_COLOR}]That item is not equipable!");
                 return;
             }
 
             inventory.EquipItem(item);
 
-            Utils.WriteColor($"Equipped: [magenta]{item}");
+            Utils.WriteColor($"Equipped: [{ColorConstants.ITEM_COLOR}]{item}");
         }
     }
 }

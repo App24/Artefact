@@ -71,6 +71,29 @@ namespace Artefact.Misc
             return stringColors;
         }
 
+        public List<List<StringColor>> Split(string separtor)
+        {
+            List<List<StringColor>> toReturn = new List<List<StringColor>>();
+            List<StringColor> current = new List<StringColor>();
+
+            foreach (StringColor stringColor in stringColors)
+            {
+                string[] texts = stringColor.Text.Split(separtor);
+                for (int i = 0; i < texts.Length; i++)
+                {
+                    if (i > 0)
+                    {
+                        toReturn.Add(current);
+                        current = new List<StringColor>();
+                    }
+                    current.Add(new StringColor(texts[i], stringColor.Color));
+                }
+            }
+            toReturn.Add(current);
+
+            return toReturn;
+        }
+
         public void WriteLine()
         {
             foreach (StringColor stringColor in stringColors)

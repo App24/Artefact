@@ -16,7 +16,7 @@ namespace Artefact.CraftingSystem
 
             if (item == null)
             {
-                Utils.WriteColor("[red]That is not an item!");
+                Utils.WriteColor($"[{ColorConstants.BAD_COLOR}]That is not an item!");
                 return;
             }
 
@@ -27,7 +27,7 @@ namespace Artefact.CraftingSystem
         {
             if (!item.Item.IsCraftable)
             {
-                Utils.WriteColor($"[magenta]{item.Item}[/] [red]is not craftable!");
+                Utils.WriteColor($"[{ColorConstants.ITEM_COLOR}]{item.Item}[/] [{ColorConstants.BAD_COLOR}]is not craftable!");
                 return;
             }
 
@@ -46,8 +46,8 @@ namespace Artefact.CraftingSystem
 
             if (missingItems.Count > 0)
             {
-                Console.WriteLine("You are missing items needed to craft that!");
-                Console.WriteLine("Missing:");
+                Utils.WriteColor($"[{ColorConstants.BAD_COLOR}]You are missing items needed to craft that!");
+                Utils.WriteColor("Missing:");
                 foreach(ItemData itemData in missingItems)
                 {
                     Utils.WriteColor($"- {itemData.ToColoredString()}");

@@ -30,6 +30,11 @@ namespace Artefact
         [DllImport("kernel32.dll", ExactSpelling = true)]
         private static extern IntPtr GetConsoleWindow();
 
+        /*
+         * ASCII Art for text created in: https://patorjk.com/software/taag/
+         * 
+         */
+
         static void Main(string[] args)
         {
             IntPtr handle = GetConsoleWindow();

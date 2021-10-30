@@ -13,6 +13,8 @@ namespace Artefact.MapSystem
     [Serializable]
     class Map
     {
+        public const float ENCOUNTER_PROBABILITY = 1 / 30f;
+
         public static PlayerEntity Player { get { return Instance.player; } set { Instance.player = value; } }
         public static List<Entity> Entities { get { return Instance.entities; } set { Instance.entities = value; } }
 
@@ -32,13 +34,13 @@ namespace Artefact.MapSystem
         static string map = "\n"+
  "            _____________\n"+
  "            |     |     |\n"+
-$"            | [darkcyan]{Location.CPU}[/] | [darkcyan]{Location.RAM}[/] |\n"+
+$"            | [{ColorConstants.LOCATION_COLOR}]{Location.CPU}[/] | [{ColorConstants.LOCATION_COLOR}]{Location.RAM}[/] |\n"+
  "           _|_____|_____|_\n"+
  "     N     |       |     |\n"+
-$"     ^     |       | [darkcyan]{Location.HDD}[/] |\n" +
+$"     ^     |       | [{ColorConstants.LOCATION_COLOR}]{Location.HDD}[/] |\n" +
 $"     |     |       |_____|\n"+
  "W <——+——> E|       |\n" +
-$"     |     |  [darkcyan]{Location.GPU}[/]  |\n"+
+$"     |     |  [{ColorConstants.LOCATION_COLOR}]{Location.GPU}[/]  |\n"+
  "     V     |       |\n"+
  "     S     |       |\n"+
  "           |       |\n"+
@@ -91,7 +93,7 @@ $"     |     |  [darkcyan]{Location.GPU}[/]  |\n"+
         {
 
             Player.Location = location;
-            Utils.WriteColor($"Moved to: [darkcyan]{Player.Location}");
+            Utils.WriteColor($"Moved to: [{ColorConstants.LOCATION_COLOR}]{Player.Location}");
 
             if (location == Location.CPU && !GameSettings.CPUVisited)
             {
@@ -107,8 +109,8 @@ $"     |     |  [darkcyan]{Location.GPU}[/]  |\n"+
             if (!disableSpawn || forceSpawn)
             {
                 Random random = new Random();
-                int probablity = random.Next(30);
-                if (probablity <= 0 || forceSpawn)
+                float probability = (float)random.NextDouble();
+                if (probability < ENCOUNTER_PROBABILITY || forceSpawn)
                 {
                     Fight.StartFight(location, EnemyType.Virus | EnemyType.Trojan | EnemyType.RansomWare);
                 }

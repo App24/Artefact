@@ -1,4 +1,5 @@
 ﻿using Artefact.InventorySystem;
+using Artefact.Items.Equipables;
 using Artefact.Misc;
 using Artefact.States;
 using System;
@@ -12,8 +13,20 @@ namespace Artefact.Entities
     {
         public Inventory Inventory { get; }
 
-        public override HitDamageRange HitDamage => Inventory.Weapon == null ? new HitDamageRange(3, 5) : Inventory.Weapon.Damage;
-        public override int Defense => Inventory.Defense;
+        public override IntRange HitDamage => Inventory.Weapon == null ? new IntRange(3, 5) : Inventory.Weapon.Damage;
+
+        public override int Defense
+        {
+            get
+            {
+                int defense = 0;
+                foreach (KeyValuePair<ArmorType, ArmorItem> keyValuePair in Inventory.Armor)
+                {
+                    defense += keyValuePair.Value.Defense;
+                }
+                return defense;
+            }
+        }
 
         public PlayerEntity() : base(100)
         {
@@ -22,7 +35,7 @@ namespace Artefact.Entities
 
         public new void Damage(int amount)
         {
-            Utils.WriteColor($"You have been dealt [red]{amount}[/] damage");
+            Utils.WriteColor($"You have been dealt [{ColorConstants.BAD_COLOR}]{amount}[/] damage");
             base.Damage(amount);
 
             if (Health <= 0)
@@ -33,8 +46,20 @@ namespace Artefact.Entities
 
         public new void Heal(int amount)
         {
-            Utils.WriteColor($"Healed by [green]{amount}[/] points!");
+            Utils.WriteColor($"Healed by [{ColorConstants.GOOD_COLOR}]{amount}[/] points!");
             base.Heal(amount);
+        }
+
+        public new void AddXP(int amount)
+        {
+            Utils.WriteColor($"You earnt [{ColorConstants.XP_COLOR}]{amount}[/] xp");
+            AddXP(amount, IncreaseLevel);
+        }
+
+        public new void IncreaseLevel()
+        {
+            Utils.WriteColor($"[{ColorConstants.XP_COLOR}]You leveled up");
+            base.IncreaseLevel();
         }
     }
 }

@@ -8,8 +8,17 @@ namespace Artefact.Items.Equipables
     [Serializable]
     abstract class EquipableItem : Item
     {
-        public EquipableItem(string name, params ItemData[] crafting) : base(name, crafting)
+        public EquipableType EquipableType { get; }
+
+        public EquipableItem(string name, EquipableType equipableType, params ItemData[] crafting) : base(name, crafting)
         {
+            EquipableType = equipableType;
         }
+    }
+
+    enum EquipableType
+    {
+        Weapon,
+        Armor
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Artefact.Items;
+using Artefact.Misc;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -19,11 +20,11 @@ namespace Artefact.InventorySystem
 
         public string ToColoredString()
         {
-            string text = $"[magenta]{Item}[/]: [green]{Amount}[/]";
+            string text = $"[{ColorConstants.ITEM_COLOR}]{Item}[/]: [{ColorConstants.GOOD_COLOR}]{Amount}[/]";
 
             if(Item is IUsable)
             {
-                text += " - [green]Usable[/]";
+                text += $" - [{ColorConstants.GOOD_COLOR}]Usable[/]";
             }
 
             return text;
@@ -31,9 +32,9 @@ namespace Artefact.InventorySystem
 
         public override bool Equals(object obj)
         {
-            if(obj is ItemData)
+            if(obj is ItemData itemData)
             {
-                return Item == ((ItemData)obj).Item;
+                return Item == itemData.Item;
             }
             return false;
         }

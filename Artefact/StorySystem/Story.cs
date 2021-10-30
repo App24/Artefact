@@ -60,15 +60,15 @@ namespace Artefact.StorySystem
                         {
                             case 0:
                                 {
-                                    Dialog.Speak(Character.Clippy, "You are inside the [darkred]user[/]'s computer.");
+                                    Dialog.Speak(Character.Clippy, $"You are inside the [{ColorConstants.USER_COLOR}]user[/]'s computer.");
                                     Dialog.Speak(Character.Clippy, "Are you another software the user deleted? ^-^");
                                 }
                                 break;
                             case 1:
                                 {
-                                    Dialog.Speak(Character.Clippy, "I am [cyan]Clippy");
+                                    Dialog.Speak(Character.Clippy, $"I am [{ColorConstants.CHARACTER_COLOR}]Clippy");
                                     GameSettings.KnowsClippy = true;
-                                    Dialog.Speak(Character.Clippy, "I am, or was, a helpful piece of software that helped the [darkred]user[/] whenever them needed!");
+                                    Dialog.Speak(Character.Clippy, $"I am, or was, a helpful piece of software that helped the [{ColorConstants.USER_COLOR}]user[/] whenever them needed!");
                                 }
                                 break;
                             case 2:
@@ -83,7 +83,7 @@ namespace Artefact.StorySystem
                     {
                         if (!GameSettings.KnowsClippy)
                         {
-                            Dialog.Speak(Character.Clippy, "By the way, my name is [cyan]Clippy");
+                            Dialog.Speak(Character.Clippy, $"By the way, my name is [{ColorConstants.CHARACTER_COLOR}]Clippy");
                             GameSettings.KnowsClippy = true;
                         }
 
@@ -136,7 +136,7 @@ namespace Artefact.StorySystem
                         while (string.IsNullOrEmpty(name))
                         {
                             name = Console.ReadLine();
-                            if(!Utils.GetCharacterConfirmation(Dialog.GetCharacterVoiceLine(Character.Clippy, $"So your name is [cyan]{name}[/]?"))){
+                            if(!Utils.GetCharacterConfirmation(Dialog.GetCharacterVoiceLine(Character.Clippy, $"So your name is [{Constants.CHARACTER_COLOR}]{name}[/]?"))){
                                 name = null;
                                 Dialog.Speak(Character.Clippy, "What is your name then?");
                             }
@@ -146,7 +146,7 @@ namespace Artefact.StorySystem
 #endif
 
                         GameSettings.PlayerName = name;
-                        Dialog.Speak(Character.Clippy, $"Nice to meet you, [cyan]{name}[/]");
+                        Dialog.Speak(Character.Clippy, $"Nice to meet you, [{ColorConstants.CHARACTER_COLOR}]{name}[/]");
 
                         Map.SpawnPlayer();
 
@@ -155,12 +155,12 @@ namespace Artefact.StorySystem
                     break;
                 case 4:
                     {
-                        Dialog.Speak(Character.Clippy, "If you need help or want to ask further questions, I am here, just type [darkmagenta]HELP[/]");
+                        Dialog.Speak(Character.Clippy, $"If you need help or want to ask further questions, I am here, just type [{ColorConstants.COMMAND_COLOR}]HELP[/]");
                         Dialog.Speak(Character.Clippy, "Oh, before I forget, I have a map here, I do not need anymore, you can have!");
                         Map.Player.Inventory.AddItem(new ItemData(Item.MapItem, 1), true);
                         Dialog.Speak(Character.Clippy, "And here is a recipe book, do not lose it, you will lose all your knowledge on recipes!");
                         Map.Player.Inventory.AddItem(new ItemData(Item.RecipeBookItem), true);
-                        Dialog.Speak(Character.Clippy, "Why don't you type [darkmagenta]MAP[/] to find out where you are?");
+                        Dialog.Speak(Character.Clippy, $"Why don't you type [{ColorConstants.COMMAND_COLOR}]MAP[/] to find out where you are?");
                         NextStep();
                     }
                     break;
@@ -171,11 +171,11 @@ namespace Artefact.StorySystem
                     break;
                 case CPU_STEP:
                     {
-                        Dialog.Speak(Character.Clippy, "This is the [darkcyan]CPU[/]!");
-                        Dialog.Speak(Character.Clippy, "This is where everything the [darkred]user[/] does is processed!");
+                        Dialog.Speak(Character.Clippy, $"This is the [{ColorConstants.LOCATION_COLOR}]CPU[/]!");
+                        Dialog.Speak(Character.Clippy, $"This is where everything the [{ColorConstants.USER_COLOR}]user[/] does is processed!");
                         Dialog.Speak(Character.Clippy, "It is a marvel sight!");
-                        Dialog.Speak(Character.Clippy, "But it seems to be turned off right now, which is odd, since the [darkred]user[/] always has their computer turned on!");
-                        Dialog.Speak(Character.Clippy, "................");
+                        Dialog.Speak(Character.Clippy, $"But it seems to be turned off right now, which is odd, since the [{ColorConstants.USER_COLOR}]user[/] always has their computer turned on!");
+                        Dialog.Speak(Character.Clippy, ".........................");
                         Dialog.Speak(Character.Clippy, "Wha-what is that?!?");
                         Dialog.Speak(Character.Clippy, "RUN, IT'S A TROJAN!!!");
 #if !BYPASS
@@ -189,8 +189,8 @@ namespace Artefact.StorySystem
                     break;
                 case RAM_STEP:
                     {
-                        Dialog.Speak(Character.Clippy, "Here is the [darkcyan]RAM[/]");
-                        Dialog.Speak(Character.Clippy, "That is odd, there is no data in here, I guess that means that the [darkred]user[/] does not have the computer turned on!");
+                        Dialog.Speak(Character.Clippy, $"Here is the [{ColorConstants.LOCATION_COLOR}]RAM[/]");
+                        Dialog.Speak(Character.Clippy, $"That is odd, there is no data in here, I guess that means that the [{ColorConstants.USER_COLOR}]user[/] does not have the computer turned on!");
                         GameSettings.RAMVisited = true;
                         Step = EMPTY_STEP;
                     }

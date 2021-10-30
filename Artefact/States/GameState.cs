@@ -21,7 +21,7 @@ namespace Artefact.States
         {
             if (GlobalSettings.JustLoaded)
             {
-                Utils.Type($"Welcome back, [cyan]{GameSettings.PlayerName}");
+                Utils.Type($"Welcome back, [{ColorConstants.CHARACTER_COLOR}]{GameSettings.PlayerName}");
                 GlobalSettings.JustLoaded = false;
             }
             Story.DoStep();

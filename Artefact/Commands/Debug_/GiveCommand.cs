@@ -24,7 +24,7 @@ namespace Artefact.Commands
 
             if (item == null)
             {
-                Utils.WriteColor("[red]Not a valid item!");
+                Utils.WriteColor($"[{ColorConstants.BAD_COLOR}]Not a valid item!");
                 return;
             }
 
@@ -34,7 +34,7 @@ namespace Artefact.Commands
             {
                 if(!int.TryParse(args[1], out amount))
                 {
-                    Utils.WriteColor("[red]Please provide a valid amount!");
+                    Utils.WriteColor($"[{ColorConstants.BAD_COLOR}]Please provide a valid amount!");
                     return;
                 }
             }

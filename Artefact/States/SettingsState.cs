@@ -16,21 +16,20 @@ namespace Artefact.States
 
         public override void Update()
         {
-            Utils.WriteCenter(@"
-[yellow]   _____      _   _   _                 
-[yellow]  / ____|    | | | | (_)                
-[yellow] | (___   ___| |_| |_ _ _ __   __ _ ___ 
-[yellow]  \___ \ / _ | __| __| | '_ \ / _` / __|
-[yellow]  ____) |  __| |_| |_| | | | | (_| \__ \
-[yellow] |_____/ \___|\__|\__|_|_| |_|\__, |___/
-[yellow]                               __/ |    
-[yellow]                              |___/     
+            Utils.WriteCenter(@"[magenta]
+   _____      _   _   _                 
+  / ____|    | | | | (_)                
+ | (___   ___| |_| |_ _ _ __   __ _ ___ 
+  \___ \ / _ | __| __| | '_ \ / _` / __|
+  ____) |  __| |_| |_| | | | | (_| \__ \
+ |_____/ \___|\__|\__|_|_| |_|\__, |___/
+                               __/ |    
+                              |___/     
 ");
 
-            string[] textSpeedColors = new string[] { "green", "yellow", "red" };
-            string textSpeedColor = textSpeedColors[Array.IndexOf(Enum.GetValues(typeof(TextSpeed)), GlobalSettings.TextSpeed)];
-            string simpleModeColor = GlobalSettings.SimpleMode ? "green" : "red";
-            int selection = Utils.GetSelection($"Text Speed: [{textSpeedColor}]{GlobalSettings.TextSpeed}[/]", $"Simple Mode: [{simpleModeColor}]{GlobalSettings.SimpleMode}[/]", "Back");
+            ConsoleColor[] textSpeedColors = new ConsoleColor[] { ConsoleColor.Green, ConsoleColor.Yellow, ConsoleColor.Red };
+            ConsoleColor textSpeedColor = textSpeedColors[Array.IndexOf(Enum.GetValues(typeof(TextSpeed)), GlobalSettings.TextSpeed)];
+            int selection = Utils.GetSelection($"Text Speed: [{textSpeedColor}]{GlobalSettings.TextSpeed}[/]", $"Simple Mode: [{(GlobalSettings.SimpleMode ? ConsoleColor.Green : ConsoleColor.Red)}]{GlobalSettings.SimpleMode}[/]", "Back");
 
             switch (selection)
             {
