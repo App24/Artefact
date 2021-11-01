@@ -83,7 +83,7 @@ namespace Artefact.InventorySystem
         {
             ItemData i = GetItem(item.Name);
 
-            return i.Equals(default(ItemData))? 0 : i.Amount;
+            return i.Equals(default(ItemData)) ? 0 : i.Amount;
         }
 
         public List<ItemData> GetItems()
@@ -127,7 +127,8 @@ namespace Artefact.InventorySystem
                 default:
                     {
                         Utils.WriteColor($"[{ColorConstants.ERROR_COLOR}]No equip definition for {equipableItem.EquipableType}");
-                    }break;
+                    }
+                    break;
             }
         }
     }

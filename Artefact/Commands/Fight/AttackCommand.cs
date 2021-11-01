@@ -14,7 +14,7 @@ namespace Artefact.Commands.FightCommands
     {
         public string Name => "attack";
 
-        public string[] Aliases => new string[] { };
+        public string[] Aliases => new string[] { "fight" };
 
         public bool HasArguments => false;
 

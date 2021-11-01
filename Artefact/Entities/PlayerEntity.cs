@@ -50,16 +50,17 @@ namespace Artefact.Entities
             base.Heal(amount);
         }
 
-        public new void AddXP(int amount)
+        public override void AddXP(int amount)
         {
             Utils.WriteColor($"You earnt [{ColorConstants.XP_COLOR}]{amount}[/] xp");
-            AddXP(amount, IncreaseLevel);
+            base.AddXP(amount);
         }
 
-        public new void IncreaseLevel()
+        public override void IncreaseLevel()
         {
-            Utils.WriteColor($"[{ColorConstants.XP_COLOR}]You leveled up");
             base.IncreaseLevel();
+            Utils.WriteColor($"[{ColorConstants.XP_COLOR}]You leveled up to level {Level}");
+            Utils.WriteColor($"Your max health is now [{ColorConstants.GOOD_COLOR}]{MaxHealth}");
         }
     }
 }

@@ -22,7 +22,7 @@ namespace Artefact.Commands
             Inventory inventory = Map.Player.Inventory;
 
             Console.WriteLine("Here is what is in your inventory:");
-            foreach(ItemData item in inventory.GetItems())
+            foreach (ItemData item in inventory.GetItems())
             {
                 Utils.WriteColor($"- {item.ToColoredString()}");
             }

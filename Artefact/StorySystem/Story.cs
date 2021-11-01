@@ -1,4 +1,5 @@
 ﻿using Artefact.DialogSystem;
+using Artefact.Entities;
 using Artefact.FightSystem;
 using Artefact.InventorySystem;
 using Artefact.Items;
@@ -182,7 +183,7 @@ namespace Artefact.StorySystem
                         Thread.Sleep((int)GlobalSettings.TextSpeed * 15);
 #endif
                         GameSettings.EnableCommands = false;
-                        Fight.StartFight(Map.Player.Location, Entities.EnemyType.Trojan, 1);
+                        Fight.StartFight(Map.Player.Location, new BattleParameters(Entities.EnemyType.Trojan, new IntRange(1, 1), 1));
                         GameSettings.CPUVisited = true;
                         //Step = EMPTY_STEP;
                     }

@@ -18,7 +18,7 @@ namespace Artefact.Commands
 
         public void OnRun(List<string> args)
         {
-            if(!int.TryParse(args[0], out int xp))
+            if (!int.TryParse(args[0], out int xp))
             {
                 throw new CommandException("Invalid Amount");
             }

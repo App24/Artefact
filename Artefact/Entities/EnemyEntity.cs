@@ -15,9 +15,15 @@ namespace Artefact.Entities
 
         public string ASCIIRepresentation { get; }
 
-        public IntRange XPRange { get; }
+        public IntRange XPRange
+        {
+            get
+            {
+                return new IntRange((int)Math.Floor(GetLevelXP() * 0.45f), (int)Math.Ceiling(GetLevelXP() * 0.55f));
+            }
+        }
 
-        /* Ascii Art got from:
+        /* Ascii Art gotten from:
          * https://ascii.co.uk/
          */
 
@@ -31,7 +37,6 @@ namespace Artefact.Entities
                         MaxHealth = 50;
                         Defense = 1;
                         HitDamage = new IntRange(5, 8);
-                        XPRange = new IntRange(2, 5);
                         ItemDrops.Add(new ItemDropData(Item.BinaryItem, 5));
                         ASCIIRepresentation = @"
      ,-^-.
@@ -49,9 +54,8 @@ namespace Artefact.Entities
                         MaxHealth = 60;
                         Defense = 0;
                         HitDamage = new IntRange(5, 7);
-                        XPRange = new IntRange(3, 8);
                         ItemDrops.Add(new ItemDropData(Item.BinaryItem, 8));
-                        ASCIIRepresentation= @"
+                        ASCIIRepresentation = @"
                _(\
       _____   /  .|
  >==.'|  | 'TK  \_|
@@ -66,7 +70,6 @@ namespace Artefact.Entities
                         MaxHealth = 30;
                         Defense = 3;
                         HitDamage = new IntRange(7, 10);
-                        XPRange = new IntRange(2, 9);
                         ItemDrops.Add(new ItemDropData(Item.BinaryItem, 12, 3));
 
                         ASCIIRepresentation = @"
@@ -96,11 +99,12 @@ namespace Artefact.Entities
         }
     }
 
-    [Flags] enum EnemyType
+    [Flags]
+    enum EnemyType
     {
-        Virus=1,
-        Trojan=2,
-        RansomWare=4
+        Virus = 1,
+        Trojan = 2,
+        RansomWare = 4
     }
 
     [Serializable]
@@ -111,7 +115,7 @@ namespace Artefact.Entities
         public uint Min { get; }
         public uint Max { get; }
 
-        public ItemDropData(Item item, uint max, uint min=1, float chance=1)
+        public ItemDropData(Item item, uint max, uint min = 1, float chance = 1)
         {
             Item = item;
             Min = min;

@@ -71,9 +71,9 @@ namespace Artefact.Misc
         public static void WriteCenter(string text)
         {
             StringColorBuilder stringColorBuilder = new StringColorBuilder(text);
-            foreach(List<StringColor> stringColors in stringColorBuilder.Split("\n"))
+            foreach (List<StringColor> stringColors in stringColorBuilder.Split("\n"))
             {
-                Console.SetCursorPosition((Console.WindowWidth - stringColors.Map(s=>s.Text).Join(" ").Length) / 2, Console.CursorTop);
+                Console.SetCursorPosition((Console.WindowWidth - stringColors.Map(s => s.Text).Join(" ").Length) / 2, Console.CursorTop);
                 foreach (StringColor stringColor in stringColors)
                 {
                     Console.ForegroundColor = stringColor.Color;

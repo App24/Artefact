@@ -31,20 +31,20 @@ namespace Artefact.MapSystem
             new Room(Location.HDD, west: Location.GPU, north: Location.RAM)
         };
 
-        static string map = "\n"+
- "            _____________\n"+
- "            |     |     |\n"+
-$"            | [{ColorConstants.LOCATION_COLOR}]{Location.CPU}[/] | [{ColorConstants.LOCATION_COLOR}]{Location.RAM}[/] |\n"+
- "           _|_____|_____|_\n"+
- "     N     |       |     |\n"+
-$"     ^     |       | [{ColorConstants.LOCATION_COLOR}]{Location.HDD}[/] |\n" +
-$"     |     |       |_____|\n"+
- "W <——+——> E|       |\n" +
-$"     |     |  [{ColorConstants.LOCATION_COLOR}]{Location.GPU}[/]  |\n"+
- "     V     |       |\n"+
- "     S     |       |\n"+
- "           |       |\n"+
- "           |_______|\n";
+        static string map = "\n" +
+ "            _____________\n" +
+ "             |     |     |\n" +
+$"             | [{ColorConstants.LOCATION_COLOR}]{Location.CPU}[/] | [{ColorConstants.LOCATION_COLOR}]{Location.RAM}[/] |\n" +
+ "            _|_____|_____|_\n" +
+ "     N      |       |     |\n" +
+$"     ^      |       | [{ColorConstants.LOCATION_COLOR}]{Location.HDD}[/] |\n" +
+$"     |      |       |_____|\n" +
+ "W <--+--> E |       |\n" +
+$"     |      |  [{ColorConstants.LOCATION_COLOR}]{Location.GPU}[/]  |\n" +
+ "     V      |       |\n" +
+ "     S      |       |\n" +
+ "            |       |\n" +
+ "            |_______|\n";
 
         public Map()
         {
@@ -112,7 +112,7 @@ $"     |     |  [{ColorConstants.LOCATION_COLOR}]{Location.GPU}[/]  |\n"+
                 float probability = (float)random.NextDouble();
                 if (probability < ENCOUNTER_PROBABILITY || forceSpawn)
                 {
-                    Fight.StartFight(location, EnemyType.Virus | EnemyType.Trojan | EnemyType.RansomWare);
+                    Fight.StartFight(location, new BattleParameters(EnemyType.Virus | EnemyType.Trojan | EnemyType.RansomWare));
                 }
             }
         }

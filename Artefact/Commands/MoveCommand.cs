@@ -42,7 +42,7 @@ namespace Artefact.Commands
                 direction = (Direction)Utils.GetSelection(directions);
             }
 
-            if(!Map.MovePlayer(direction))
+            if (!Map.MovePlayer(direction))
                 Utils.WriteColor($"[{ColorConstants.BAD_COLOR}]You can't move that direction!");
         }
     }

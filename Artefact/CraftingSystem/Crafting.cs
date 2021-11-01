@@ -48,7 +48,7 @@ namespace Artefact.CraftingSystem
             {
                 Utils.WriteColor($"[{ColorConstants.BAD_COLOR}]You are missing items needed to craft that!");
                 Utils.WriteColor("Missing:");
-                foreach(ItemData itemData in missingItems)
+                foreach (ItemData itemData in missingItems)
                 {
                     Utils.WriteColor($"- {itemData.ToColoredString()}");
                 }

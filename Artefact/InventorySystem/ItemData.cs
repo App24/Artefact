@@ -12,7 +12,7 @@ namespace Artefact.InventorySystem
         public Item Item { get; }
         public int Amount { get; set; }
 
-        public ItemData(Item item, int amount=1)
+        public ItemData(Item item, int amount = 1)
         {
             Item = item;
             Amount = amount;
@@ -22,7 +22,7 @@ namespace Artefact.InventorySystem
         {
             string text = $"[{ColorConstants.ITEM_COLOR}]{Item}[/]: [{ColorConstants.GOOD_COLOR}]{Amount}[/]";
 
-            if(Item is IUsable)
+            if (Item is IUsable)
             {
                 text += $" - [{ColorConstants.GOOD_COLOR}]Usable[/]";
             }
@@ -32,7 +32,7 @@ namespace Artefact.InventorySystem
 
         public override bool Equals(object obj)
         {
-            if(obj is ItemData itemData)
+            if (obj is ItemData itemData)
             {
                 return Item == itemData.Item;
             }

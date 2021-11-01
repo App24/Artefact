@@ -32,7 +32,7 @@ namespace Artefact.Commands
 
             if (args.Count > 1)
             {
-                if(!int.TryParse(args[1], out amount))
+                if (!int.TryParse(args[1], out amount))
                 {
                     Utils.WriteColor($"[{ColorConstants.BAD_COLOR}]Please provide a valid amount!");
                     return;

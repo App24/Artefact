@@ -18,7 +18,7 @@ namespace Artefact.Settings
 
         TextSpeed textSpeed = TextSpeed.Normal;
         bool simpleMode;
-        
+
 
         public GlobalSettings()
         {

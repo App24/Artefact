@@ -31,12 +31,12 @@ namespace Artefact.Commands
                 Utils.WriteColor($"Weapon Equiped: [{ColorConstants.ITEM_COLOR}]{player.Inventory.Weapon}[/]");
             }
 
-            foreach(KeyValuePair<ArmorType, ArmorItem> keyValuePair in player.Inventory.Armor)
+            foreach (KeyValuePair<ArmorType, ArmorItem> keyValuePair in player.Inventory.Armor)
             {
                 Utils.WriteColor($"{keyValuePair.Key} Equipped: [{ColorConstants.ITEM_COLOR}]{keyValuePair.Value}[/]");
             }
 
-            Utils.WriteColor($"Attack Damage: [{ColorConstants.GOOD_COLOR}]{player.HitDamage}[/]");
+            Utils.WriteColor($"Attack Damage: [{ColorConstants.GOOD_COLOR}]{player.HitDamage * player.HitModifierLevel}[/]");
             Utils.WriteColor($"Defense Amount: [{ColorConstants.GOOD_COLOR}]{player.Defense}[/]");
         }
     }

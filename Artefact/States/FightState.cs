@@ -30,7 +30,6 @@ namespace Artefact.States
 
         public override void Init()
         {
-            SaveSystem.SaveGame(SaveSystem.CHECKPOINT_FILE);
 
             Console.Clear();
 
@@ -43,6 +42,9 @@ namespace Artefact.States
             commandHandler.AddCommand(new SweepAttackCommand());
             if (CanHaveRunCommand())
                 commandHandler.AddCommand(new RunCommand());
+#if DEBUG
+            commandHandler.AddCommand(new KillCommand());
+#endif
             #endregion
 
             CommandHandler.Instance = commandHandler;
@@ -50,9 +52,13 @@ namespace Artefact.States
             Utils.WriteColor($"[{ColorConstants.BAD_COLOR}]{Enemies.Count}[/] enem{(Enemies.Count == 1 ? "y" : "ies")} appear{(Enemies.Count == 1 ? "s" : "")}!");
             foreach (EnemyEntity enemy in Enemies)
             {
-                Utils.WriteColor($"Type: [{ColorConstants.ENEMY_COLOR}]{enemy.EnemyType}[/]\nHealth: [{ColorConstants.BAD_COLOR}]{enemy.Health}[/]\nHit Damage: [{ColorConstants.BAD_COLOR}]{enemy.HitDamage}[/]\nDefense: [{ColorConstants.BAD_COLOR}]{enemy.Defense}[/]");
-                if(!string.IsNullOrEmpty(enemy.ASCIIRepresentation))
-                Utils.WriteColor(enemy.ASCIIRepresentation);
+                Utils.WriteColor($"Type: [{ColorConstants.ENEMY_COLOR}]{enemy.EnemyType}[/]");
+                Utils.WriteColor($"Health: [{ColorConstants.BAD_COLOR}]{enemy.Health}[/]");
+                Utils.WriteColor($"Level: [{ColorConstants.BAD_COLOR}]{enemy.Level}[/]");
+                Utils.WriteColor($"Hit Damage: [{ColorConstants.BAD_COLOR}]{enemy.HitDamage * enemy.HitModifierLevel}[/]");
+                Utils.WriteColor($"Defense: [{ColorConstants.BAD_COLOR}]{enemy.Defense}[/]");
+                if (!string.IsNullOrEmpty(enemy.ASCIIRepresentation))
+                    Utils.WriteColor(enemy.ASCIIRepresentation);
                 Console.WriteLine();
             }
         }
@@ -120,7 +126,8 @@ namespace Artefact.States
                     {
                         Utils.WriteColor("You are defending!");
                         Map.Player.DefenseModifier = 1.5f;
-                    }break;
+                    }
+                    break;
                 case Move.SweepAttack:
                     {
                         int damagePerEnemy = (int)Math.Ceiling(Map.Player.GetRandomDamage() / (float)Enemies.Count);
@@ -150,6 +157,13 @@ namespace Artefact.States
                         }
                     }
                     break;
+                case Move.InstaKill:
+                    {
+                        Enemies.ForEach(enemy =>
+                        {
+                            enemy.Damage(enemy.MaxHealth);
+                        });
+                    }break;
             }
             return true;
         }
@@ -197,7 +211,7 @@ namespace Artefact.States
             {
                 Utils.WriteColor($"Killed [{ColorConstants.ENEMY_COLOR}]{enemy.EnemyType}");
                 Random random = new Random();
-                foreach(ItemDropData itemDropData in enemy.ItemDrops)
+                foreach (ItemDropData itemDropData in enemy.ItemDrops)
                 {
                     float per = (float)random.NextDouble();
                     if (per < itemDropData.Chance)

@@ -25,22 +25,22 @@ namespace Artefact.Items.Potions
                 return false;
             }
 
-            int healthAmount;
+            float healthAmount;
             switch (HealthPotionType)
             {
                 case HealthPotionType.Small:
                     {
-                        healthAmount = 10;
+                        healthAmount = Map.Player.MaxHealth / 10f;
                     }
                     break;
                 case HealthPotionType.Medium:
                     {
-                        healthAmount = 25;
+                        healthAmount = Map.Player.MaxHealth / 4f;
                     }
                     break;
                 case HealthPotionType.Large:
                     {
-                        healthAmount = 50;
+                        healthAmount = Map.Player.MaxHealth / 2f;
                     }
                     break;
                 default:
@@ -50,7 +50,7 @@ namespace Artefact.Items.Potions
                     }
             }
 
-            Map.Player.Heal(healthAmount);
+            Map.Player.Heal((int)healthAmount);
             return true;
         }
     }

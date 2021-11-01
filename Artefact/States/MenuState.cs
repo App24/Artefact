@@ -37,11 +37,13 @@ namespace Artefact.States
                 case 1:
                     {
                         StateMachine.AddState(new SettingsState(), false);
-                    }break;
+                    }
+                    break;
                 case 2:
                     {
                         GlobalSettings.Running = false;
-                    }break;
+                    }
+                    break;
             }
 
             Console.Clear();

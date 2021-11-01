@@ -20,7 +20,8 @@ namespace Artefact.Commands
         {
             string characterName = args.Join(" ");
 
-            if(!Enum.TryParse(characterName, true, out Character character)){
+            if (!Enum.TryParse(characterName, true, out Character character))
+            {
                 if (characterName.ToLower() == GameSettings.PlayerName.ToLower())
                     character = Character.Player;
                 else
@@ -47,7 +48,8 @@ namespace Artefact.Commands
                                 {
                                     Dialog.Speak(Character.Clippy, $"I do not know.\nI just found you here.\nMaybe the [{ColorConstants.USER_COLOR}]user[/] deleted you too? ^-^");
                                     OnRun(args);
-                                }break;
+                                }
+                                break;
                             case 1:
                                 {
                                     Dialog.Speak(Character.Clippy, $"I am not exactly sure, one day I felt myself lighter and then appeared right outside my home, being unable to enter it.\nI think the [{ColorConstants.USER_COLOR}]user[/] deleted me :'(");
@@ -61,7 +63,8 @@ namespace Artefact.Commands
                                 }
                                 break;
                         }
-                    }break;
+                    }
+                    break;
             }
         }
     }

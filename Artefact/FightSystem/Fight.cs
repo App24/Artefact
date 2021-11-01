@@ -1,6 +1,7 @@
 ﻿using Artefact.Entities;
 using Artefact.MapSystem;
 using Artefact.Misc;
+using Artefact.Saving;
 using Artefact.Settings;
 using Artefact.States;
 using System;
@@ -11,17 +12,42 @@ namespace Artefact.FightSystem
 {
     static class Fight
     {
-        public static void StartFight(Location location, EnemyType allowedEnemies, int maxAmount=3)
+        public static void StartFight(Location location, BattleParameters battleParameters)
         {
+            SaveSystem.SaveGame(SaveSystem.CHECKPOINT_FILE);
             Random random = new Random();
-            int numEnemies = random.Next(maxAmount);
+            int numEnemies = random.Next(battleParameters.MaxEnemyAmount) + 1;
             List<EnemyEntity> enemies = new List<EnemyEntity>();
-            List<EnemyType> allowedEnemyTypes=allowedEnemies.GetSetFlags();
-            for(int i = 0; i < numEnemies+1; i++)
+            List<EnemyType> allowedEnemyTypes = battleParameters.AllowedEnemies.GetSetFlags();
+            for (int i = 0; i < numEnemies; i++)
             {
-                enemies.Add(Map.SpawnEnemy(allowedEnemyTypes[random.Next(allowedEnemyTypes.Count)], location));
+                EnemyEntity enemy = Map.SpawnEnemy(allowedEnemyTypes[random.Next(allowedEnemyTypes.Count)], location);
+                IntRange range = battleParameters.LevelRange;
+                enemy.SetLevel(random.Next(range.Min, range.Max));
+                enemies.Add(enemy);
             }
             StateMachine.AddState(new FightState(enemies.ToArray()), false);
+        }
+    }
+
+    struct BattleParameters
+    {
+        public EnemyType AllowedEnemies { get; }
+        public int MaxEnemyAmount { get; }
+        public IntRange LevelRange { get; }
+
+        public BattleParameters(EnemyType allowedEnemies, int maxAmount = 3, bool scaleUp = true)
+        {
+            MaxEnemyAmount = maxAmount;
+            LevelRange = new IntRange(1, 10);
+            if (scaleUp)
+                LevelRange = new IntRange(Map.Player.Level, Map.Player.Level + 1);
+            AllowedEnemies = allowedEnemies;
+        }
+
+        public BattleParameters(EnemyType allowedEnemies, IntRange levelRange, int maxAmount = 3) : this(allowedEnemies, maxAmount, false)
+        {
+            LevelRange = levelRange;
         }
     }
 }

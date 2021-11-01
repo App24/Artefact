@@ -82,7 +82,7 @@ namespace Artefact.Commands.Misc
 
                 List<string> texts = new List<string>();
                 texts.AddRange(newCommands.Map((c) => $"[{ColorConstants.COMMAND_COLOR}]{c.Name}[/]"));
-                if (pageIndex+1 < Math.Ceiling(visibleCommands.Count / (float)MAX_COMMANDS_PER_PAGE)) texts.Add("Next");
+                if (pageIndex + 1 < Math.Ceiling(visibleCommands.Count / (float)MAX_COMMANDS_PER_PAGE)) texts.Add("Next");
                 if (pageIndex > 0) texts.Add("Previous");
 
                 int selection = Utils.GetSelection(texts.ToArray());

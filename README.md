@@ -15,6 +15,9 @@ Uni Assessment, I had to create a text-based adventure, I decided to set mine in
 - [x] Enemy Foundation
 - [ ] Interact with stuff in each level
 - [ ] Levels and XP
+- - [x] Level Up
+- - [x] Health Increasing
+- - [ ] Damage/Defense Increasing
 - [ ] Middle of story
 - [ ] End of story
 - [ ] Improve/balance combat
