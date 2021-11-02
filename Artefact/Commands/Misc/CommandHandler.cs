@@ -2,6 +2,7 @@
 using Artefact.Misc;
 using Artefact.Settings;
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -95,7 +96,7 @@ namespace Artefact.Commands.Misc
                         Utils.WriteColor($"Write arguments for the command {command.NoArgsResponse}");
                         string argsText = Console.ReadLine();
                         MatchCollection matches = reg.Matches(argsText);
-                        args = matches.Map(match => Regex.Replace(match.Value, RE_QUOTE_STRIP_PATTERN, ""));
+                        args = matches.Map(match => Regex.Replace(match.Value, RE_QUOTE_STRIP_PATTERN, "")).ToList();
                     }
                 }
                 else
@@ -117,7 +118,7 @@ namespace Artefact.Commands.Misc
                 string text = Console.ReadLine();
                 if (string.IsNullOrEmpty(text)) return false;
                 MatchCollection matches = reg.Matches(text);
-                List<string> commandData = matches.Map(match => Regex.Replace(match.Value, RE_QUOTE_STRIP_PATTERN, ""));
+                List<string> commandData = matches.Map(match => Regex.Replace(match.Value, RE_QUOTE_STRIP_PATTERN, "")).ToList();
                 if (commandData.Count <= 0) return false;
                 string commandName = commandData[0].ToLower();
                 args = commandData.GetRange(1, commandData.Count - 1);

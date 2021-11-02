@@ -12,6 +12,7 @@ using Artefact.Settings;
 using Artefact.StorySystem;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading;
 
@@ -163,7 +164,8 @@ namespace Artefact.States
                         {
                             enemy.Damage(enemy.MaxHealth);
                         });
-                    }break;
+                    }
+                    break;
             }
             return true;
         }

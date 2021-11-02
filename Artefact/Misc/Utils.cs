@@ -20,7 +20,7 @@ namespace Artefact.Misc
         /// Get the user to select an option from an array, they are also able to type the name of the item to select it
         /// </summary>
         /// <param name="options">The options available to choose from</param>
-        /// <returns>Returns a number between 0 and length of <paramref name="options"/></returns>
+        /// <returns>Returns a number between 0 and length of <paramref name="options"/> - 1</returns>
         public static int GetSelection(params string[] options)
         {
             int index = -1;
@@ -28,10 +28,10 @@ namespace Artefact.Misc
             WriteColor(options.Map((option, i) => $"{i + 1}. {option}[/]").Join("\n"));
             while (index < 0 || index >= options.Length)
             {
-                string selection = Console.ReadLine();
+                string selection = Console.ReadLine().ToLower();
                 if (!int.TryParse(selection, out index))
                 {
-                    index = optionsList.FindIndex(o => o.ToLower() == selection.ToLower()) + 1;
+                    index = optionsList.FindIndex(o => selection == o.ToLower().TrimColor()) + 1;
                 }
                 index -= 1;
                 if (index < 0 || index >= options.Length)
@@ -63,7 +63,7 @@ namespace Artefact.Misc
         public static bool GetCharacterConfirmation(string inputText)
         {
             Type(inputText);
-            string response = Console.ReadLine().ToLower();
+            string response = Console.ReadLine().ToLower().Trim();
 
             return ValidYes.Contains(response);
         }
@@ -84,18 +84,19 @@ namespace Artefact.Misc
             Console.ResetColor();
         }
 
-        public static void WriteColor(string message)
+        public static void WriteColor(string text)
         {
-            StringColorBuilder stringColorBuilder = new StringColorBuilder(message);
+            StringColorBuilder stringColorBuilder = new StringColorBuilder(text);
 
-            foreach (StringColor stringColor in stringColorBuilder.GetStringColors())
+            foreach (List<StringColor> stringColors in stringColorBuilder.Split("\n"))
             {
-                Console.ForegroundColor = stringColor.Color;
-                Console.Write(stringColor.Text);
+                foreach (StringColor stringColor in stringColors)
+                {
+                    Console.ForegroundColor = stringColor.Color;
+                    Console.Write(stringColor.Text);
+                }
+                Console.WriteLine();
             }
-
-            Console.WriteLine();
-
             Console.ResetColor();
         }
 
@@ -132,22 +133,20 @@ namespace Artefact.Misc
 
         public static void Type(string text)
         {
-            string[] lines = text.Split("\n");
-            foreach (string line in lines)
+            StringColorBuilder stringColorBuilder = new StringColorBuilder(text);
+            foreach (List<StringColor> stringColors in stringColorBuilder.Split("\n"))
             {
-                StringColorBuilder stringColorBuilder = new StringColorBuilder(line);
-                foreach (StringColor stringColor in stringColorBuilder.GetStringColors())
+                foreach (StringColor stringColor in stringColors)
                 {
                     Console.ForegroundColor = stringColor.Color;
                     foreach (char letter in stringColor.Text)
                     {
                         Console.Write(letter);
 #if !BYPASS
-                    Thread.Sleep((int)GlobalSettings.TextSpeed);
+                        Thread.Sleep((int)GlobalSettings.TextSpeed);
 #endif
                     }
                 }
-
                 Console.WriteLine();
             }
             Console.ResetColor();

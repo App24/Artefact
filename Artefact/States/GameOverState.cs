@@ -1,5 +1,6 @@
 ﻿using Artefact.Misc;
 using Artefact.Saving;
+using Artefact.Settings;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -30,7 +31,7 @@ namespace Artefact.States
             int selection = Utils.GetSelection($"[{ColorConstants.GOOD_COLOR}]Yes", $"[{ColorConstants.BAD_COLOR}]No");
             if (selection == 0)
             {
-                LoadResult loadResult = SaveSystem.LoadGame(SaveSystem.CHECKPOINT_FILE);
+                LoadResult loadResult = SaveSystem.LoadGame(SaveSystem.CHECKPOINT_FILE, GameSettings.SaveSlot);
                 Thread.Sleep(1500);
                 if (loadResult == LoadResult.Success)
                 {

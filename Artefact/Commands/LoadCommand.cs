@@ -2,6 +2,8 @@
 using Artefact.Saving;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Text;
 using System.Threading;
 
@@ -19,12 +21,20 @@ namespace Artefact.Commands
 
         public void OnRun(List<string> args)
         {
-            if (Utils.GetConfirmation($"You sure you want to load a save game? [{ColorConstants.BAD_COLOR}]All your progress since last save will be lost!"))
+            List<string> saves = SaveSystem.AvailableSaves().Map(save => Path.GetFileName(save)).ToList();
+            saves.Add("Back");
+            Utils.WriteColor("[yellow]Please select a save slot!");
+            int selection = Utils.GetSelection(saves.ToArray());
+
+            if (selection < saves.Count - 1)
             {
-                if (SaveSystem.LoadGame() == LoadResult.Success)
+                if (Utils.GetConfirmation($"You sure you want to load a save game? [{ColorConstants.BAD_COLOR}]All your progress since last save will be lost!"))
                 {
-                    Thread.Sleep(1500);
-                    Console.Clear();
+                    if (SaveSystem.LoadGame(slot: selection + 1) == LoadResult.Success)
+                    {
+                        Thread.Sleep(1500);
+                        Console.Clear();
+                    }
                 }
             }
         }

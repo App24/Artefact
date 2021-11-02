@@ -5,6 +5,7 @@ using Artefact.StorySystem;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 
@@ -15,9 +16,13 @@ namespace Artefact.Saving
         const string SETTINGS_FILE = "settings.dat";
         const string SAVE_FILE = "save.dat";
         public const string CHECKPOINT_FILE = "checkpoint.dat";
+        const string SAVE_FOLDER = "saves";
+
+        public static bool HasAnySaveGames => Directory.Exists(SAVE_FOLDER);
 
         static void SaveClass<T>(string fileName, T value)
         {
+            Directory.CreateDirectory(Path.GetDirectoryName(fileName));
             FileStream stream = File.Create(fileName);
             BinaryFormatter formatter = new BinaryFormatter();
             formatter.Serialize(stream, value);
@@ -70,14 +75,15 @@ namespace Artefact.Saving
                 new GlobalSettings();
         }
 
-        public static void SaveGame(string fileName = SAVE_FILE)
+        public static void SaveGame(string fileName = SAVE_FILE, int slot = 1)
         {
-            SaveClass(fileName, new Save());
+            GameSettings.SaveSlot = slot;
+            SaveClass(Path.Combine(SAVE_FOLDER, slot.ToString(), fileName), new Save());
         }
 
-        public static LoadResult LoadGame(string fileName = SAVE_FILE)
+        public static LoadResult LoadGame(string fileName = SAVE_FILE, int slot = 1)
         {
-            LoadDetails<Save> loadDetails = LoadClass<Save>(fileName);
+            LoadDetails<Save> loadDetails = LoadClass<Save>(Path.Combine(SAVE_FOLDER, slot.ToString(), fileName));
             if (loadDetails.LoadResult == LoadResult.Success)
             {
                 Utils.WriteColor($"[{ColorConstants.GOOD_COLOR}]Save loaded successfully!");
@@ -117,6 +123,11 @@ namespace Artefact.Saving
             new GameSettings();
             Story.Step = 0;
             new Map();
+        }
+
+        public static List<string> AvailableSaves()
+        {
+            return Directory.GetDirectories(SAVE_FOLDER).ToList();
         }
     }
 

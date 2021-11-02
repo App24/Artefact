@@ -13,9 +13,9 @@ namespace Artefact.Misc
 
         List<StringColor> stringColors;
 
-        const string RE_COLOR_SPLITTER_PATTERN = @"(\[[^\[][^\]]*\])";
-        const string RE_COLOR_START_PATTERN = @"(\[[^\[\/][^\]]*\])";
-        const string RE_COLOR_END_PATTERN = @"(\[[\/][^\]]*\])";
+        public const string RE_COLOR_SPLITTER_PATTERN = @"(\[[^\[][^\]]*\])";
+        public const string RE_COLOR_START_PATTERN = @"(\[[^\[\/][^\]]*\])";
+        public const string RE_COLOR_END_PATTERN = @"(\[[\/][^\]]*\])";
 
         public StringColorBuilder(string message)
         {

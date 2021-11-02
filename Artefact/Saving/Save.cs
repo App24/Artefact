@@ -8,7 +8,7 @@ using System.Text;
 namespace Artefact.Saving
 {
     [Serializable]
-    class Save : Saveable
+    class Save
     {
         public GameSettings GameSettings { get; }
         public Map Map { get; }

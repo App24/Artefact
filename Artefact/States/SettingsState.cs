@@ -3,6 +3,7 @@ using Artefact.Saving;
 using Artefact.Settings;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Artefact.States
@@ -29,14 +30,14 @@ namespace Artefact.States
 
             ConsoleColor[] textSpeedColors = new ConsoleColor[] { ConsoleColor.Green, ConsoleColor.Yellow, ConsoleColor.Red };
             ConsoleColor textSpeedColor = textSpeedColors[Array.IndexOf(Enum.GetValues(typeof(TextSpeed)), GlobalSettings.TextSpeed)];
-            int selection = Utils.GetSelection($"Text Speed: [{textSpeedColor}]{GlobalSettings.TextSpeed}[/]", $"Simple Mode: [{(GlobalSettings.SimpleMode ? ConsoleColor.Green : ConsoleColor.Red)}]{GlobalSettings.SimpleMode}[/]", "Back");
+            int selection = Utils.GetSelection($"Text Speed: [{textSpeedColor}]{GlobalSettings.TextSpeed}[/]", $"Simple Mode: [{(GlobalSettings.SimpleMode ? ColorConstants.GOOD_COLOR : ColorConstants.BAD_COLOR)}]{GlobalSettings.SimpleMode}[/]", "Back");
 
             switch (selection)
             {
                 case 0:
                     {
                         string[] textSpeeds = Enum.GetNames(typeof(TextSpeed));
-                        GlobalSettings.TextSpeed = Enum.Parse<TextSpeed>(textSpeeds[Utils.GetSelection(textSpeeds.Map((x, i) => $"[{textSpeedColors[i]}]{x}[/]").ToArray())], true);
+                        GlobalSettings.TextSpeed = (TextSpeed)Enum.Parse(typeof(TextSpeed), textSpeeds[Utils.GetSelection(textSpeeds.Map((x, i) => $"[{textSpeedColors[i]}]{x}[/]").ToArray())], true);
                     }
                     break;
                 case 1:

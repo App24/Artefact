@@ -18,10 +18,18 @@ namespace Artefact.Commands
 
         public void OnRun(List<string> args)
         {
-            if (Utils.GetConfirmation($"You sure you want to save? [{ColorConstants.BAD_COLOR}]It will override the previous saved game!"))
+            Utils.WriteColor("[yellow]Please enter a slot number");
+            List<string> availableSlots = new List<string>() { "1", "2", "3" };
+            availableSlots.Add("Back");
+            int selection = Utils.GetSelection(availableSlots.ToArray());
+
+            if (selection < availableSlots.Count - 1)
             {
-                SaveSystem.SaveGame();
-                Utils.WriteColor($"[{ColorConstants.GOOD_COLOR}]Game Saved!");
+                if (Utils.GetConfirmation($"You sure you want to save? [{ColorConstants.BAD_COLOR}]It will override the previous saved game!"))
+                {
+                    SaveSystem.SaveGame(slot: selection + 1);
+                    Utils.WriteColor($"[{ColorConstants.GOOD_COLOR}]Game Saved to Slot: {selection + 1}!");
+                }
             }
         }
     }

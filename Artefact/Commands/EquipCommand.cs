@@ -6,6 +6,7 @@ using Artefact.Misc;
 using Artefact.Settings;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Artefact.Commands
@@ -34,7 +35,7 @@ namespace Artefact.Commands
             }
             else
             {
-                List<Item> availableEquipableItems = inventory.GetItems().Map(i => i.Item).FindAll(i => i is EquipableItem);
+                List<Item> availableEquipableItems = inventory.GetItems().Map(i => i.Item).ToList().FindAll(i => i is EquipableItem);
 
                 if (availableEquipableItems.Count <= 0)
                 {
@@ -42,7 +43,7 @@ namespace Artefact.Commands
                     return;
                 }
 
-                List<string> options = availableEquipableItems.Map(i => $"[{ColorConstants.ITEM_COLOR}]{i.Name}[/]");
+                List<string> options = availableEquipableItems.Map(i => $"[{ColorConstants.ITEM_COLOR}]{i.Name}[/]").ToList();
                 options.Add("Exit");
                 int selection = Utils.GetSelection(options.ToArray());
 

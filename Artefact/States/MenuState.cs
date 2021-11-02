@@ -31,7 +31,7 @@ namespace Artefact.States
             {
                 case 0:
                     {
-                        StateMachine.AddState(new LoadState(), false);
+                        StateMachine.AddState(new StartState(), false);
                     }
                     break;
                 case 1:

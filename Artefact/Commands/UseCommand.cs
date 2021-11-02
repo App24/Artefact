@@ -4,6 +4,7 @@ using Artefact.MapSystem;
 using Artefact.Misc;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Artefact.Commands
@@ -20,14 +21,14 @@ namespace Artefact.Commands
 
         public void OnRun(List<string> args)
         {
-            List<Item> usableItems = Map.Player.Inventory.GetItems().FindAll(i => i.Item is IUsable).Map(i => i.Item);
+            List<Item> usableItems = Map.Player.Inventory.GetItems().FindAll(i => i.Item is IUsable).Map(i => i.Item).ToList();
             if (usableItems.Count <= 0)
             {
                 Utils.WriteColor($"[{ColorConstants.BAD_COLOR}]You do not have any usable items in your inventory!");
                 throw new CommandException("");
             }
 
-            List<string> options = usableItems.Map(i => $"[{ColorConstants.ITEM_COLOR}]{i.Name}[/]");
+            List<string> options = usableItems.Map(i => $"[{ColorConstants.ITEM_COLOR}]{i.Name}[/]").ToList();
             options.Add("Exit");
             int selection = Utils.GetSelection(options.ToArray());
             if (selection >= usableItems.Count)

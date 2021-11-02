@@ -6,7 +6,7 @@ using System.Text;
 namespace Artefact.Settings
 {
     [Serializable]
-    class GlobalSettings : Saveable
+    class GlobalSettings
     {
         public static bool Running { get; set; } = true;
         public static bool JustLoaded { get; set; }

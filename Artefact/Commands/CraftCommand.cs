@@ -4,6 +4,7 @@ using Artefact.Misc;
 using Artefact.Settings;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Artefact.Commands
@@ -21,7 +22,7 @@ namespace Artefact.Commands
             if (GlobalSettings.SimpleMode)
             {
                 List<Item> craftableItems = Item.Items.FindAll((i) => i.IsCraftable);
-                List<string> options = craftableItems.Map(i => $"[{ColorConstants.ITEM_COLOR}]{i.Name}[/]");
+                List<string> options = craftableItems.Map(i => $"[{ColorConstants.ITEM_COLOR}]{i.Name}[/]").ToList();
                 options.Add("Exit");
                 int selection = Utils.GetSelection(options.ToArray());
                 if (selection >= craftableItems.Count) return;

@@ -6,6 +6,7 @@ using Artefact.Settings;
 using Artefact.States;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Artefact.FightSystem
@@ -14,11 +15,11 @@ namespace Artefact.FightSystem
     {
         public static void StartFight(Location location, BattleParameters battleParameters)
         {
-            SaveSystem.SaveGame(SaveSystem.CHECKPOINT_FILE);
+            SaveSystem.SaveGame(SaveSystem.CHECKPOINT_FILE, GameSettings.SaveSlot);
             Random random = new Random();
             int numEnemies = random.Next(battleParameters.MaxEnemyAmount) + 1;
             List<EnemyEntity> enemies = new List<EnemyEntity>();
-            List<EnemyType> allowedEnemyTypes = battleParameters.AllowedEnemies.GetSetFlags();
+            List<EnemyType> allowedEnemyTypes = battleParameters.AllowedEnemies.GetSetFlags().ToList();
             for (int i = 0; i < numEnemies; i++)
             {
                 EnemyEntity enemy = Map.SpawnEnemy(allowedEnemyTypes[random.Next(allowedEnemyTypes.Count)], location);
