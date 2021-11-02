@@ -15,7 +15,7 @@ namespace Artefact.FightSystem
     {
         public static void StartFight(Location location, BattleParameters battleParameters)
         {
-            SaveSystem.SaveGame(SaveSystem.CHECKPOINT_FILE, GameSettings.SaveSlot);
+            SaveSystem.SaveGame(SaveSystem.CHECKPOINT_FILE);
             Random random = new Random();
             int numEnemies = random.Next(battleParameters.MaxEnemyAmount) + 1;
             List<EnemyEntity> enemies = new List<EnemyEntity>();

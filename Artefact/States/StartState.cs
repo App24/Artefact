@@ -10,6 +10,8 @@ namespace Artefact.States
 {
     class StartState : State
     {
+        bool saveSlot = false;
+
         public override void Init()
         {
 
@@ -27,31 +29,53 @@ namespace Artefact.States
                                                          
                                                          
 ");
-            List<Action> actions = new List<Action>();
-            List<string> options = new List<string>();
-            options.Add("Start Game");
-            actions.Add(() =>
+
+            if (!saveSlot)
             {
-                SaveSystem.NewGame();
-                StateMachine.CleanStates();
-                StateMachine.AddState(new GameState());
-            });
-            if (SaveSystem.HasAnySaveGames)
-            {
-                options.Add("Load Game");
+                List<Action> actions = new List<Action>();
+                List<string> options = new List<string>();
+                options.Add("Start Game");
                 actions.Add(() =>
                 {
-                    StateMachine.AddState(new LoadState(), false);
+                    saveSlot = true;
                 });
-            }
-            options.Add("Back");
-            actions.Add(() =>
-            {
-                StateMachine.RemoveState();
-            });
-            int selection = Utils.GetSelection(options.ToArray());
+                if (SaveSystem.HasAnySaveGames)
+                {
+                    options.Add("Load Game");
+                    actions.Add(() =>
+                    {
+                        StateMachine.AddState(new LoadState(), false);
+                    });
+                }
+                options.Add("Back");
+                actions.Add(() =>
+                {
+                    StateMachine.RemoveState();
+                });
+                int selection = Utils.GetSelection(options.ToArray());
 
-            actions[selection]();
+                actions[selection]();
+            }
+            else
+            {
+                List<string> options = new List<string>();
+                for(int i = 1; i < SaveSystem.SAVE_SLOTS+1; i++)
+                {
+                    options.Add(i.ToString());
+                }
+                options.Add("Back");
+                int selection = Utils.GetSelection(options.ToArray());
+
+                if (selection == options.Count - 1)
+                    saveSlot = false;
+                else
+                {
+                    SaveSystem.NewGame();
+                    GameSettings.SaveSlot = selection + 1;
+                    StateMachine.CleanStates();
+                    StateMachine.AddState(new GameState());
+                }
+            }
 
             Console.Clear();
         }

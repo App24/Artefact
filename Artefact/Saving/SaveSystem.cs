@@ -17,6 +17,7 @@ namespace Artefact.Saving
         const string SAVE_FILE = "save.dat";
         public const string CHECKPOINT_FILE = "checkpoint.dat";
         const string SAVE_FOLDER = "saves";
+        public const int SAVE_SLOTS = 3;
 
         public static bool HasAnySaveGames => Directory.Exists(SAVE_FOLDER);
 
@@ -75,14 +76,15 @@ namespace Artefact.Saving
                 new GlobalSettings();
         }
 
-        public static void SaveGame(string fileName = SAVE_FILE, int slot = 1)
+        public static void SaveGame(string fileName = SAVE_FILE)
         {
-            GameSettings.SaveSlot = slot;
-            SaveClass(Path.Combine(SAVE_FOLDER, slot.ToString(), fileName), new Save());
+            SaveClass(Path.Combine(SAVE_FOLDER, GameSettings.SaveSlot.ToString(), fileName), new Save());
         }
 
-        public static LoadResult LoadGame(string fileName = SAVE_FILE, int slot = 1)
+        public static LoadResult LoadGame(string fileName = SAVE_FILE, int slot=0)
         {
+            if (slot <= 0)
+                slot = GameSettings.SaveSlot;
             LoadDetails<Save> loadDetails = LoadClass<Save>(Path.Combine(SAVE_FOLDER, slot.ToString(), fileName));
             if (loadDetails.LoadResult == LoadResult.Success)
             {
@@ -123,11 +125,6 @@ namespace Artefact.Saving
             new GameSettings();
             Story.Step = 0;
             new Map();
-        }
-
-        public static List<string> AvailableSaves()
-        {
-            return Directory.GetDirectories(SAVE_FOLDER).ToList();
         }
     }
 
