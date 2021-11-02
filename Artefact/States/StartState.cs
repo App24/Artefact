@@ -58,11 +58,7 @@ namespace Artefact.States
             }
             else
             {
-                List<string> options = new List<string>();
-                for(int i = 1; i < SaveSystem.SAVE_SLOTS+1; i++)
-                {
-                    options.Add(i.ToString());
-                }
+                List<string> options = SaveSystem.GetSaveGameNames();
                 options.Add("Back");
                 int selection = Utils.GetSelection(options.ToArray());
 

@@ -21,11 +21,7 @@ namespace Artefact.Commands
 
         public void OnRun(List<string> args)
         {
-            List<string> saves = new List<string>();
-            for (int i = 1; i < SaveSystem.SAVE_SLOTS+1; i++)
-            {
-                saves.Add(i.ToString());
-            }
+            List<string> saves = SaveSystem.GetSaveGameNames();
             saves.Add("Back");
             Utils.WriteColor("[yellow]Please select a save slot!");
             int selection = Utils.GetSelection(saves.ToArray());

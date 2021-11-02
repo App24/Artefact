@@ -36,7 +36,7 @@ namespace Artefact.Commands
                 Utils.WriteColor($"{keyValuePair.Key} Equipped: [{ColorConstants.ITEM_COLOR}]{keyValuePair.Value}[/]");
             }
 
-            Utils.WriteColor($"Attack Damage: [{ColorConstants.GOOD_COLOR}]{player.HitDamage * player.HitModifierLevel}[/]");
+            Utils.WriteColor($"Attack Damage: [{ColorConstants.GOOD_COLOR}]{player.HitDamage}[/]");
             Utils.WriteColor($"Defense Amount: [{ColorConstants.GOOD_COLOR}]{player.Defense}[/]");
         }
     }

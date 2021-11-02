@@ -13,7 +13,7 @@ namespace Artefact.Entities
     {
         public Inventory Inventory { get; }
 
-        public override IntRange HitDamage => Inventory.Weapon == null ? new IntRange(3, 5) : Inventory.Weapon.Damage;
+        public override IntRange BaseHitDamage => Inventory.Weapon == null ? new IntRange(3, 5) : Inventory.Weapon.Damage;
 
         public override int Defense
         {

@@ -10,15 +10,20 @@ namespace Artefact.Entities
     {
         public string UUID { get; }
 
-        public long MaxHealth { get { return (long)Math.Ceiling(_maxHealth * Math.Pow(1.05f, Math.Max(0, Level - 1))); } protected set { _maxHealth = value; Heal(MaxHealth); } }
-        private long _maxHealth;
+        public long MaxHealth { get { return (long)Math.Ceiling(BaseMaxHealth * Math.Pow(1.05f, Math.Max(0, Level - 1))); } protected set { BaseMaxHealth = value; Heal(MaxHealth); } }
+        public long BaseMaxHealth { get; private set; }
         public long Health { get; protected set; }
         public Location Location { get; set; }
 
-        public virtual IntRange HitDamage { get; protected set; }
+        // Damage
+        public IntRange HitDamage { get { return BaseHitDamage * HitModifierLevel; } protected set { BaseHitDamage = value; } }
+        public virtual IntRange BaseHitDamage { get; protected set; }
         public float HitModifierLevel { get { return (float)Math.Pow(1.05f, Math.Max(0, Level - 1)); } }
+
+        // Defense
         public virtual int Defense { get; protected set; }
         public float DefenseModifier { get; set; } = 1f;
+
         public Move Move { get; set; }
         public int Level { get; private set; } = 1;
         public int XP { get; private set; }

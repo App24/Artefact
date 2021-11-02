@@ -32,7 +32,7 @@ namespace Artefact.MapSystem
         };
 
         static string map = "\n" +
- "            _____________\n" +
+ "             _____________\n" +
  "             |     |     |\n" +
 $"             | [{ColorConstants.LOCATION_COLOR}]{Location.CPU}[/] | [{ColorConstants.LOCATION_COLOR}]{Location.RAM}[/] |\n" +
  "            _|_____|_____|_\n" +

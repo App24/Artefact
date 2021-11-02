@@ -27,7 +27,6 @@ namespace Artefact.StorySystem
 
         public static void DoStep()
         {
-
             //Prevent getting softlock due to save editing shenanigans
             if (Step > 4)
             {
@@ -35,6 +34,11 @@ namespace Artefact.StorySystem
                 {
                     Dialog.Speak(Character.Clippy, "Where is your map? Here, you can have another!");
                     Map.Player.Inventory.AddItem(new ItemData(Item.MapItem), announce: true);
+                }
+                if (!Map.Player.Inventory.HasItem(new ItemData(Item.RecipeBookItem)))
+                {
+                    Dialog.Speak(Character.Clippy, "Where is your recipe? Here, you can have another!");
+                    Map.Player.Inventory.AddItem(new ItemData(Item.RecipeBookItem), announce: true);
                 }
             }
             switch (Step)
@@ -137,7 +141,7 @@ namespace Artefact.StorySystem
                         while (string.IsNullOrEmpty(name))
                         {
                             name = Console.ReadLine();
-                            if(!Utils.GetCharacterConfirmation(Dialog.GetCharacterVoiceLine(Character.Clippy, $"So your name is [{Constants.CHARACTER_COLOR}]{name}[/]?"))){
+                            if(!Utils.GetCharacterConfirmation(Dialog.GetCharacterVoiceLine(Character.Clippy, $"So your name is [{ColorConstants.CHARACTER_COLOR}]{name}[/]?"))){
                                 name = null;
                                 Dialog.Speak(Character.Clippy, "What is your name then?");
                             }

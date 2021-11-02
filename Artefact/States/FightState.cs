@@ -56,7 +56,7 @@ namespace Artefact.States
                 Utils.WriteColor($"Type: [{ColorConstants.ENEMY_COLOR}]{enemy.EnemyType}[/]");
                 Utils.WriteColor($"Health: [{ColorConstants.BAD_COLOR}]{enemy.Health}[/]");
                 Utils.WriteColor($"Level: [{ColorConstants.BAD_COLOR}]{enemy.Level}[/]");
-                Utils.WriteColor($"Hit Damage: [{ColorConstants.BAD_COLOR}]{enemy.HitDamage * enemy.HitModifierLevel}[/]");
+                Utils.WriteColor($"Hit Damage: [{ColorConstants.BAD_COLOR}]{enemy.HitDamage}[/]");
                 Utils.WriteColor($"Defense: [{ColorConstants.BAD_COLOR}]{enemy.Defense}[/]");
                 if (!string.IsNullOrEmpty(enemy.ASCIIRepresentation))
                     Utils.WriteColor(enemy.ASCIIRepresentation);

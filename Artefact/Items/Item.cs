@@ -21,6 +21,7 @@ namespace Artefact.Items
 
         // Weapons
         public static WeaponItem BinarySwordItem { get; } = new WeaponItem("Binary Sword", new IntRange(8, 10), new ItemData(BinaryItem, 3));
+        public static WeaponItem BinaryAxeItem { get; } = new WeaponItem("Binary Axe", new IntRange(10, 12), new ItemData(BinaryItem, 3));
 
         // Armor
         public static ArmorItem BinaryHelmetItem { get; } = new ArmorItem("Binary Helmet", 2, ArmorType.Helmet, new ItemData(BinaryItem, 5));

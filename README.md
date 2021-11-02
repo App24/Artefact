@@ -17,7 +17,8 @@ Uni Assessment, I had to create a text-based adventure, I decided to set mine in
 - [ ] Levels and XP
 - - [x] Level Up
 - - [x] Health Increasing
-- - [ ] Damage/Defense Increasing
+- - [x] Damage/Defense Increasing
+- - [ ] Balancing
 - [ ] Middle of story
 - [ ] End of story
 - [ ] Improve/balance combat

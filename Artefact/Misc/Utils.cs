@@ -105,12 +105,11 @@ namespace Artefact.Misc
             string text = "";
             for (int i = 0; i < width; i++)
             {
-                if (((i + 1) / (float)width) <= percentage)
-                    text += "#";
+                if ((i  / (float)width) < percentage)
+                    text += $"[{barColor}]#[/]";
                 else
                     text += "-";
             }
-            text = text.Map(x => { if (x == '#') return $"[{barColor}]{x}[/]"; return x.ToString(); }).Join("");
             return $"[{text}]";
         }
 
