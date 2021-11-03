@@ -1,6 +1,7 @@
 ﻿using Artefact.DialogSystem;
 using Artefact.Entities;
 using Artefact.FightSystem;
+using Artefact.GenderSystem;
 using Artefact.InventorySystem;
 using Artefact.Items;
 using Artefact.MapSystem;
@@ -117,7 +118,7 @@ namespace Artefact.StorySystem
                         while (true)
                         {
                             gender = (Gender)Utils.GetSelection(Enum.GetNames(typeof(Gender)));
-                            if (Utils.GetCharacterConfirmation(Character.Clippy, $"So your gender is {gender}?"))
+                            if (Utils.GetCharacterConfirmation(Character.Clippy, $"So your gender pronouns are {gender}?"))
                             {
                                 break;
                             }
@@ -160,7 +161,7 @@ namespace Artefact.StorySystem
                         Dialog.Speak(Character.Clippy, $"This is the [{ColorConstants.LOCATION_COLOR}]CPU[/]!");
                         Dialog.Speak(Character.Clippy, $"This is where everything the [{ColorConstants.USER_COLOR}]user[/] does is processed!");
                         Dialog.Speak(Character.Clippy, "It is a marvel sight!");
-                        Dialog.Speak(Character.Clippy, $"But it seems to be turned off right now, which is odd, since the [{ColorConstants.USER_COLOR}]user[/] always has [{PronounReference.Possessive_Determiner}] computer turned on!");
+                        Dialog.Speak(Character.Clippy, $"But it seems to be turned off right now, which is odd, since the [{ColorConstants.USER_COLOR}]user[/] always has [{PronounType.Possessive_Determiner}] computer turned on!");
                         Dialog.Speak(Character.Clippy, ".........................");
                         Dialog.Speak(Character.Clippy, "Wha-what is that?!?");
                         Dialog.Speak(Character.Clippy, "RUN, IT'S A TROJAN!!!");
@@ -176,7 +177,7 @@ namespace Artefact.StorySystem
                 case RAM_STEP:
                     {
                         Dialog.Speak(Character.Clippy, $"Here is the [{ColorConstants.LOCATION_COLOR}]RAM[/]");
-                        Dialog.Speak(Character.Clippy, $"That is odd, there is no data in here, I guess that means that the [{ColorConstants.USER_COLOR}]user[/] does not have [{PronounReference.Possessive_Determiner}] computer turned on!");
+                        Dialog.Speak(Character.Clippy, $"That is odd, there is no data in here, I guess that means that the [{ColorConstants.USER_COLOR}]user[/] does not have [{PronounType.Possessive_Determiner}] computer turned on!");
                         GameSettings.RAMVisited = true;
                         Step = EMPTY_STEP;
                     }
@@ -184,24 +185,14 @@ namespace Artefact.StorySystem
             }
         }
 
-        /*
-         * Example senteces copied from: https://writing.umn.edu/sws/quickhelp/grammar/nonbinary.html
-         */
         static void CreateGender()
         {
-            GetGenderPronoun("____ wrote a carefully-researched article.", out string nominative);
-            GetGenderPronoun("I cited ____.", out string objective);
-            GetGenderPronoun("____ carefully-researched article won an award.", out string possessive_determiner);
-            GetGenderPronoun("That research is ____.", out string possessive_pronoun);
-            GetGenderPronoun($"{nominative} cited ____.", out string reflexive);
-            GameSettings.Pronouns = new Dictionary<PronounReference, string>()
-            {
-                { PronounReference.Nominative, nominative },
-                { PronounReference.Objective, objective },
-                { PronounReference.Possessive_Determiner, possessive_determiner },
-                { PronounReference.Possessive_Pronoun, possessive_pronoun },
-                { PronounReference.Reflexive, reflexive }
-            };
+            GetGenderPronoun("____ defeated an armada of paper clips.", out string nominative);
+            GetGenderPronoun("I defeated ____.", out string objective);
+            GetGenderPronoun("____ inventory is full.", out string possessiveDeterminer);
+            GetGenderPronoun("That health is ____.", out string possessivePronoun);
+            GetGenderPronoun($"{nominative} defeated ____.", out string reflexive);
+            GameSettings.Pronouns = new GenderPronouns(nominative, objective, possessiveDeterminer, possessivePronoun, reflexive);
         }
 
         static void GetGenderPronoun(string example, out string pronoun)

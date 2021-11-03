@@ -1,5 +1,6 @@
 ﻿using Artefact.DialogSystem;
 using Artefact.Entities;
+using Artefact.GenderSystem;
 using Artefact.Settings;
 using System;
 using System.Collections.Generic;
@@ -16,37 +17,6 @@ namespace Artefact.Misc
     {
         public static string[] ValidYes { get; } = new string[] { "y", "yes", "yeah", "yea" };
         public static string[] ValidNo { get; } = new string[] { "n", "no", "nah" };
-
-        static Dictionary<Gender, Dictionary<PronounReference, string>> pronounReferences = new Dictionary<Gender, Dictionary<PronounReference, string>>()
-        {
-            { Gender.Male, new Dictionary<PronounReference, string>()
-                {
-                    { PronounReference.Nominative, "he" },
-                    { PronounReference.Objective, "him" },
-                    { PronounReference.Possessive_Determiner, "his" },
-                    { PronounReference.Possessive_Pronoun, "his" },
-                    { PronounReference.Reflexive, "himself" }
-                }
-            },
-            { Gender.Female, new Dictionary<PronounReference, string>()
-                {
-                    { PronounReference.Nominative, "she" },
-                    { PronounReference.Objective, "her" },
-                    { PronounReference.Possessive_Determiner, "her" },
-                    { PronounReference.Possessive_Pronoun, "hers" },
-                    { PronounReference.Reflexive, "herself" }
-                }
-            },
-            { Gender.Other, new Dictionary<PronounReference, string>()
-                {
-                    { PronounReference.Nominative, "they" },
-                    { PronounReference.Objective, "them" },
-                    { PronounReference.Possessive_Determiner, "their" },
-                    { PronounReference.Possessive_Pronoun, "theirs" },
-                    { PronounReference.Reflexive, "themselves" }
-                }
-            }
-        };
 
         /// <summary>
         /// Get the user to select an option from an array, they are also able to type the name of the item to select it
@@ -125,7 +95,7 @@ namespace Artefact.Misc
                 foreach (StringColor stringColor in stringColors)
                 {
                     Console.ForegroundColor = stringColor.Color;
-                    Console.Write(ReplacePronouns(stringColor.Text));
+                    Console.Write(GenderUtils.ReplacePronouns(stringColor.Text));
                 }
                 Console.WriteLine();
             }
@@ -170,7 +140,7 @@ namespace Artefact.Misc
                 foreach (StringColor stringColor in stringColors)
                 {
                     Console.ForegroundColor = stringColor.Color;
-                    foreach (char letter in ReplacePronouns(stringColor.Text))
+                    foreach (char letter in GenderUtils.ReplacePronouns(stringColor.Text))
                     {
                         Console.Write(letter);
 #if !BYPASS
@@ -183,32 +153,6 @@ namespace Artefact.Misc
             Console.ResetColor();
         }
 
-        static string ReplacePronouns(string text)
-        {
-            if (GameSettings.Instance != null)
-            {
-                if (!pronounReferences.TryGetValue(GameSettings.PlayerGender, out var references))
-                {
-                    references = GameSettings.Pronouns;
-                }
-                foreach (PronounReference pronounReference in Enum.GetValues(typeof(PronounReference)))
-                {
-                    if (references.TryGetValue(pronounReference, out string reference))
-                    {
-                        text = text.Replace($"[{pronounReference}]", reference);
-                    }
-                }
-            }
-            return text;
-        }
-    }
 
-    enum PronounReference
-    {
-        Nominative,
-        Objective,
-        Possessive_Determiner,
-        Possessive_Pronoun,
-        Reflexive
     }
 }
