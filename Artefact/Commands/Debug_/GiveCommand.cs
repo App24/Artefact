@@ -20,23 +20,17 @@ namespace Artefact.Commands
 
         public void OnRun(List<string> args)
         {
-            Item item = Item.GetItem(args[0]);
+            bool lastArgAmount = int.TryParse(args[args.Count - 1], out int amount);
+            if (!lastArgAmount) amount = 1;
+
+            string itemName = args.GetRange(0, args.Count - (lastArgAmount ? 1 : 0)).Join(" ");
+
+            Item item = Item.GetItem(itemName);
 
             if (item == null)
             {
                 Utils.WriteColor($"[{ColorConstants.BAD_COLOR}]Not a valid item!");
                 return;
-            }
-
-            int amount = 1;
-
-            if (args.Count > 1)
-            {
-                if (!int.TryParse(args[1], out amount))
-                {
-                    Utils.WriteColor($"[{ColorConstants.BAD_COLOR}]Please provide a valid amount!");
-                    return;
-                }
             }
 
             Map.Player.Inventory.AddItem(new ItemData(item, amount), true);

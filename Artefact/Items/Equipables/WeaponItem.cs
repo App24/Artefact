@@ -1,4 +1,5 @@
-﻿using Artefact.Entities;
+﻿using Artefact.CraftingSystem;
+using Artefact.Entities;
 using Artefact.InventorySystem;
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,7 @@ namespace Artefact.Items.Equipables
     {
         public IntRange Damage { get; }
 
-        public WeaponItem(string name, IntRange damage, params ItemData[] crafting) : base(name, EquipableType.Weapon, crafting)
+        public WeaponItem(string name, IntRange damage, params CraftData[] craftData) : base(name, EquipableType.Weapon, craftData)
         {
             Damage = damage;
         }

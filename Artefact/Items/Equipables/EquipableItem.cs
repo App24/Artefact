@@ -1,4 +1,5 @@
-﻿using Artefact.InventorySystem;
+﻿using Artefact.CraftingSystem;
+using Artefact.InventorySystem;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -10,7 +11,7 @@ namespace Artefact.Items.Equipables
     {
         public EquipableType EquipableType { get; }
 
-        public EquipableItem(string name, EquipableType equipableType, params ItemData[] crafting) : base(name, crafting)
+        public EquipableItem(string name, EquipableType equipableType, params CraftData[] craftData) : base(name, craftData)
         {
             EquipableType = equipableType;
         }

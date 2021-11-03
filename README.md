@@ -13,12 +13,13 @@ Uni Assessment, I had to create a text-based adventure, I decided to set mine in
 - [x] Saving
 - [x] Dialog System
 - [x] Enemy Foundation
-- [ ] Interact with stuff in each level
+- [x] Crafting Improvement
 - [ ] Levels and XP
 - - [x] Level Up
 - - [x] Health Increasing
 - - [x] Damage Increasing
 - - [ ] Balancing
+- [ ] Interact with stuff in each level
 - [ ] Middle of story
 - [ ] End of story
 - [ ] Improve/balance combat
@@ -26,4 +27,3 @@ Uni Assessment, I had to create a text-based adventure, I decided to set mine in
 - [ ] Map Expansion/Improvements
 - [ ] More Characters
 - [ ] More Enemies
-- [ ] Crafting Improvement

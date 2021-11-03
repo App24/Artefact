@@ -75,7 +75,7 @@ namespace Artefact.Entities
             {
                 return Heal(-amount);
             }
-            
+
             amount = (long)(amount * GetNormalisedDefense());
             Health -= amount;
             if (Health <= 0)

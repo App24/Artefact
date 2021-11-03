@@ -10,7 +10,7 @@ namespace Artefact.CraftingSystem
 {
     static class Crafting
     {
-        public static void CraftItem(string itemName)
+        public static void CraftItem(string itemName, int amount)
         {
             Item item = Item.GetItem(itemName);
 
@@ -20,7 +20,7 @@ namespace Artefact.CraftingSystem
                 return;
             }
 
-            CraftItem(new ItemData(item, 1));
+            CraftItem(new ItemData(item, amount));
         }
 
         public static void CraftItem(ItemData item)
@@ -33,33 +33,55 @@ namespace Artefact.CraftingSystem
 
             Inventory inventory = Map.Player.Inventory;
 
-            List<ItemData> missingItems = new List<ItemData>();
+            List<List<ItemData>> missingItemsRecipes = new List<List<ItemData>>();
 
-            foreach (ItemData craftItem in item.Item.CraftItems)
+            for (int i = 0; i < item.Item.CraftData.Count; i++)
             {
-                if (!inventory.HasItem(craftItem, true))
+                CraftData craftData = item.Item.CraftData[i];
+
+                List<ItemData> missingItems = new List<ItemData>();
+
+                foreach (ItemData craftItem in craftData.CraftItems)
                 {
-                    int inventoryAmount = inventory.GetAmount(craftItem.Item);
-                    missingItems.Add(new ItemData(craftItem.Item, craftItem.Amount - inventoryAmount));
+                    ItemData itemData = craftItem * item.Amount;
+                    if (!inventory.HasItem(itemData, true))
+                    {
+                        int inventoryAmount = inventory.GetAmount(itemData.Item);
+                        missingItems.Add(new ItemData(itemData.Item, itemData.Amount - inventoryAmount));
+                    }
                 }
+
+                if (missingItems.Count > 0)
+                {
+                    missingItemsRecipes.Add(missingItems);
+                    continue;
+                }
+
+                inventory.AddItem(new ItemData(item.Item, craftData.Amount * item.Amount), true);
+
+                foreach (ItemData craftItem in craftData.CraftItems)
+                {
+                    inventory.RemoveItem(craftItem * item.Amount);
+                }
+
+                missingItemsRecipes.Clear();
+
+                break;
             }
 
-            if (missingItems.Count > 0)
+            if (missingItemsRecipes.Count > 0)
             {
                 Utils.WriteColor($"[{ColorConstants.BAD_COLOR}]You are missing items needed to craft that!");
-                Utils.WriteColor("Missing:");
-                foreach (ItemData itemData in missingItems)
+                for (int i = 0; i < missingItemsRecipes.Count; i++)
                 {
-                    Utils.WriteColor($"- {itemData.ToColoredString()}");
+                    List<ItemData> missingItems = missingItemsRecipes[i];
+                    Utils.WriteColor($"Recipe: #{i + 1}");
+                    Utils.WriteColor("Missing:");
+                    foreach (ItemData itemData in missingItems)
+                    {
+                        Utils.WriteColor($"- {itemData.ToColoredString()}");
+                    }
                 }
-                return;
-            }
-
-            inventory.AddItem(item, true);
-
-            foreach (ItemData craftItem in item.Item.CraftItems)
-            {
-                inventory.RemoveItem(craftItem);
             }
         }
     }

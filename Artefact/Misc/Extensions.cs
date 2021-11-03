@@ -18,13 +18,7 @@ namespace Artefact.Misc
             if (source == null) throw new ArgumentNullException("source");
             if (action == null) throw new ArgumentNullException("action");
 
-            foreach (T item in source)
-            {
-                E value = action(item);
-                if (value != null)
-                    yield return value;
-            }
-
+            return source.Map((item, _) => action(item));
         }
 
         public static IEnumerable<E> Map<T, E>(this IEnumerable<T> source, Func<T, int, E> action)

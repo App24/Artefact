@@ -24,7 +24,7 @@ namespace Artefact.Saving
         static void SaveClass<T>(string fileName, T value)
         {
             string directory = Path.GetDirectoryName(fileName);
-            if(!string.IsNullOrEmpty(directory))
+            if (!string.IsNullOrEmpty(directory))
                 Directory.CreateDirectory(directory);
             FileStream stream = File.Create(fileName);
             BinaryFormatter formatter = new BinaryFormatter();
@@ -86,7 +86,7 @@ namespace Artefact.Saving
             SaveClass(Path.Combine(SAVE_FOLDER, GameSettings.SaveSlot.ToString(), fileName), new Save());
         }
 
-        public static LoadResult LoadGame(string fileName = SAVE_FILE, int slot=0)
+        public static LoadResult LoadGame(string fileName = SAVE_FILE, int slot = 0)
         {
             if (slot <= 0)
                 slot = GameSettings.SaveSlot;
@@ -138,10 +138,10 @@ namespace Artefact.Saving
         public static List<string> GetSaveGameNames()
         {
             List<string> saves = new List<string>();
-            for(int i = 1; i < SAVE_SLOTS + 1; i++)
+            for (int i = 1; i < SAVE_SLOTS + 1; i++)
             {
                 string saveName = "";
-                if(!Directory.Exists(Path.Combine(SAVE_FOLDER, saveName)))
+                if (!Directory.Exists(Path.Combine(SAVE_FOLDER, saveName)))
                 {
                     saveName = $"[{ColorConstants.BAD_COLOR}]Empty[/]";
                 }
@@ -165,7 +165,7 @@ namespace Artefact.Saving
 
         public static bool HasSavegame(int slot)
         {
-            return LoadClass<Save>(Path.Combine(SAVE_FOLDER, slot.ToString(), SAVE_FILE)).LoadResult==LoadResult.Success;
+            return LoadClass<Save>(Path.Combine(SAVE_FOLDER, slot.ToString(), SAVE_FILE)).LoadResult == LoadResult.Success;
         }
     }
 

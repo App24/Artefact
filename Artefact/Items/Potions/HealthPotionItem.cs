@@ -1,4 +1,5 @@
-﻿using Artefact.InventorySystem;
+﻿using Artefact.CraftingSystem;
+using Artefact.InventorySystem;
 using Artefact.MapSystem;
 using Artefact.Misc;
 using System;
@@ -12,7 +13,7 @@ namespace Artefact.Items.Potions
     {
         public HealthPotionType HealthPotionType { get; }
 
-        public HealthPotionItem(HealthPotionType healthPotionType, params ItemData[] craftings) : base($"{healthPotionType} Health Potion", craftings)
+        public HealthPotionItem(HealthPotionType healthPotionType, params CraftData[] craftData) : base($"{healthPotionType} Health Potion", craftData)
         {
             HealthPotionType = healthPotionType;
         }
@@ -46,7 +47,8 @@ namespace Artefact.Items.Potions
                 case HealthPotionType.Ginormous:
                     {
                         healthAmount = Map.Player.MaxHealth;
-                    }break;
+                    }
+                    break;
                 default:
                     {
                         Utils.WriteColor($"[{ColorConstants.ERROR_COLOR}]{HealthPotionType} does not have set health regeneration!");

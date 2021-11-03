@@ -66,7 +66,7 @@ namespace Artefact.States
                     saveSlot = false;
                 else
                 {
-                    bool replace=true;
+                    bool replace = true;
                     if (SaveSystem.HasSavegame(selection + 1))
                     {
                         replace = Utils.GetConfirmation("[red]There is already a save game stored there. Override it?");

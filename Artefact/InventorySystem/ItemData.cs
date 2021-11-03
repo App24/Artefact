@@ -38,5 +38,10 @@ namespace Artefact.InventorySystem
             }
             return false;
         }
+
+        public static ItemData operator *(ItemData a, int b)
+        {
+            return new ItemData(a.Item, a.Amount * b);
+        }
     }
 }

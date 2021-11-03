@@ -26,7 +26,7 @@ namespace Artefact.Commands
                 options.Add("Exit");
                 int selection = Utils.GetSelection(options.ToArray());
                 if (selection >= craftableItems.Count) return;
-                Crafting.CraftItem(craftableItems[selection].Name);
+                Crafting.CraftItem(craftableItems[selection].Name, 1);
             }
             else
             {
@@ -35,9 +35,12 @@ namespace Artefact.Commands
                     Console.WriteLine(NoArgsResponse);
                     return;
                 }
-                string itemName = args.Join(" ");
+                bool lastArgAmount = int.TryParse(args[args.Count - 1], out int amount);
+                if (!lastArgAmount) amount = 1;
 
-                Crafting.CraftItem(itemName);
+                string itemName = args.GetRange(0, args.Count - (lastArgAmount ? 1 : 0)).Join(" ");
+
+                Crafting.CraftItem(itemName, amount);
             }
         }
     }

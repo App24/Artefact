@@ -1,4 +1,5 @@
-﻿using Artefact.InventorySystem;
+﻿using Artefact.CraftingSystem;
+using Artefact.InventorySystem;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -11,7 +12,7 @@ namespace Artefact.Items.Equipables
         public int Defense { get; }
         public ArmorType ArmorType { get; }
 
-        public ArmorItem(string name, int defense, ArmorType armorType, params ItemData[] crafting) : base(name, EquipableType.Armor, crafting)
+        public ArmorItem(string name, int defense, ArmorType armorType, params CraftData[] craftData) : base(name, EquipableType.Armor, craftData)
         {
             Defense = defense;
             ArmorType = armorType;
