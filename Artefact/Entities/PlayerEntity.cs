@@ -33,10 +33,9 @@ namespace Artefact.Entities
             Inventory = new Inventory();
         }
 
-        public new void Damage(int amount)
+        public void Damage(int amount)
         {
-            Utils.WriteColor($"You have been dealt [{ColorConstants.BAD_COLOR}]{amount}[/] damage");
-            base.Damage(amount);
+            Utils.WriteColor($"You have been dealt [{ColorConstants.BAD_COLOR}]{base.Damage(amount)}[/] damage");
 
             if (Health <= 0)
             {
@@ -44,10 +43,9 @@ namespace Artefact.Entities
             }
         }
 
-        public new void Heal(int amount)
+        public void Heal(int amount)
         {
-            Utils.WriteColor($"Healed by [{ColorConstants.GOOD_COLOR}]{amount}[/] points!");
-            base.Heal(amount);
+            Utils.WriteColor($"Healed by [{ColorConstants.GOOD_COLOR}]{base.Heal(amount)}[/] points!");
         }
 
         public override void AddXP(int amount)

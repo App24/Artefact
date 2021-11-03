@@ -43,6 +43,10 @@ namespace Artefact.Items.Potions
                         healthAmount = Map.Player.MaxHealth / 2f;
                     }
                     break;
+                case HealthPotionType.Ginormous:
+                    {
+                        healthAmount = Map.Player.MaxHealth;
+                    }break;
                 default:
                     {
                         Utils.WriteColor($"[{ColorConstants.ERROR_COLOR}]{HealthPotionType} does not have set health regeneration!");
@@ -59,6 +63,7 @@ namespace Artefact.Items.Potions
     {
         Small,
         Medium,
-        Large
+        Large,
+        Ginormous
     }
 }

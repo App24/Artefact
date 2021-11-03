@@ -1,4 +1,5 @@
 ﻿using Artefact.MapSystem;
+using Artefact.Misc;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -56,31 +57,32 @@ namespace Artefact.Entities
             Map.RemoveEntity(this);
         }
 
-        public void Heal(long amount)
+        public long Heal(long amount)
         {
             if (amount < 0)
             {
-                Damage(-amount);
-                return;
+                return Damage(-amount);
             }
 
             Health += amount;
             if (Health > MaxHealth) Health = MaxHealth;
+            return amount;
         }
 
-        public void Damage(long amount)
+        public long Damage(long amount)
         {
             if (amount < 0)
             {
-                Heal(-amount);
-                return;
+                return Heal(-amount);
             }
-
-            Health -= (int)Math.Ceiling(amount * GetNormalisedDefense());
+            
+            amount = (long)(amount * GetNormalisedDefense());
+            Health -= amount;
             if (Health <= 0)
             {
                 Kill();
             }
+            return amount;
         }
 
         public float GetNormalisedDefense()
@@ -91,7 +93,7 @@ namespace Artefact.Entities
         public int GetRandomDamage()
         {
             Random random = new Random();
-            return (int)Math.Ceiling(random.Next(HitDamage.Min, HitDamage.Max + 1) * HitModifierLevel);
+            return (int)(random.Next(HitDamage.Min, HitDamage.Max + 1) * HitModifierLevel);
         }
 
         public int GetLevelXP()
@@ -130,7 +132,11 @@ namespace Artefact.Entities
 
         public IntRange(int min, int max)
         {
+#if !DISABLE_RNG
             Min = min;
+#else
+            Min = max;
+#endif
             Max = max;
         }
 
@@ -140,16 +146,6 @@ namespace Artefact.Entities
         {
             if (Min == Max) return $"{Min}";
             return $"{Min} - {Max}";
-        }
-
-        public static IntRange operator +(IntRange a, IntRange b)
-        {
-            return new IntRange(a.Min + b.Min, a.Max + b.Max);
-        }
-
-        public static IntRange operator -(IntRange a, IntRange b)
-        {
-            return new IntRange(a.Min - b.Min, a.Max - b.Max);
         }
 
         public static IntRange operator *(IntRange a, float b)

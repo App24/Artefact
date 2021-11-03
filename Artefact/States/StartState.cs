@@ -66,10 +66,18 @@ namespace Artefact.States
                     saveSlot = false;
                 else
                 {
-                    SaveSystem.NewGame();
-                    GameSettings.SaveSlot = selection + 1;
-                    StateMachine.CleanStates();
-                    StateMachine.AddState(new GameState());
+                    bool replace=true;
+                    if (SaveSystem.HasSavegame(selection + 1))
+                    {
+                        replace = Utils.GetConfirmation("[red]There is already a save game stored there. Override it?");
+                    }
+                    if (replace)
+                    {
+                        SaveSystem.NewGame();
+                        GameSettings.SaveSlot = selection + 1;
+                        StateMachine.CleanStates();
+                        StateMachine.AddState(new GameState());
+                    }
                 }
             }
 

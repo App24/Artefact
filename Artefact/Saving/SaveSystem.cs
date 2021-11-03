@@ -162,6 +162,11 @@ namespace Artefact.Saving
 
             return saves;
         }
+
+        public static bool HasSavegame(int slot)
+        {
+            return LoadClass<Save>(Path.Combine(SAVE_FOLDER, slot.ToString(), SAVE_FILE)).LoadResult==LoadResult.Success;
+        }
     }
 
     class LoadDetails<T>

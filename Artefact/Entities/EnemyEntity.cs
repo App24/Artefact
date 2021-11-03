@@ -37,7 +37,7 @@ namespace Artefact.Entities
                         MaxHealth = 50;
                         Defense = 1;
                         HitDamage = new IntRange(5, 8);
-                        ItemDrops.Add(new ItemDropData(Item.BinaryItem, 5));
+                        ItemDrops.Add(new ItemDropData(Item.BitItem, 8));
                         ASCIIRepresentation = @"
      ,-^-.
      |\/\|
@@ -54,7 +54,7 @@ namespace Artefact.Entities
                         MaxHealth = 60;
                         Defense = 0;
                         HitDamage = new IntRange(5, 7);
-                        ItemDrops.Add(new ItemDropData(Item.BinaryItem, 8));
+                        ItemDrops.Add(new ItemDropData(Item.BitItem, 13));
                         ASCIIRepresentation = @"
                _(\
       _____   /  .|
@@ -70,7 +70,7 @@ namespace Artefact.Entities
                         MaxHealth = 30;
                         Defense = 3;
                         HitDamage = new IntRange(7, 10);
-                        ItemDrops.Add(new ItemDropData(Item.BinaryItem, 12, 3));
+                        ItemDrops.Add(new ItemDropData(Item.BitItem, 18, 5));
 
                         ASCIIRepresentation = @"
      .--------.
@@ -92,10 +92,9 @@ namespace Artefact.Entities
             Health = MaxHealth;
         }
 
-        public new void Damage(int amount)
+        public void Damage(int amount)
         {
-            Utils.WriteColor($"You dealt [{ColorConstants.GOOD_COLOR}]{amount}[/] damage to [{ColorConstants.ENEMY_COLOR}]{EnemyType}[/]");
-            base.Damage(amount);
+            Utils.WriteColor($"You dealt [{ColorConstants.GOOD_COLOR}]{base.Damage(amount)}[/] damage to [{ColorConstants.ENEMY_COLOR}]{EnemyType}[/]");
         }
     }
 
