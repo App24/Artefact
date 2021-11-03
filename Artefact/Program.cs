@@ -11,16 +11,16 @@ namespace Artefact
 {
     class Program
     {
-
-        const int MF_BYCOMMAND = 0x00000000;
-        const int SC_MAXIMIZE = 0xF030;
-        const int SC_SIZE = 0xF000;
-
         /**
          * Disable resizing and maximise button
          * Credit: Patrik Bak
          * Link: https://social.msdn.microsoft.com/Forums/vstudio/en-US/1aa43c6c-71b9-42d4-aa00-60058a85f0eb/c-console-window-disable-resize?forum=csharpgeneral
          */
+
+        const int MF_BYCOMMAND = 0x00000000;
+        const int SC_MAXIMIZE = 0xF030;
+        const int SC_SIZE = 0xF000;
+
         [DllImport("user32.dll")]
         public static extern int DeleteMenu(IntPtr hMenu, int nPosition, int wFlags);
 

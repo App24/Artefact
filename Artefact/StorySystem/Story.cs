@@ -92,44 +92,6 @@ namespace Artefact.StorySystem
                             GameSettings.KnowsClippy = true;
                         }
 
-                        Utils.WriteColor(@"[green]
-                                                  
-                         ...                      
-                   .,,*//(((((//*.                
-                 ..,/(         (#(/*              
-               ..,/*             /#//             
-              .,,/,               %(/.            
-         ##@@@@@&@@@@             %(/,            
-      %%,    ..*/                ,(//             
-          ...,,/.                @@@@@@@@&,       
-                 .*.            .,.*     .&&(     
-       .###%&@@%   .*               ....    .&.   
-  ,    @%%%&&@@@@. .*/            ..     .*   .   
-   ,.   (@@@@@@@ ..**.         #%#%&&@@(  .,*     
-    .**,.,.....,,*/,     .,   .@@@@@@@@@. .,*.    
-          .*##%.           ,,.   (%&&%* ..**,     
-           ,(%%              .*,,,,.,,***/,       
-           ,###.               %&&%               
-           ,###. (%%*          %%%#     .##,      
-           ,##(. (##,          %%#/    *(#%       
-           ,#((. /#(.          %%(,   *(#%        
-           .#(/* /((.          ##(,   //#/        
-            %(/* *((,          #%(.  ,(/#.        
-            #(*/ *(/*          (%(.  *//#         
-            /#** .(/*          *#(*  .(/(.        
-            ,%/,. ((*.         ,(/*   (//,        
-             %/., ,%/,         **/*   (///        
-             /#*,  ,%(,,      ,,,/    ((//        
-             .&/..   /%/,..,.*/(*  .  (#(/        
-              (#,,      .,*/,.        /#(/        
-               &(,,                   /#(/        
-                %/..                  *((*        
-                .%*.,                .*//.        
-                  %(,,              .,*/.         
-                   *%(,,,        ,,.,*,           
-                     .%%#/,,,,,,**//.             
-                                                  
-");
                         Dialog.Speak(Character.Clippy, "May I ask what your name is?");
                         NextStep();
                     }
@@ -141,7 +103,7 @@ namespace Artefact.StorySystem
                         while (string.IsNullOrEmpty(name))
                         {
                             name = Console.ReadLine();
-                            if(!Utils.GetCharacterConfirmation(Dialog.GetCharacterVoiceLine(Character.Clippy, $"So your name is [{ColorConstants.CHARACTER_COLOR}]{name}[/]?"))){
+                            if(!Utils.GetCharacterConfirmation(Character.Clippy, $"So your name is [{ColorConstants.CHARACTER_COLOR}]{name}[/]?")){
                                 name = null;
                                 Dialog.Speak(Character.Clippy, "What is your name then?");
                             }
@@ -149,8 +111,27 @@ namespace Artefact.StorySystem
 #else
                         name = "Debug";
 #endif
+                        Gender gender = Gender.Other;
+
+#if !BYPASS
+                        while (true)
+                        {
+                            gender = (Gender)Utils.GetSelection(Enum.GetNames(typeof(Gender)));
+                            if (Utils.GetCharacterConfirmation(Character.Clippy, $"So your gender is {gender}?"))
+                            {
+                                break;
+                            }
+                        }
+
+                        if (gender == Gender.Custom)
+                        {
+                            Dialog.Speak(Character.Clippy, "I will now ask you questions to set up your pronouns properly");
+                            CreateGender();
+                        }
+#endif
 
                         GameSettings.PlayerName = name;
+                        GameSettings.PlayerGender = gender;
                         Dialog.Speak(Character.Clippy, $"Nice to meet you, [{ColorConstants.CHARACTER_COLOR}]{name}[/]");
 
                         Map.SpawnPlayer();
@@ -179,7 +160,7 @@ namespace Artefact.StorySystem
                         Dialog.Speak(Character.Clippy, $"This is the [{ColorConstants.LOCATION_COLOR}]CPU[/]!");
                         Dialog.Speak(Character.Clippy, $"This is where everything the [{ColorConstants.USER_COLOR}]user[/] does is processed!");
                         Dialog.Speak(Character.Clippy, "It is a marvel sight!");
-                        Dialog.Speak(Character.Clippy, $"But it seems to be turned off right now, which is odd, since the [{ColorConstants.USER_COLOR}]user[/] always has their computer turned on!");
+                        Dialog.Speak(Character.Clippy, $"But it seems to be turned off right now, which is odd, since the [{ColorConstants.USER_COLOR}]user[/] always has [{PronounReference.Possessive_Determiner}] computer turned on!");
                         Dialog.Speak(Character.Clippy, ".........................");
                         Dialog.Speak(Character.Clippy, "Wha-what is that?!?");
                         Dialog.Speak(Character.Clippy, "RUN, IT'S A TROJAN!!!");
@@ -187,7 +168,7 @@ namespace Artefact.StorySystem
                         Thread.Sleep((int)GlobalSettings.TextSpeed * 15);
 #endif
                         GameSettings.EnableCommands = false;
-                        Fight.StartFight(Map.Player.Location, new BattleParameters(Entities.EnemyType.Trojan, new IntRange(1, 1), 1));
+                        Fight.StartFight(Map.Player.Location, new BattleParameters(EnemyType.Trojan, new IntRange(1, 1), 1));
                         GameSettings.CPUVisited = true;
                         //Step = EMPTY_STEP;
                     }
@@ -195,11 +176,48 @@ namespace Artefact.StorySystem
                 case RAM_STEP:
                     {
                         Dialog.Speak(Character.Clippy, $"Here is the [{ColorConstants.LOCATION_COLOR}]RAM[/]");
-                        Dialog.Speak(Character.Clippy, $"That is odd, there is no data in here, I guess that means that the [{ColorConstants.USER_COLOR}]user[/] does not have the computer turned on!");
+                        Dialog.Speak(Character.Clippy, $"That is odd, there is no data in here, I guess that means that the [{ColorConstants.USER_COLOR}]user[/] does not have [{PronounReference.Possessive_Determiner}] computer turned on!");
                         GameSettings.RAMVisited = true;
                         Step = EMPTY_STEP;
                     }
                     break;
+            }
+        }
+
+        /*
+         * Example senteces copied from: https://writing.umn.edu/sws/quickhelp/grammar/nonbinary.html
+         */
+        static void CreateGender()
+        {
+            GetGenderPronoun("____ wrote a carefully-researched article.", out string nominative);
+            GetGenderPronoun("I cited ____.", out string objective);
+            GetGenderPronoun("____ carefully-researched article won an award.", out string possessive_determiner);
+            GetGenderPronoun("That research is ____.", out string possessive_pronoun);
+            GetGenderPronoun($"{nominative} cited ____.", out string reflexive);
+            GameSettings.Pronouns = new Dictionary<PronounReference, string>()
+            {
+                { PronounReference.Nominative, nominative },
+                { PronounReference.Objective, objective },
+                { PronounReference.Possessive_Determiner, possessive_determiner },
+                { PronounReference.Possessive_Pronoun, possessive_pronoun },
+                { PronounReference.Reflexive, reflexive }
+            };
+        }
+
+        static void GetGenderPronoun(string example, out string pronoun)
+        {
+            pronoun = null;
+            while (string.IsNullOrEmpty(pronoun))
+            {
+                Dialog.Speak(Character.Clippy, "Complete the following example:");
+                Utils.WriteColor(example);
+                pronoun = Console.ReadLine().Trim();
+                Dialog.Speak(Character.Clippy, "So the example would be:");
+                if (!Utils.GetConfirmation(example.Replace("____", pronoun)))
+                {
+                    Dialog.Speak(Character.Clippy, "Please type your valid pronoun!");
+                    pronoun = null;
+                }
             }
         }
     }

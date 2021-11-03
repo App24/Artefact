@@ -69,14 +69,15 @@ namespace Artefact.Entities
             return amount;
         }
 
-        public long Damage(long amount)
+        public long Damage(long amount, bool ignoreDefense = false)
         {
             if (amount < 0)
             {
                 return Heal(-amount);
             }
 
-            amount = (long)(amount * GetNormalisedDefense());
+            if (!ignoreDefense)
+                amount = (long)(amount * GetNormalisedDefense());
             Health -= amount;
             if (Health <= 0)
             {

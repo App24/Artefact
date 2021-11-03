@@ -19,7 +19,7 @@ namespace Artefact.Entities
         {
             get
             {
-                return new IntRange((int)Math.Floor(GetLevelXP() * 0.45f), (int)Math.Ceiling(GetLevelXP() * 0.55f));
+                return new IntRange((int)Math.Floor(GetLevelXP() * 0.3f), (int)Math.Ceiling(GetLevelXP() * 0.45f));
             }
         }
 
@@ -88,13 +88,78 @@ namespace Artefact.Entities
 '.________________.'";
                     }
                     break;
+                case EnemyType.AdWare:
+                    {
+                        MaxHealth = 20;
+                        Defense = 1;
+                        HitDamage = new IntRange(3, 4);
+                        ItemDrops.Add(new ItemDropData(Item.BitItem, 6, 3));
+
+                        ASCIIRepresentation = @"
+  _____             _                 
+ |  __ \           | |                
+ | |  | | ___   ___| |_ ___  _ __ ___ 
+ | |  | |/ _ \ / __| __/ _ \| '__/ __|
+ | |__| | (_) | (__| || (_) | |  \__ \
+ |_____/ \___/_\___|\__\___/|_|  |___/
+        | |  | |     | |              
+        | |__| | __ _| |_ ___         
+        |  __  |/ _` | __/ _ \        
+        | |  | | (_| | ||  __/        
+     ___|_|_ |_|\__,_|\__\___|        
+    |__   __| |                       
+       | |  | |__   ___ _ __ ___      
+       | |  | '_ \ / _ | '_ ` _ \     
+       | |  | | | |  __| | | | | |    
+       |_|  |_| |_|\___|_| |_| |_|    
+                                      
+                                      ";
+                    }
+                    break;
+                /*
+                 * https://textart.sh/topic/spy
+                 */
+                case EnemyType.SpyWare:
+                    {
+                        MaxHealth = 30;
+                        Defense = 7;
+                        HitDamage = new IntRange(2, 4);
+                        ItemDrops.Add(new ItemDropData(Item.BitItem, 20, 10));
+
+                        ASCIIRepresentation = @"
+                ████████████              
+              ██▓▓▓▓▓▓▓▓▓▓▓▓██            
+            ██▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓██          
+            ██▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓██        
+          ██▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓██        
+          ██▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓██        
+          ██▓▓▓▓▓▓░░  ████░░██  ██        
+            ██▓▓▓▓░░  ████░░██  ██        
+          ████▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓██        
+      ████▓▓▓▓██▓▓░░████████░░██████      
+    ██▓▓▓▓▓▓▓▓▓▓██░░░░░░░░░░██▓▓▓▓▓▓██    
+    ██▓▓▓▓▓▓▓▓▓▓▓▓██████████▓▓▓▓▓▓▓▓██    
+  ██▓▓▓▓▓▓▓▓██▓▓▓▓  ██  ▓▓▓▓██▓▓▓▓▓▓▓▓██  
+  ██▓▓▓▓██████▓▓▓▓▓▓██  ▓▓▓▓██████▓▓▓▓██  
+  ██▓▓▓▓▓▓████▓▓▓▓▓▓▓▓▓▓▓▓▓▓████▓▓▓▓▓▓██  
+  ██▓▓▓▓▓▓████▓▓▓▓▓▓▓▓▓▓▓▓▓▓████▓▓▓▓▓▓██  
+    ██████  ██▓▓▓▓▓▓▓▓▓▓▓▓▓▓██  ██████    
+          ██▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓██          
+        ██▓▓▓▓▓▓▓▓▓▓██▓▓▓▓▓▓▓▓▓▓██        
+      ████▓▓▓▓▓▓▓▓██  ██▓▓▓▓▓▓▓▓████      
+  ████▓▓▓▓▓▓▓▓▓▓██      ██▓▓▓▓▓▓▓▓▓▓████  
+██▓▓▓▓▓▓▓▓▓▓▓▓▓▓██      ██▓▓▓▓▓▓▓▓▓▓▓▓▓▓██
+██████████████████      ██████████████████
+";
+                    }
+                    break;
             }
             Health = MaxHealth;
         }
 
-        public void Damage(int amount)
+        public void Damage(int amount, bool ignoreDefense = false)
         {
-            Utils.WriteColor($"You dealt [{ColorConstants.GOOD_COLOR}]{base.Damage(amount)}[/] damage to [{ColorConstants.ENEMY_COLOR}]{EnemyType}[/]");
+            Utils.WriteColor($"You dealt [{ColorConstants.GOOD_COLOR}]{base.Damage(amount, ignoreDefense)}[/] damage to [{ColorConstants.ENEMY_COLOR}]{EnemyType}[/]");
         }
     }
 
@@ -103,7 +168,9 @@ namespace Artefact.Entities
     {
         Virus = 1,
         Trojan = 2,
-        RansomWare = 4
+        RansomWare = 4,
+        AdWare = 8,
+        SpyWare = 16
     }
 
     [Serializable]

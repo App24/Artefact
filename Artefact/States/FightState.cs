@@ -162,7 +162,7 @@ namespace Artefact.States
                     {
                         Enemies.ForEach(enemy =>
                         {
-                            enemy.Damage(enemy.MaxHealth);
+                            enemy.Damage(enemy.MaxHealth, true);
                         });
                     }
                     break;
