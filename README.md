@@ -19,7 +19,7 @@ Uni Assessment, I had to create a text-based adventure, I decided to set mine in
 - - [x] Health Increasing
 - - [x] Damage Increasing
 - - [ ] Balancing
-- [ ] Interact with stuff in each level
+- [ ] Interact with stuff in each location
 - [ ] Middle of story
 - [ ] End of story
 - [ ] Improve/balance combat

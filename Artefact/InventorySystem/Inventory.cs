@@ -116,9 +116,9 @@ namespace Artefact.InventorySystem
                         {
                             ArmorItem armorItem = (ArmorItem)item;
                             RemoveItem(new ItemData(item));
-                            if (Armor.ContainsKey(armorItem.ArmorType))
+                            if(Armor.TryGetValue(armorItem.ArmorType, out ArmorItem equippedArmor))
                             {
-                                AddItem(new ItemData(item));
+                                AddItem(new ItemData(equippedArmor));
                             }
                             Armor.AddOrReplace(armorItem.ArmorType, armorItem);
                         }

@@ -35,19 +35,8 @@ namespace Artefact.Items
         #endregion
 
         #region Armor
-        #region Bit
-        public static ArmorItem BitHelmetItem { get; } = new ArmorItem("Bit Helmet", 2, ArmorType.Helmet, new CraftData(new ItemData(BitItem, 5)));
-        public static ArmorItem BitChestplateItem { get; } = new ArmorItem("Bit Chestplate", 4, ArmorType.Chestplate, new CraftData(new ItemData(BitItem, 8)));
-        public static ArmorItem BitLeggingsItem { get; } = new ArmorItem("Bit Leggings", 3, ArmorType.Leggings, new CraftData(new ItemData(BitItem, 7)));
-        public static ArmorItem BitBootsItem { get; } = new ArmorItem("Bit Boots", 2, ArmorType.Boots, new CraftData(new ItemData(BitItem, 4)));
-        #endregion
-
-        #region Byte
-        public static ArmorItem ByteHelmetItem { get; } = new ArmorItem("Byte Helmet", 5, ArmorType.Helmet, new CraftData(new ItemData(ByteItem, 5)));
-        public static ArmorItem ByteChestplateItem { get; } = new ArmorItem("Byte Chestplate", 9, ArmorType.Chestplate, new CraftData(new ItemData(ByteItem, 8)));
-        public static ArmorItem ByteLeggingsItem { get; } = new ArmorItem("Byte Leggings", 7, ArmorType.Leggings, new CraftData(new ItemData(ByteItem, 7)));
-        public static ArmorItem ByteBootsItem { get; } = new ArmorItem("Byte Boots", 4, ArmorType.Boots, new CraftData(new ItemData(ByteItem, 4)));
-        #endregion
+        public static ArmorItems BitArmor { get; } = ArmorItemFactory.CreateArmor("Bit", BitItem, 2);
+        public static ArmorItems ByteArmor { get; } = ArmorItemFactory.CreateArmor("Byte", ByteItem, 5);
         #endregion
 
         #region Potions
