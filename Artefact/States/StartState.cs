@@ -58,6 +58,7 @@ namespace Artefact.States
             }
             else
             {
+                Utils.WriteColor("Select a slot to save your game in!");
                 List<string> options = SaveSystem.GetSaveGameNames();
                 options.Add("Back");
                 int selection = Utils.GetSelection(options.ToArray());
@@ -69,7 +70,7 @@ namespace Artefact.States
                     bool replace = true;
                     if (SaveSystem.HasSavegame(selection + 1))
                     {
-                        replace = Utils.GetConfirmation("[red]There is already a save game stored there. Override it?");
+                        replace = Utils.GetConfirmation($"[{ColorConstants.WARNING_COLOR}]There is already a save game stored there. [{ColorConstants.BAD_COLOR}]Override it?");
                     }
                     if (replace)
                     {

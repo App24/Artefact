@@ -25,10 +25,11 @@ namespace Artefact.Settings
         #region Visited
         public static bool CPUVisited { get { return Instance.cpuVisited; } set { Instance.cpuVisited = value; } }
         public static bool RAMVisited { get { return Instance.ramVisited; } set { Instance.ramVisited = value; } }
+        public static bool HDDVisited { get { return Instance.hddVisited; } set { Instance.hddVisited = value; } }
         #endregion
 
         #region Session Timing
-        public static long GameStartDate { get { return Instance.gameStartDate; } set { Instance.gameStartDate = value; } }
+        public static long GameStartDate { get; set; }
         public static long SessionStartDate { get; set; }
         public static long GameTime { get { return Instance.gameTime; } set { Instance.gameTime = value; } }
         #endregion
@@ -36,13 +37,12 @@ namespace Artefact.Settings
         public static GameSettings Instance { get; set; }
 
         bool knowsClippy;
-        public string playerName { get; set; }
+        public string playerName { get; private set; }
         Gender playerGender = Gender.Other;
         GenderPronouns pronouns;
         bool enableCommands;
-        bool cpuVisited, ramVisited;
+        bool cpuVisited, ramVisited, hddVisited;
         int slot = 1;
-        long gameStartDate;
         public long gameTime { get; private set; }
 
         public GameSettings()

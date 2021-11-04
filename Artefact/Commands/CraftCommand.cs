@@ -15,7 +15,7 @@ namespace Artefact.Commands
         public string[] Aliases => new string[] { "create" };
 
         public bool HasArguments => false;
-        public string NoArgsResponse => "(Item)";
+        public string NoArgsResponse => "(Item) (Amount)";
 
         public void OnRun(List<string> args)
         {

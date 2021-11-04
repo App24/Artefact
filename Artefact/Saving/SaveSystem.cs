@@ -21,7 +21,7 @@ namespace Artefact.Saving
 
         public static bool HasAnySaveGames => Directory.Exists(SAVE_FOLDER);
 
-        static void SaveClass<T>(string fileName, T value)
+        static void SaveClass<T>(string fileName, T value) where T : class
         {
             string directory = Path.GetDirectoryName(fileName);
             if (!string.IsNullOrEmpty(directory))
@@ -116,11 +116,6 @@ namespace Artefact.Saving
                             Utils.WriteColor($"[{ColorConstants.ERROR_COLOR}]There is no save file!");
                         }
                         break;
-                    case LoadResult.InvalidVersion:
-                        {
-                            Utils.WriteColor($"[{ColorConstants.ERROR_COLOR}]The save version is not a match!");
-                        }
-                        break;
                 }
             }
             return loadDetails.LoadResult;
@@ -184,7 +179,6 @@ namespace Artefact.Saving
     enum LoadResult
     {
         Success,
-        InvalidVersion,
         NoFile,
         InvalidFile
     }

@@ -37,16 +37,6 @@ namespace Artefact.Misc
             }
         }
 
-        public static bool Contains<T>(this T[] array, T value)
-        {
-            return array.Contains((val) => val.Equals(value));
-        }
-
-        public static bool Contains<T>(this T[] array, Func<T, bool> action)
-        {
-            return Array.Exists(array, val => action(val));
-        }
-
         public static IEnumerable<T> GetSetFlags<T>(this T src) where T : struct
         {
             if (!typeof(T).IsEnum) throw new ArgumentException($"Argument {typeof(T).FullName} is not an Enum");

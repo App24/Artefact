@@ -15,6 +15,7 @@ namespace Artefact.Misc
 
         public const ConsoleColor ERROR_COLOR = ConsoleColor.DarkRed;
         public const ConsoleColor BAD_COLOR = ConsoleColor.Red;
+        public const ConsoleColor WARNING_COLOR = ConsoleColor.Yellow;
         public const ConsoleColor GOOD_COLOR = ConsoleColor.Green;
         public const ConsoleColor XP_COLOR = ConsoleColor.Cyan;
     }

@@ -27,3 +27,6 @@ Uni Assessment, I had to create a text-based adventure, I decided to set mine in
 - [ ] Map Expansion/Improvements
 - [ ] More Characters
 - [ ] More Enemies
+- [ ] Finish Help Command
+- [ ] Finish Recipes Command
+- [ ] Implement Simple Mode everywhere

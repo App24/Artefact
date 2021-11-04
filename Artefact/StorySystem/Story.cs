@@ -19,6 +19,7 @@ namespace Artefact.StorySystem
         public static int Step { get; set; }
         public const int CPU_STEP = 99;
         public const int RAM_STEP = 100;
+        public const int HDD_STEP = 101;
         public const int EMPTY_STEP = 1000;
 
         public static void NextStep()
@@ -38,7 +39,7 @@ namespace Artefact.StorySystem
                 }
                 if (!Map.Player.Inventory.HasItem(new ItemData(Item.RecipeBookItem)))
                 {
-                    Dialog.Speak(Character.Clippy, "Where is your recipe? Here, you can have another!");
+                    Dialog.Speak(Character.Clippy, "Where is your recipe book? Here, you can have another!");
                     Map.Player.Inventory.AddItem(new ItemData(Item.RecipeBookItem), announce: true);
                 }
             }
@@ -112,8 +113,8 @@ namespace Artefact.StorySystem
 #else
                         name = "Debug";
 #endif
+                        Dialog.Speak(Character.Clippy, "What are your gender pronouns?");
                         Gender gender = Gender.Other;
-
 #if !BYPASS
                         while (true)
                         {
@@ -182,25 +183,33 @@ namespace Artefact.StorySystem
                         Step = EMPTY_STEP;
                     }
                     break;
+                case HDD_STEP:
+                    {
+                        Dialog.Speak(Character.Clippy, $"Here is the [{ColorConstants.LOCATION_COLOR}]HDD[/]");
+                        Dialog.Speak(Character.Clippy, $"Weird, the hard drive isn't spinning, really worrisome. I hope nothing happened to the [{ColorConstants.USER_COLOR}]user[/]");
+                        GameSettings.HDDVisited = true;
+                        Step = EMPTY_STEP;
+                    }
+                    break;
             }
         }
 
         static void CreateGender()
         {
-            GetGenderPronoun("____ defeated an armada of paper clips.", out string nominative);
-            GetGenderPronoun("I defeated ____.", out string objective);
-            GetGenderPronoun("____ inventory is full.", out string possessiveDeterminer);
-            GetGenderPronoun("That health is ____.", out string possessivePronoun);
-            GetGenderPronoun($"{nominative} defeated ____.", out string reflexive);
+            string nominative = GetGenderPronoun("____ defeated an armada of paper clips.");
+            string objective = GetGenderPronoun("I defeated ____.");
+            string possessiveDeterminer = GetGenderPronoun("____ inventory is full.");
+            string possessivePronoun = GetGenderPronoun("That health is ____.");
+            string reflexive = GetGenderPronoun($"{nominative} helped ____.");
             GameSettings.Pronouns = new GenderPronouns(nominative, objective, possessiveDeterminer, possessivePronoun, reflexive);
         }
 
-        static void GetGenderPronoun(string example, out string pronoun)
+        static string GetGenderPronoun(string example)
         {
-            pronoun = null;
+            string pronoun = null;
             while (string.IsNullOrEmpty(pronoun))
             {
-                Dialog.Speak(Character.Clippy, "Complete the following example:");
+                Dialog.Speak(Character.Clippy, "Complete the following example with your relevant pronoun:");
                 Utils.WriteColor(example);
                 pronoun = Console.ReadLine().Trim();
                 Dialog.Speak(Character.Clippy, "So the example would be:");
@@ -210,6 +219,7 @@ namespace Artefact.StorySystem
                     pronoun = null;
                 }
             }
+            return pronoun;
         }
     }
 }

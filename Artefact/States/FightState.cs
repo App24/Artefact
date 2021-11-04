@@ -22,7 +22,7 @@ namespace Artefact.States
     {
         public static List<EnemyEntity> Enemies { get; private set; }
 
-        public const float RUN_PROBABILITY = 0.1f;
+        public const float RUN_PROBABILITY = 0.15f;
 
         public FightState(params EnemyEntity[] enemies)
         {
@@ -51,7 +51,7 @@ namespace Artefact.States
             CommandHandler.Instance = commandHandler;
 
             Utils.WriteColor($"[{ColorConstants.BAD_COLOR}]{Enemies.Count}[/] enem{(Enemies.Count == 1 ? "y" : "ies")} appear{(Enemies.Count == 1 ? "s" : "")}!");
-            foreach (EnemyEntity enemy in Enemies)
+            Enemies.ForEach(enemy =>
             {
                 Utils.WriteColor($"Type: [{ColorConstants.ENEMY_COLOR}]{enemy.EnemyType}[/]");
                 Utils.WriteColor($"Health: [{ColorConstants.BAD_COLOR}]{enemy.Health}[/]");
@@ -61,7 +61,7 @@ namespace Artefact.States
                 if (!string.IsNullOrEmpty(enemy.ASCIIRepresentation))
                     Utils.WriteColor(enemy.ASCIIRepresentation);
                 Console.WriteLine();
-            }
+            });
         }
 
         public override void Update()
@@ -71,12 +71,10 @@ namespace Artefact.States
 
             if (PlayerTurn())
             {
+                CheckForDeaths();
 
                 EnemiesTurn();
-
             }
-
-            CheckForDeaths();
 
             if (Story.Step == Story.CPU_STEP)
             {
@@ -213,7 +211,7 @@ namespace Artefact.States
             {
                 Utils.WriteColor($"Killed [{ColorConstants.ENEMY_COLOR}]{enemy.EnemyType}");
                 Random random = new Random();
-                foreach (ItemDropData itemDropData in enemy.ItemDrops)
+                enemy.ItemDrops.ForEach(itemDropData =>
                 {
                     float per = (float)random.NextDouble();
                     if (per < itemDropData.Chance)
@@ -221,7 +219,7 @@ namespace Artefact.States
                         int amount = random.Next((int)itemDropData.Min, (int)itemDropData.Max + 1);
                         Map.Player.Inventory.AddItem(new ItemData(itemDropData.Item, amount), true);
                     }
-                }
+                });
                 int xpAmount = random.Next(enemy.XPRange.Min, enemy.XPRange.Min + 1);
                 Map.Player.AddXP(xpAmount);
                 enemy.Kill();

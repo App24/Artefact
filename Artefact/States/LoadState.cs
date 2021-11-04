@@ -28,6 +28,7 @@ namespace Artefact.States
                                                         
                                                         
 ");
+            Utils.WriteColor("Select a slot to load your game!");
             List<string> saves = SaveSystem.GetSaveGameNames();
             saves.Add("Back");
             int selection = Utils.GetSelection(saves.ToArray());

@@ -28,7 +28,7 @@ namespace Artefact.States
                               |___/     
 ");
 
-            ConsoleColor[] textSpeedColors = new ConsoleColor[] { ConsoleColor.Green, ConsoleColor.Yellow, ConsoleColor.Red };
+            ConsoleColor[] textSpeedColors = new ConsoleColor[] { ColorConstants.GOOD_COLOR, ColorConstants.WARNING_COLOR, ColorConstants.BAD_COLOR };
             ConsoleColor textSpeedColor = textSpeedColors[Array.IndexOf(Enum.GetValues(typeof(TextSpeed)), GlobalSettings.TextSpeed)];
             int selection = Utils.GetSelection($"Text Speed: [{textSpeedColor}]{GlobalSettings.TextSpeed}[/]", $"Simple Mode: [{(GlobalSettings.SimpleMode ? ColorConstants.GOOD_COLOR : ColorConstants.BAD_COLOR)}]{GlobalSettings.SimpleMode}[/]", "Back");
 

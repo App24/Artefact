@@ -15,8 +15,8 @@ namespace Artefact.Misc
 {
     static class Utils
     {
-        public static string[] ValidYes { get; } = new string[] { "y", "yes", "yeah", "yea" };
-        public static string[] ValidNo { get; } = new string[] { "n", "no", "nah" };
+        public static List<string> ValidYes { get; } = new List<string>() { "y", "yes", "yeah", "yea" };
+        public static List<string> ValidNo { get; } = new List<string>() { "n", "no", "nah" };
 
         /// <summary>
         /// Get the user to select an option from an array, they are also able to type the name of the item to select it
@@ -33,7 +33,7 @@ namespace Artefact.Misc
                 string selection = Console.ReadLine().ToLower();
                 if (!int.TryParse(selection, out index))
                 {
-                    index = optionsList.FindIndex(o => selection == o.ToLower().TrimColor()) + 1;
+                    index = optionsList.FindIndex(option => selection == option.ToLower().TrimColor()) + 1;
                 }
                 index -= 1;
                 if (index < 0 || index >= options.Length)
@@ -64,10 +64,20 @@ namespace Artefact.Misc
 
         public static bool GetCharacterConfirmation(Character character, string inputText)
         {
-            Type(Dialog.GetCharacterVoiceLine(character, inputText));
-            string response = Console.ReadLine().ToLower().Trim();
+            while (true)
+            {
+                Type(Dialog.GetCharacterVoiceLine(character, inputText));
+                string response = Console.ReadLine().ToLower().Trim();
 
-            return ValidYes.Contains(response);
+                if (ValidYes.Contains(response))
+                {
+                    return true;
+                }
+                else if (ValidNo.Contains(response))
+                {
+                    return false;
+                }
+            }
         }
 
         public static void WriteCenter(string text)
@@ -75,7 +85,7 @@ namespace Artefact.Misc
             StringColorBuilder stringColorBuilder = new StringColorBuilder(text);
             foreach (List<StringColor> stringColors in stringColorBuilder.Split("\n"))
             {
-                Console.SetCursorPosition((Console.WindowWidth - stringColors.Map(s => s.Text).Join(" ").Length) / 2, Console.CursorTop);
+                Console.SetCursorPosition((Console.WindowWidth - stringColors.Map(s => s.Text).Join("").Length) / 2, Console.CursorTop);
                 foreach (StringColor stringColor in stringColors)
                 {
                     Console.ForegroundColor = stringColor.Color;

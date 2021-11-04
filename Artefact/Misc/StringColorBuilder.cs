@@ -7,9 +7,7 @@ namespace Artefact.Misc
 {
     class StringColorBuilder
     {
-        public string Message { get; private set; }
-
-        public string FullMessage { get; set; }
+        private string fullMessage;
 
         List<StringColor> stringColors;
 
@@ -19,22 +17,19 @@ namespace Artefact.Misc
 
         public StringColorBuilder(string message)
         {
-            FullMessage = message;
+            fullMessage = message;
             BuildString();
         }
 
         public void BuildString()
         {
-            var pieces = Regex.Split(FullMessage, RE_COLOR_SPLITTER_PATTERN);
+            string[] pieces = Regex.Split(fullMessage, RE_COLOR_SPLITTER_PATTERN);
             stringColors = new List<StringColor>();
-            Message = "";
 
             ConsoleColor currentColor = ConsoleColor.White;
             string currentText = "";
-            for (int i = 0; i < pieces.Length; i++)
+            foreach(string piece in pieces)
             {
-                string piece = pieces[i];
-
                 if (Regex.IsMatch(piece, RE_COLOR_END_PATTERN))
                 {
                     stringColors.Add(new StringColor(currentText, currentColor));
@@ -43,27 +38,30 @@ namespace Artefact.Misc
                 }
                 else if (Regex.IsMatch(piece, RE_COLOR_START_PATTERN))
                 {
+                    // Removing [ and ] from the string piece
                     string colorString = piece.Substring(1, piece.Length - 2);
+
+                    // Try convert it to a ConsoleColor
                     if (Enum.TryParse(colorString, true, out ConsoleColor color))
                     {
                         stringColors.Add(new StringColor(currentText, currentColor));
                         currentText = "";
                         currentColor = color;
                     }
+                    // If it fails, append the text to the currentText
                     else
                     {
                         currentText += piece;
-                        Message += piece;
                     }
                 }
                 else
                 {
                     currentText += piece;
-                    Message += piece;
                 }
             }
 
-            stringColors.Add(new StringColor(currentText, currentColor));
+            if(!string.IsNullOrEmpty(currentText))
+                stringColors.Add(new StringColor(currentText, currentColor));
         }
 
         public List<StringColor> GetStringColors()
@@ -74,7 +72,7 @@ namespace Artefact.Misc
         public List<List<StringColor>> Split(string separtor)
         {
             List<List<StringColor>> toReturn = new List<List<StringColor>>();
-            List<StringColor> current = new List<StringColor>();
+            List<StringColor> currentLine = new List<StringColor>();
 
             foreach (StringColor stringColor in stringColors)
             {
@@ -83,17 +81,18 @@ namespace Artefact.Misc
                 {
                     if (i > 0)
                     {
-                        toReturn.Add(current);
-                        current = new List<StringColor>();
+                        toReturn.Add(currentLine);
+                        currentLine = new List<StringColor>();
                     }
-                    current.Add(new StringColor(texts[i], stringColor.Color));
+                    currentLine.Add(new StringColor(texts[i], stringColor.Color));
                 }
             }
-            toReturn.Add(current);
+            toReturn.Add(currentLine);
 
             return toReturn;
         }
 
+        [Obsolete("Use Utils.WriteColor")]
         public void WriteLine()
         {
             foreach (StringColor stringColor in stringColors)
@@ -115,11 +114,6 @@ namespace Artefact.Misc
         {
             Text = text;
             Color = color;
-        }
-
-        public override string ToString()
-        {
-            return $"[{Text}] ({Color})";
         }
     }
 }

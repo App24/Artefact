@@ -105,6 +105,11 @@ $"     |      |  [{ColorConstants.LOCATION_COLOR}]{Location.GPU}[/]  |\n" +
                 Story.Step = Story.RAM_STEP;
                 disableSpawn = true;
             }
+            else if (location == Location.HDD && !GameSettings.HDDVisited)
+            {
+                Story.Step = Story.HDD_STEP;
+                disableSpawn = true;
+            }
 
             if (!disableSpawn || forceSpawn)
             {
