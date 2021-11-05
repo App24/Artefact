@@ -36,7 +36,8 @@ namespace Artefact.Items
 
         #region Armor
         public static ArmorItems BitArmor { get; } = ArmorItemFactory.CreateArmor("Bit", BitItem, 2);
-        public static ArmorItems ByteArmor { get; } = ArmorItemFactory.CreateArmor("Byte", ByteItem, 5);
+        public static ArmorItems ByteArmor { get; } = ArmorItemFactory.CreateArmor("Byte", ByteItem, 8);
+        public static ArmorItems KiloByteArmor { get; } = ArmorItemFactory.CreateArmor("KiloByte", KiloByteItem, 12);
         #endregion
 
         #region Potions

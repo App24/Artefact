@@ -46,6 +46,7 @@ namespace Artefact.Commands.Misc
             commandHandler.AddCommand(new MoveCommand());
             commandHandler.AddCommand(new UseCommand());
             commandHandler.AddCommand(new RecipesCommand());
+            commandHandler.AddCommand(new InteractCommand());
 #if DEBUG
             commandHandler.AddCommand(new GiveCommand());
             commandHandler.AddCommand(new ForceFightCommand());

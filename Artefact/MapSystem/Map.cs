@@ -1,5 +1,6 @@
 ﻿using Artefact.Entities;
 using Artefact.FightSystem;
+using Artefact.MapSystem.Rooms;
 using Artefact.Misc;
 using Artefact.Settings;
 using Artefact.States;
@@ -13,7 +14,7 @@ namespace Artefact.MapSystem
     [Serializable]
     class Map
     {
-        public const float ENCOUNTER_PROBABILITY = 1 / 30f;
+        public const float ENCOUNTER_PROBABILITY = 1 / 25f;
 
         public static PlayerEntity Player { get { return Instance.player; } set { Instance.player = value; } }
         public static List<Entity> Entities { get { return Instance.entities; } set { Instance.entities = value; } }
@@ -25,14 +26,18 @@ namespace Artefact.MapSystem
 
         static List<Room> rooms = new List<Room>()
         {
-            new Room(Location.GPU, Location.CPU, east: Location.HDD),
-            new Room(Location.CPU, south: Location.GPU, east: Location.RAM),
-            new Room(Location.RAM, west: Location.CPU, south:Location.HDD),
-            new Room(Location.HDD, west: Location.GPU, north: Location.RAM)
+            new GPURoom(),
+            new CPURoom(),
+            new RAMRoom(),
+            new HDDRoom(),
+            new PSURoom()
         };
 
         static string map = "\n" +
- "             _____________\n" +
+ "     ___________\n" +
+ "     |         |\n" +
+$"     |   [{ColorConstants.LOCATION_COLOR}]{Location.PSU}[/]   |\n" +
+ "     |_________|__________\n" +
  "             |     |     |\n" +
 $"             | [{ColorConstants.LOCATION_COLOR}]{Location.CPU}[/] | [{ColorConstants.LOCATION_COLOR}]{Location.RAM}[/] |\n" +
  "            _|_____|_____|_\n" +
@@ -78,7 +83,7 @@ $"     |      |  [{ColorConstants.LOCATION_COLOR}]{Location.GPU}[/]  |\n" +
 
         public static bool MovePlayer(Direction direction, bool disableSpawn = false, bool forceSpawn = false)
         {
-            (bool moved, Location location) = Move(direction, Player.Location);
+            bool moved = Move(direction, Player.Location, out Location location);
 
             if (moved)
             {
@@ -91,23 +96,13 @@ $"     |      |  [{ColorConstants.LOCATION_COLOR}]{Location.GPU}[/]  |\n" +
 
         public static void MovePlayer(Location location, bool disableSpawn = false, bool forceSpawn = false)
         {
-
             Player.Location = location;
             Utils.WriteColor($"Moved to: [{ColorConstants.LOCATION_COLOR}]{Player.Location}");
 
-            if (location == Location.CPU && !GameSettings.CPUVisited)
+            Room currentRoom = GetRoom(location);
+            if (currentRoom != null && currentRoom.StoryRelated && !currentRoom.VisitedBool)
             {
-                Story.Step = Story.CPU_STEP;
-                disableSpawn = true;
-            }
-            else if (location == Location.RAM && !GameSettings.RAMVisited)
-            {
-                Story.Step = Story.RAM_STEP;
-                disableSpawn = true;
-            }
-            else if (location == Location.HDD && !GameSettings.HDDVisited)
-            {
-                Story.Step = Story.HDD_STEP;
+                Story.Step = currentRoom.StoryStep;
                 disableSpawn = true;
             }
 
@@ -122,10 +117,10 @@ $"     |      |  [{ColorConstants.LOCATION_COLOR}]{Location.GPU}[/]  |\n" +
             }
         }
 
-        public static (bool, Location) Move(Direction direction, Location currentLocation)
+        public static bool Move(Direction direction, Location currentLocation, out Location nextLocation)
         {
             Room currentRoom = GetRoom(currentLocation);
-            Location nextLocation = Location.None;
+            nextLocation = Location.None;
             switch (direction)
             {
                 case Direction.North:
@@ -141,7 +136,7 @@ $"     |      |  [{ColorConstants.LOCATION_COLOR}]{Location.GPU}[/]  |\n" +
                     nextLocation = currentRoom.West;
                     break;
             }
-            return (nextLocation != Location.None, nextLocation);
+            return nextLocation != Location.None;
         }
 
         public static Room GetRoom(Location location)
@@ -165,6 +160,7 @@ $"     |      |  [{ColorConstants.LOCATION_COLOR}]{Location.GPU}[/]  |\n" +
         CPU,
         RAM,
         HDD,
+        PSU,
 
         Room = 50
     }

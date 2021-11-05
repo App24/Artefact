@@ -5,6 +5,7 @@ using Artefact.Misc;
 using Artefact.Settings;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Artefact.Commands
@@ -31,7 +32,16 @@ namespace Artefact.Commands
                 Utils.WriteColor($"Weapon Equiped: [{ColorConstants.ITEM_COLOR}]{player.Inventory.Weapon}[/]");
             }
 
-            foreach (KeyValuePair<ArmorType, ArmorItem> keyValuePair in player.Inventory.Armor)
+            // Sort armor items to have it be from helmet to boots no matter in what order the armor was equipped
+            List<KeyValuePair<ArmorType, ArmorItem>> armorItems = player.Inventory.Armor.ToList();
+            armorItems.Sort((a, b) =>
+            {
+                int aInt = (int)a.Key;
+                int bInt = (int)b.Key;
+                return aInt.CompareTo(bInt);
+            });
+
+            foreach (KeyValuePair<ArmorType, ArmorItem> keyValuePair in armorItems)
             {
                 Utils.WriteColor($"{keyValuePair.Key} Equipped: [{ColorConstants.ITEM_COLOR}]{keyValuePair.Value}[/]");
             }

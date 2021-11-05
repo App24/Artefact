@@ -28,7 +28,7 @@ namespace Artefact.Misc
 
             ConsoleColor currentColor = ConsoleColor.White;
             string currentText = "";
-            foreach(string piece in pieces)
+            foreach (string piece in pieces)
             {
                 if (Regex.IsMatch(piece, RE_COLOR_END_PATTERN))
                 {
@@ -60,7 +60,7 @@ namespace Artefact.Misc
                 }
             }
 
-            if(!string.IsNullOrEmpty(currentText))
+            if (!string.IsNullOrEmpty(currentText))
                 stringColors.Add(new StringColor(currentText, currentColor));
         }
 

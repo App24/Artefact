@@ -20,6 +20,7 @@ namespace Artefact.StorySystem
         public const int CPU_STEP = 99;
         public const int RAM_STEP = 100;
         public const int HDD_STEP = 101;
+        public const int PSU_STEP = 102;
         public const int EMPTY_STEP = 1000;
 
         public static void NextStep()
@@ -188,6 +189,14 @@ namespace Artefact.StorySystem
                         Dialog.Speak(Character.Clippy, $"Here is the [{ColorConstants.LOCATION_COLOR}]HDD[/]");
                         Dialog.Speak(Character.Clippy, $"Weird, the hard drive isn't spinning, really worrisome. I hope nothing happened to the [{ColorConstants.USER_COLOR}]user[/]");
                         GameSettings.HDDVisited = true;
+                        Step = EMPTY_STEP;
+                    }
+                    break;
+                case PSU_STEP:
+                    {
+                        Dialog.Speak(Character.Clippy, $"Here is the [{ColorConstants.LOCATION_COLOR}]PSU[/]");
+                        //Dialog.Speak(Character.Clippy, $"Weird, the hard drive isn't spinning, really worrisome. I hope nothing happened to the [{ColorConstants.USER_COLOR}]user[/]");
+                        GameSettings.PSUVisited = true;
                         Step = EMPTY_STEP;
                     }
                     break;
