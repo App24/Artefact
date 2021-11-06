@@ -13,9 +13,10 @@ namespace Artefact.FightSystem
 {
     static class Fight
     {
-        public static void StartFight(Location location, BattleParameters battleParameters)
+        public static void StartFight(Location location, BattleParameters battleParameters, FightParameters fightParameters = null)
         {
             SaveSystem.SaveGame(SaveSystem.CHECKPOINT_FILE);
+            GameSettings.EnableCommands = false;
             Random random = new Random();
             int numEnemies = random.Next(battleParameters.MaxEnemyAmount) + 1;
             List<EnemyEntity> enemies = new List<EnemyEntity>();
@@ -27,7 +28,7 @@ namespace Artefact.FightSystem
                 enemy.SetLevel(random.Next(range.Min, range.Max));
                 enemies.Add(enemy);
             }
-            StateMachine.AddState(new FightState(enemies.ToArray()), false);
+            StateMachine.AddState(new FightState(fightParameters, enemies.ToArray()), false);
         }
     }
 

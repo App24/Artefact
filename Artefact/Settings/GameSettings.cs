@@ -22,13 +22,6 @@ namespace Artefact.Settings
         public static int SaveSlot { get { return Instance.slot; } set { Instance.slot = value; } }
         #endregion
 
-        #region Visited
-        public static bool CPUVisited { get { return Instance.cpuVisited; } set { Instance.cpuVisited = value; } }
-        public static bool RAMVisited { get { return Instance.ramVisited; } set { Instance.ramVisited = value; } }
-        public static bool HDDVisited { get { return Instance.hddVisited; } set { Instance.hddVisited = value; } }
-        public static bool PSUVisited { get { return Instance.psuVisited; } set { Instance.psuVisited = value; } }
-        #endregion
-
         #region Session Timing
         public static long GameStartDate { get; set; }
         public static long SessionStartDate { get; set; }
@@ -42,7 +35,6 @@ namespace Artefact.Settings
         Gender playerGender = Gender.Other;
         GenderPronouns pronouns;
         bool enableCommands;
-        bool cpuVisited, ramVisited, hddVisited, psuVisited;
         int slot = 1;
         public long gameTime { get; private set; }
 

@@ -3,6 +3,7 @@ using Artefact.Commands.FightCommands;
 using Artefact.Commands.Misc;
 using Artefact.DialogSystem;
 using Artefact.Entities;
+using Artefact.FightSystem;
 using Artefact.InventorySystem;
 using Artefact.Items;
 using Artefact.MapSystem;
@@ -24,9 +25,14 @@ namespace Artefact.States
 
         public const float RUN_PROBABILITY = 0.15f;
 
-        public FightState(params EnemyEntity[] enemies)
+        FightParameters fightParameters;
+
+        public FightState(FightParameters fightParameters, params EnemyEntity[] enemies)
         {
             Enemies = new List<EnemyEntity>(enemies);
+            this.fightParameters = fightParameters;
+            if (this.fightParameters == null)
+                this.fightParameters = new FightParameters();
         }
 
         public override void Init()
@@ -76,7 +82,7 @@ namespace Artefact.States
                 EnemiesTurn();
             }
 
-            if (Story.Step == Story.CPU_STEP)
+            if (fightParameters.PreventDeath)
             {
                 if (Map.Player.Health < 20)
                 {
@@ -230,19 +236,13 @@ namespace Artefact.States
         public override void Remove()
         {
             GameSettings.EnableCommands = true;
-            if (Story.Step == Story.CPU_STEP)
-            {
-                Dialog.Speak(Character.Clippy, $"Phew, that was a close one!");
-                Dialog.Speak(Character.Clippy, "You should use these to regenerate your health!");
-                Map.Player.Inventory.AddItem(new ItemData(Item.SmallHealthPotion, 3), true);
-                Dialog.Speak(Character.Clippy, $"Use the command [{ColorConstants.COMMAND_COLOR}]USE[/] to utilise those potions!");
-                Story.Step = Story.EMPTY_STEP;
-            }
+            if (fightParameters.OnFightEnd != null)
+                fightParameters.OnFightEnd();
         }
 
         bool CanHaveRunCommand()
         {
-            return Story.Step != Story.CPU_STEP;
+            return !fightParameters.PreventRun;
         }
     }
 }

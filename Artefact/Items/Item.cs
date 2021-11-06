@@ -3,6 +3,7 @@ using Artefact.Entities;
 using Artefact.InventorySystem;
 using Artefact.Items.Equipables;
 using Artefact.Items.Potions;
+using Artefact.Misc;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -19,11 +20,12 @@ namespace Artefact.Items
         #region Normal Items
         public static Item MapItem { get; } = new Item("Map");
         public static Item RecipeBookItem { get; } = new Item("Recipe Book");
+        public static Item ElectronItem { get; } = new Item("Electron");
         public static Item BitItem { get; } = new Item("Bit");
         public static Item ByteItem { get; } = new Item("Byte", new CraftData(new ItemData(BitItem, 8)));
         public static Item KiloByteItem { get; } = new Item("KiloByte", new CraftData(new ItemData(ByteItem, 8)));
 
-        public static Item RAMChipItem { get; } = new Item("RAM Chip", new CraftData(2, new ItemData(KiloByteItem, 3)));
+        public static Item RAMChipItem { get; } = new Item("RAM Chip", new CraftData(2, new ItemData(KiloByteItem, 3), new ItemData(ElectronItem, 3)));
         #endregion
 
         #region Weapons

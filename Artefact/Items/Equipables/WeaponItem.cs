@@ -1,6 +1,7 @@
 ﻿using Artefact.CraftingSystem;
 using Artefact.Entities;
 using Artefact.InventorySystem;
+using Artefact.Misc;
 using System;
 using System.Collections.Generic;
 using System.Text;

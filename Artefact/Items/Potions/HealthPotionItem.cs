@@ -56,7 +56,7 @@ namespace Artefact.Items.Potions
                     }
             }
 
-            Map.Player.Heal((int)healthAmount);
+            Map.Player.Heal((long)healthAmount);
             return true;
         }
     }

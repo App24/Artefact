@@ -33,7 +33,7 @@ namespace Artefact.Entities
             Inventory = new Inventory();
         }
 
-        public void Damage(int amount)
+        public void Damage(long amount)
         {
             Utils.WriteColor($"You have been dealt [{ColorConstants.BAD_COLOR}]{base.Damage(amount)}[/] damage");
 
@@ -43,7 +43,7 @@ namespace Artefact.Entities
             }
         }
 
-        public void Heal(int amount)
+        public new void Heal(long amount)
         {
             Utils.WriteColor($"Healed by [{ColorConstants.GOOD_COLOR}]{base.Heal(amount)}[/] points!");
         }

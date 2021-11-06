@@ -2,6 +2,7 @@
 
 namespace Artefact.MapSystem.Rooms
 {
+    [Serializable]
     abstract class Room
     {
         public Location Location { get; }
@@ -10,9 +11,7 @@ namespace Artefact.MapSystem.Rooms
         public Location East { get; }
         public Location West { get; }
 
-        public virtual bool StoryRelated { get; }
-        public virtual int StoryStep { get; }
-        public virtual bool VisitedBool { get; }
+        public bool VisitedBefore { get; private set; }
 
         public Room(Location location, Location north = Location.None, Location south = Location.None, Location east = Location.None, Location west = Location.None)
         {
@@ -24,5 +23,18 @@ namespace Artefact.MapSystem.Rooms
         }
 
         public abstract void OnInteract();
+
+        public void OnEnter()
+        {
+            if (!VisitedBefore)
+            {
+                OnEnterFirst();
+                VisitedBefore = true;
+            }
+            OnEnterRoom();
+        }
+
+        protected abstract void OnEnterRoom();
+        protected abstract void OnEnterFirst();
     }
 }

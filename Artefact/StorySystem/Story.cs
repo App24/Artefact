@@ -17,11 +17,6 @@ namespace Artefact.StorySystem
     static class Story
     {
         public static int Step { get; set; }
-        public const int CPU_STEP = 99;
-        public const int RAM_STEP = 100;
-        public const int HDD_STEP = 101;
-        public const int PSU_STEP = 102;
-        public const int EMPTY_STEP = 1000;
 
         public static void NextStep()
         {
@@ -156,48 +151,6 @@ namespace Artefact.StorySystem
                 case 5:
                     {
                         GameSettings.EnableCommands = true;
-                    }
-                    break;
-                case CPU_STEP:
-                    {
-                        Dialog.Speak(Character.Clippy, $"This is the [{ColorConstants.LOCATION_COLOR}]CPU[/]!");
-                        Dialog.Speak(Character.Clippy, $"This is where everything the [{ColorConstants.USER_COLOR}]user[/] does is processed!");
-                        Dialog.Speak(Character.Clippy, "It is a marvel sight!");
-                        Dialog.Speak(Character.Clippy, $"But it seems to be turned off right now, which is odd, since the [{ColorConstants.USER_COLOR}]user[/] always has [{PronounType.Possessive_Determiner}] computer turned on!");
-                        Dialog.Speak(Character.Clippy, ".........................");
-                        Dialog.Speak(Character.Clippy, "Wha-what is that?!?");
-                        Dialog.Speak(Character.Clippy, "RUN, IT'S A TROJAN!!!");
-#if !BYPASS
-                        Thread.Sleep((int)GlobalSettings.TextSpeed * 15);
-#endif
-                        GameSettings.EnableCommands = false;
-                        Fight.StartFight(Map.Player.Location, new BattleParameters(EnemyType.Trojan, new IntRange(1, 1), 1));
-                        GameSettings.CPUVisited = true;
-                        //Step = EMPTY_STEP;
-                    }
-                    break;
-                case RAM_STEP:
-                    {
-                        Dialog.Speak(Character.Clippy, $"Here is the [{ColorConstants.LOCATION_COLOR}]RAM[/]");
-                        Dialog.Speak(Character.Clippy, $"That is odd, there is no data in here, I guess that means that the [{ColorConstants.USER_COLOR}]user[/] does not have [{PronounType.Possessive_Determiner}] computer turned on!");
-                        GameSettings.RAMVisited = true;
-                        Step = EMPTY_STEP;
-                    }
-                    break;
-                case HDD_STEP:
-                    {
-                        Dialog.Speak(Character.Clippy, $"Here is the [{ColorConstants.LOCATION_COLOR}]HDD[/]");
-                        Dialog.Speak(Character.Clippy, $"Weird, the hard drive isn't spinning, really worrisome. I hope nothing happened to the [{ColorConstants.USER_COLOR}]user[/]");
-                        GameSettings.HDDVisited = true;
-                        Step = EMPTY_STEP;
-                    }
-                    break;
-                case PSU_STEP:
-                    {
-                        Dialog.Speak(Character.Clippy, $"Here is the [{ColorConstants.LOCATION_COLOR}]PSU[/]");
-                        //Dialog.Speak(Character.Clippy, $"Weird, the hard drive isn't spinning, really worrisome. I hope nothing happened to the [{ColorConstants.USER_COLOR}]user[/]");
-                        GameSettings.PSUVisited = true;
-                        Step = EMPTY_STEP;
                     }
                     break;
             }

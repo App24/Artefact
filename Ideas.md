@@ -32,3 +32,6 @@
 - Fighting
 - Talk
 - Craft
+
+## Misc:
+- Pets/Companions

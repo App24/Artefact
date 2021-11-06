@@ -24,7 +24,9 @@ namespace Artefact.MapSystem
         PlayerEntity player;
         List<Entity> entities = new List<Entity>();
 
-        static List<Room> rooms = new List<Room>()
+        public static List<Room> Rooms { get { return Instance.rooms; } }
+
+        List<Room> rooms = new List<Room>()
         {
             new GPURoom(),
             new CPURoom(),
@@ -100,10 +102,9 @@ $"     |      |  [{ColorConstants.LOCATION_COLOR}]{Location.GPU}[/]  |\n" +
             Utils.WriteColor($"Moved to: [{ColorConstants.LOCATION_COLOR}]{Player.Location}");
 
             Room currentRoom = GetRoom(location);
-            if (currentRoom != null && currentRoom.StoryRelated && !currentRoom.VisitedBool)
+            if (currentRoom != null)
             {
-                Story.Step = currentRoom.StoryStep;
-                disableSpawn = true;
+                currentRoom.OnEnter();
             }
 
             if (!disableSpawn || forceSpawn)
@@ -141,7 +142,7 @@ $"     |      |  [{ColorConstants.LOCATION_COLOR}]{Location.GPU}[/]  |\n" +
 
         public static Room GetRoom(Location location)
         {
-            return rooms.Find(room => room.Location == location);
+            return Rooms.Find(room => room.Location == location);
         }
     }
 
