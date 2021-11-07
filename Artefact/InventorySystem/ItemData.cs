@@ -18,11 +18,11 @@ namespace Artefact.InventorySystem
             Amount = amount;
         }
 
-        public string ToColoredString()
+        public string ToColoredString(bool includeExtra = false)
         {
             string text = $"[{ColorConstants.ITEM_COLOR}]{Item}[/]: [{ColorConstants.GOOD_COLOR}]{Amount}[/]";
 
-            if (Item is IUsable)
+            if (Item is IUsable && includeExtra)
             {
                 text += $" - [{ColorConstants.GOOD_COLOR}]Usable[/]";
             }

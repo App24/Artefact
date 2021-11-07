@@ -14,6 +14,7 @@ Uni Assessment, I had to create a text-based adventure, I decided to set mine in
 - [x] Dialog System
 - [x] Enemy Foundation
 - [x] Crafting Improvement
+- [x] Finish Recipes Command
 - [ ] Levels and XP
 - - [x] Level Up
 - - [x] Health Increasing
@@ -30,5 +31,4 @@ Uni Assessment, I had to create a text-based adventure, I decided to set mine in
 - [ ] More Characters
 - [ ] More Enemies
 - [ ] Finish Help Command
-- [ ] Finish Recipes Command
 - [ ] Implement Simple Mode everywhere

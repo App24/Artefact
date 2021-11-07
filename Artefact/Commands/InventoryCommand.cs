@@ -24,7 +24,7 @@ namespace Artefact.Commands
             Console.WriteLine("Here is what is in your inventory:");
             foreach (ItemData item in inventory.GetItems())
             {
-                Utils.WriteColor($"- {item.ToColoredString()}");
+                Utils.WriteColor($"- {item.ToColoredString(true)}");
             }
         }
     }

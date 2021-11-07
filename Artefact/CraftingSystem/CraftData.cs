@@ -4,7 +4,7 @@ using Artefact.InventorySystem;
 namespace Artefact.CraftingSystem
 {
     [Serializable]
-    class CraftData
+    struct CraftData
     {
         public int Amount { get; }
         public ItemData[] CraftItems { get; }

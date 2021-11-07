@@ -53,6 +53,8 @@ namespace Artefact.Items
 
         public static List<Item> Items { get; private set; }
 
+        public static List<Item> CraftableItems { get { return Items.FindAll(i => i.IsCraftable); } }
+
         public Item(string name, params CraftData[] craftData)
         {
             Name = name;
