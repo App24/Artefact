@@ -158,11 +158,11 @@ namespace Artefact.StorySystem
 
         static void CreateGender()
         {
-            string nominative = GetGenderPronoun("____ defeated an armada of paper clips.");
-            string objective = GetGenderPronoun("I defeated ____.");
-            string possessiveDeterminer = GetGenderPronoun("____ inventory is full.");
-            string possessivePronoun = GetGenderPronoun("That health is ____.");
-            string reflexive = GetGenderPronoun($"{nominative} helped ____.");
+            string nominative = GetGenderPronoun("____ defeated an armada of paper clips. (Nominative Case)");
+            string objective = GetGenderPronoun("I defeated ____. (Objective Case)");
+            string possessiveDeterminer = GetGenderPronoun("____ inventory is full. (Possessive Determiner Case)");
+            string possessivePronoun = GetGenderPronoun("That health is ____. (Possessive Pronoun Case)");
+            string reflexive = GetGenderPronoun($"{nominative} helped ____. (Reflexive Case)");
             GameSettings.Pronouns = new GenderPronouns(nominative, objective, possessiveDeterminer, possessivePronoun, reflexive);
         }
 

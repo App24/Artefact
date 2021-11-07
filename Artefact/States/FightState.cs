@@ -215,20 +215,8 @@ namespace Artefact.States
         {
             if (Enemies.Contains(enemy))
             {
-                Utils.WriteColor($"Killed [{ColorConstants.ENEMY_COLOR}]{enemy.EnemyType}");
-                Random random = new Random();
-                enemy.ItemDrops.ForEach(itemDropData =>
-                {
-                    float per = (float)random.NextDouble();
-                    if (per < itemDropData.Chance)
-                    {
-                        int amount = random.Next((int)itemDropData.Min, (int)itemDropData.Max + 1);
-                        Map.Player.Inventory.AddItem(new ItemData(itemDropData.Item, amount), true);
-                    }
-                });
-                int xpAmount = random.Next(enemy.XPRange.Min, enemy.XPRange.Min + 1);
-                Map.Player.AddXP(xpAmount);
-                enemy.Kill();
+                if (enemy.Health > 0)
+                    enemy.Kill();
                 Enemies.Remove(enemy);
             }
         }

@@ -40,8 +40,7 @@ namespace Artefact.Settings
 
         public GameSettings()
         {
-            if (Instance == null)
-                Instance = this;
+            Instance = this;
         }
     }
 }

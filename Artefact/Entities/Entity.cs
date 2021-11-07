@@ -52,10 +52,7 @@ namespace Artefact.Entities
             return entity1.UUID != entity2.UUID;
         }
 
-        public void Kill()
-        {
-            Map.RemoveEntity(this);
-        }
+        public abstract void Kill();
 
         public long Heal(long amount)
         {

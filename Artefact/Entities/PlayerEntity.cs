@@ -36,11 +36,6 @@ namespace Artefact.Entities
         public void Damage(long amount)
         {
             Utils.WriteColor($"You have been dealt [{ColorConstants.BAD_COLOR}]{base.Damage(amount)}[/] damage");
-
-            if (Health <= 0)
-            {
-                StateMachine.AddState(new GameOverState());
-            }
         }
 
         public new void Heal(long amount)
@@ -59,6 +54,11 @@ namespace Artefact.Entities
             base.IncreaseLevel();
             Utils.WriteColor($"[{ColorConstants.XP_COLOR}]You leveled up to level {Level}");
             Utils.WriteColor($"Your max health is now [{ColorConstants.GOOD_COLOR}]{MaxHealth}");
+        }
+
+        public override void Kill()
+        {
+            StateMachine.AddState(new GameOverState());
         }
     }
 }

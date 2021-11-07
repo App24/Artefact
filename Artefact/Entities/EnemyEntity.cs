@@ -1,4 +1,6 @@
-﻿using Artefact.Items;
+﻿using Artefact.InventorySystem;
+using Artefact.Items;
+using Artefact.MapSystem;
 using Artefact.Misc;
 using System;
 using System.Collections.Generic;
@@ -195,6 +197,23 @@ namespace Artefact.Entities
         {
             Utils.WriteColor($"You dealt [{ColorConstants.GOOD_COLOR}]{base.Damage(amount, ignoreDefense)}[/] damage to [{ColorConstants.ENEMY_COLOR}]{EnemyType}[/]");
         }
+
+        public override void Kill()
+        {
+            Utils.WriteColor($"Killed [{ColorConstants.ENEMY_COLOR}]{EnemyType}");
+            Random random = new Random();
+            ItemDrops.ForEach(itemDropData =>
+            {
+                float per = (float)random.NextDouble();
+                if (per < itemDropData.Chance)
+                {
+                    int amount = random.Next((int)itemDropData.Min, (int)itemDropData.Max + 1);
+                    Map.Player.Inventory.AddItem(new ItemData(itemDropData.Item, amount), true);
+                }
+            });
+            int xpAmount = random.Next(XPRange.Min, XPRange.Min + 1);
+            Map.Player.AddXP(xpAmount);
+        }
     }
 
     [Flags]
@@ -205,7 +224,7 @@ namespace Artefact.Entities
         RansomWare = 4,
         AdWare = 8,
         SpyWare = 16,
-        Electricity=32
+        Electricity = 32
     }
 
     [Serializable]

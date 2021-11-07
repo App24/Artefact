@@ -4,10 +4,10 @@ namespace Artefact.FightSystem
 {
     class FightParameters
     {
-        public Action OnFightEnd { get; }
-        public bool PreventDeath { get; }
-        public bool PreventRun { get; }
-        
+        public Action OnFightEnd { get; set; }
+        public bool PreventDeath { get; set; }
+        public bool PreventRun { get; set; }
+
         public FightParameters(bool preventDeath, bool preventRun, Action onFightEnd)
         {
             PreventDeath = preventDeath;
@@ -15,7 +15,7 @@ namespace Artefact.FightSystem
             OnFightEnd = onFightEnd;
         }
 
-        public FightParameters(Action onFightEnd):this(false, false, onFightEnd)
+        public FightParameters(Action onFightEnd) : this(false, false, onFightEnd)
         {
 
         }
@@ -24,7 +24,7 @@ namespace Artefact.FightSystem
         {
         }
 
-        public FightParameters():this(false, false)
+        public FightParameters() : this(false, false)
         {
         }
     }

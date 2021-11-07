@@ -17,12 +17,10 @@ namespace Artefact.MapSystem
         public const float ENCOUNTER_PROBABILITY = 1 / 25f;
 
         public static PlayerEntity Player { get { return Instance.player; } set { Instance.player = value; } }
-        public static List<Entity> Entities { get { return Instance.entities; } set { Instance.entities = value; } }
 
         public static Map Instance { get; set; }
 
         PlayerEntity player;
-        List<Entity> entities = new List<Entity>();
 
         public static List<Room> Rooms { get { return Instance.rooms; } }
 
@@ -55,8 +53,7 @@ $"     |      |  [{ColorConstants.LOCATION_COLOR}]{Location.GPU}[/]  |\n" +
 
         public Map()
         {
-            if (Instance == null)
-                Instance = this;
+            Instance = this;
         }
 
         public static void SpawnPlayer()
@@ -69,13 +66,7 @@ $"     |      |  [{ColorConstants.LOCATION_COLOR}]{Location.GPU}[/]  |\n" +
         {
             EnemyEntity enemyEntity = new EnemyEntity(enemyType);
             enemyEntity.Location = location;
-            Entities.Add(enemyEntity);
             return enemyEntity;
-        }
-
-        public static void RemoveEntity(Entity entity)
-        {
-            Entities.Remove(entity);
         }
 
         public static string GetMapLocation(Location location)

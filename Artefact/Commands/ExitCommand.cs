@@ -1,6 +1,7 @@
 ﻿using Artefact.Misc;
 using Artefact.Saving;
 using Artefact.Settings;
+using Artefact.States;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -24,7 +25,16 @@ namespace Artefact.Commands
                 {
                     SaveSystem.SaveGame();
                 }
-                GlobalSettings.Running = false;
+                if (!Utils.GetConfirmation($"Return to [{ColorConstants.WARNING_COLOR}]main menu?"))
+                {
+                    GlobalSettings.Running = false;
+                }
+                else
+                {
+                    Console.Clear();
+                    StateMachine.RemoveState();
+                    StateMachine.AddState(new MenuState());
+                }
             }
         }
     }

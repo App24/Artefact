@@ -27,7 +27,7 @@ namespace Artefact.States
                                            
                                            ");
 
-            Utils.WriteColor("Would you like to restart from checkpoint?");
+            Utils.WriteColor($"Would you like to restart from [{ColorConstants.GOOD_COLOR}]checkpoint?");
             int selection = Utils.GetSelection($"[{ColorConstants.GOOD_COLOR}]Yes", $"[{ColorConstants.BAD_COLOR}]No");
             if (selection == 0)
             {
