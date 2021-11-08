@@ -17,6 +17,8 @@ namespace Artefact.Commands
 
         public string NoArgsResponse => "";
 
+        public string Description => "Save the game";
+
         public void OnRun(List<string> args)
         {
             if (Utils.GetConfirmation($"You sure you want to save? [{ColorConstants.BAD_COLOR}]It will override the previous saved game!"))

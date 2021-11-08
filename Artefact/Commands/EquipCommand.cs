@@ -20,6 +20,8 @@ namespace Artefact.Commands
 
         public string[] Aliases => new string[] { };
 
+        public string Description => "Equip weapons or armor";
+
         public void OnRun(List<string> args)
         {
             Inventory inventory = Map.Player.Inventory;

@@ -52,6 +52,7 @@ namespace Artefact.States
 #if DEBUG
             commandHandler.AddCommand(new KillCommand());
 #endif
+            commandHandler.AddCommand(new HelpCommand(commandHandler.GetCommands()));
             #endregion
 
             CommandHandler.Instance = commandHandler;

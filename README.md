@@ -15,6 +15,7 @@ Uni Assessment, I had to create a text-based adventure, I decided to set mine in
 - [x] Enemy Foundation
 - [x] Crafting Improvement
 - [x] Finish Recipes Command
+- [x] Finish Help Command
 - [ ] Levels and XP
 - - [x] Level Up
 - - [x] Health Increasing
@@ -30,5 +31,4 @@ Uni Assessment, I had to create a text-based adventure, I decided to set mine in
 - [ ] Map Expansion/Improvements
 - [ ] More Characters
 - [ ] More Enemies
-- [ ] Finish Help Command
 - [ ] Implement Simple Mode everywhere

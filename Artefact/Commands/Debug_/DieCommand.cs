@@ -15,6 +15,8 @@ namespace Artefact.Commands
 
         public string NoArgsResponse => "";
 
+        public string Description => "Kills the player";
+
         public void OnRun(List<string> args)
         {
             Map.Player.Damage(Map.Player.MaxHealth);

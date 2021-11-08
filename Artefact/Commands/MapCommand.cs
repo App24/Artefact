@@ -16,6 +16,8 @@ namespace Artefact.Commands
 
         public string NoArgsResponse => "";
 
+        public string Description => "Find your location";
+
         public void OnRun(List<string> args)
         {
             Utils.WriteColor($"You are located in [{ColorConstants.LOCATION_COLOR}]{Map.Player.Location}");

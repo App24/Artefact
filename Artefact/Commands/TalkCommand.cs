@@ -16,6 +16,8 @@ namespace Artefact.Commands
 
         public string NoArgsResponse => "<Name>";
 
+        public string Description => "Talk to NPC";
+
         public void OnRun(List<string> args)
         {
             string characterName = args.Join(" ");

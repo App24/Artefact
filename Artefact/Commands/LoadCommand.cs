@@ -19,6 +19,8 @@ namespace Artefact.Commands
 
         public string NoArgsResponse => "";
 
+        public string Description => "Load a save game";
+
         public void OnRun(List<string> args)
         {
             List<string> saves = SaveSystem.GetSaveGameNames();

@@ -15,6 +15,8 @@ namespace Artefact.Commands.FightCommands
 
         public string NoArgsResponse => "";
 
+        public string Description => "Insta kill all the enemies";
+
         public void OnRun(List<string> args)
         {
             Map.Player.Move = Entities.Move.InstaKill;

@@ -24,17 +24,17 @@ namespace Artefact.MapSystem.Rooms
 
         public abstract void OnInteract();
 
-        public void OnEnter()
+        public void OnEnter(ref bool disableSpawn)
         {
             if (!VisitedBefore)
             {
-                OnEnterFirst();
+                OnEnterFirst(ref disableSpawn);
                 VisitedBefore = true;
             }
-            OnEnterRoom();
+            OnEnterRoom(ref disableSpawn);
         }
 
-        protected abstract void OnEnterRoom();
-        protected abstract void OnEnterFirst();
+        protected abstract void OnEnterRoom(ref bool disableSpawn);
+        protected abstract void OnEnterFirst(ref bool disableSpawn);
     }
 }

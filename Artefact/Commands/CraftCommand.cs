@@ -17,6 +17,8 @@ namespace Artefact.Commands
         public bool HasArguments => false;
         public string NoArgsResponse => "(Item) (Amount)";
 
+        public string Description => "Craft items";
+
         public void OnRun(List<string> args)
         {
             if (GlobalSettings.SimpleMode)

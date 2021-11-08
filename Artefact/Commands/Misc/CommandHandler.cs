@@ -104,14 +104,18 @@ namespace Artefact.Commands.Misc
                 else
                 {
                     int sel = selection - newCommands.Count;
-                    Console.WriteLine(sel);
-                    if (sel <= 0)
+                    switch (sel)
                     {
-                        pageIndex++;
-                    }
-                    else
-                    {
-                        pageIndex--;
+                        case 0:
+                            {
+                                pageIndex++;
+                            }
+                            break;
+                        case 1:
+                            {
+                                pageIndex--;
+                            }
+                            break;
                     }
                     return false;
                 }

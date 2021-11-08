@@ -14,6 +14,8 @@ namespace Artefact.Commands
 
         public string NoArgsResponse => "";
 
+        public string Description => "Change settings";
+
         public void OnRun(List<string> args)
         {
             Console.Clear();

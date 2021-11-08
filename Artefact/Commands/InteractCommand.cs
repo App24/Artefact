@@ -17,6 +17,8 @@ namespace Artefact.Commands
 
         public string NoArgsResponse => "";
 
+        public string Description => "Interact with stuff in the room";
+
         public void OnRun(List<string> args)
         {
             Room currentRoom = Map.GetRoom(Map.Player.Location);

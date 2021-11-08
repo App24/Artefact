@@ -17,6 +17,8 @@ namespace Artefact.Commands
 
         public string NoArgsResponse => "";
 
+        public string Description => "Check your inventory";
+
         public void OnRun(List<string> args)
         {
             Inventory inventory = Map.Player.Inventory;

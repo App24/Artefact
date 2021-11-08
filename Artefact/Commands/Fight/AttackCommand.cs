@@ -20,6 +20,8 @@ namespace Artefact.Commands.FightCommands
 
         public string NoArgsResponse => "<Enemy>";
 
+        public string Description => "Attack an enemy";
+
         public void OnRun(List<string> args)
         {
             Map.Player.Move = Move.Attack;

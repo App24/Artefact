@@ -15,6 +15,8 @@ namespace Artefact.Commands.FightCommands
 
         public string NoArgsResponse => "";
 
+        public string Description => "Attack all the enemies in the fight";
+
         public void OnRun(List<string> args)
         {
             Map.Player.Move = Entities.Move.SweepAttack;

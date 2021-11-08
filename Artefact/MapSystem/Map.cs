@@ -95,7 +95,7 @@ $"     |      |  [{ColorConstants.LOCATION_COLOR}]{Location.GPU}[/]  |\n" +
             Room currentRoom = GetRoom(location);
             if (currentRoom != null)
             {
-                currentRoom.OnEnter();
+                currentRoom.OnEnter(ref disableSpawn);
             }
 
             if (!disableSpawn || forceSpawn)

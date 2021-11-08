@@ -23,13 +23,13 @@ namespace Artefact.MapSystem.Rooms
 
         }
 
-        protected override void OnEnterFirst()
+        protected override void OnEnterFirst(ref bool disableSpawn)
         {
             Dialog.Speak(Character.Clippy, $"Here is the [{ColorConstants.LOCATION_COLOR}]RAM[/]");
             Dialog.Speak(Character.Clippy, $"That is odd, there is no data in here, I guess that means that the [{ColorConstants.USER_COLOR}]user[/] does not have [{PronounType.Possessive_Determiner}] computer turned on!");
         }
 
-        protected override void OnEnterRoom()
+        protected override void OnEnterRoom(ref bool disableSpawn)
         {
 
         }

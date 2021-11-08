@@ -12,6 +12,8 @@ namespace Artefact.Commands
         bool HasArguments { get; }
         string NoArgsResponse { get; }
 
+        string Description { get; }
+
         void OnRun(List<string> args);
     }
 }

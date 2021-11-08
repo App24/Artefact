@@ -15,6 +15,8 @@ namespace Artefact.Commands.FightCommands
 
         public string NoArgsResponse => "";
 
+        public string Description => "Defend against an enemy attack";
+
         public void OnRun(List<string> args)
         {
             Map.Player.Move = Entities.Move.Defend;

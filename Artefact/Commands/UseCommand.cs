@@ -19,6 +19,8 @@ namespace Artefact.Commands
 
         public string NoArgsResponse => "";
 
+        public string Description => "Use items in your inventory";
+
         public void OnRun(List<string> args)
         {
             List<Item> usableItems = Map.Player.Inventory.GetItems().FindAll(i => i.Item is IUsable).Map(i => i.Item).ToList();

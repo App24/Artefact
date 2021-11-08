@@ -16,6 +16,8 @@ namespace Artefact.Commands
 
         public string NoArgsResponse => "<xp>";
 
+        public string Description => "Give XP to the player";
+
         public void OnRun(List<string> args)
         {
             if (!int.TryParse(args[0], out int xp))

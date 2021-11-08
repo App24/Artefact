@@ -17,6 +17,8 @@ namespace Artefact.Commands
 
         public string NoArgsResponse => "";
 
+        public string Description => "Exit the game";
+
         public void OnRun(List<string> args)
         {
             if (Utils.GetConfirmation($"You sure you want to [{ColorConstants.BAD_COLOR}]exit[/]?"))

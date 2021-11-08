@@ -17,6 +17,8 @@ namespace Artefact.Commands
 
         public string NoArgsResponse => "(Direction)";
 
+        public string Description => "Move around the map";
+
         public void OnRun(List<string> args)
         {
             Direction direction;

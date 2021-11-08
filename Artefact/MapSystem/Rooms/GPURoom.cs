@@ -19,12 +19,12 @@ namespace Artefact.MapSystem.Rooms
 
         }
 
-        protected override void OnEnterFirst()
+        protected override void OnEnterFirst(ref bool disableSpawn)
         {
 
         }
 
-        protected override void OnEnterRoom()
+        protected override void OnEnterRoom(ref bool disableSpawn)
         {
 
         }

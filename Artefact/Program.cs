@@ -37,6 +37,9 @@ namespace Artefact
 
         static void Main(string[] args)
         {
+            Console.WindowWidth += 2;
+            Console.WindowHeight += 2;
+
             IntPtr handle = GetConsoleWindow();
             IntPtr sysMenu = GetSystemMenu(handle, false);
 

@@ -19,6 +19,8 @@ namespace Artefact.Commands
 
         public string NoArgsResponse => "";
 
+        public string Description => "Look at your statistics";
+
         public void OnRun(List<string> args)
         {
             PlayerEntity player = Map.Player;

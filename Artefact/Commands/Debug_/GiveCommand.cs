@@ -18,6 +18,8 @@ namespace Artefact.Commands
 
         public string[] Aliases => new string[] { };
 
+        public string Description => "Give the player an item";
+
         public void OnRun(List<string> args)
         {
             bool lastArgAmount = int.TryParse(args[args.Count - 1], out int amount);

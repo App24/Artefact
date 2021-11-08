@@ -22,13 +22,13 @@ namespace Artefact.MapSystem.Rooms
 
         }
 
-        protected override void OnEnterFirst()
+        protected override void OnEnterFirst(ref bool disableSpawn)
         {
             Dialog.Speak(Character.Clippy, $"Here is the [{ColorConstants.LOCATION_COLOR}]HDD[/]");
             Dialog.Speak(Character.Clippy, $"Weird, the hard drive isn't spinning, really worrisome. I hope nothing happened to the [{ColorConstants.USER_COLOR}]user[/]");
         }
 
-        protected override void OnEnterRoom()
+        protected override void OnEnterRoom(ref bool disableSpawn)
         {
 
         }

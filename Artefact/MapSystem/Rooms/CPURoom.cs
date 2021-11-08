@@ -27,8 +27,9 @@ namespace Artefact.MapSystem.Rooms
 
         }
 
-        protected override void OnEnterFirst()
+        protected override void OnEnterFirst(ref bool disableSpawn)
         {
+            disableSpawn = true;
             Dialog.Speak(Character.Clippy, $"This is the [{ColorConstants.LOCATION_COLOR}]CPU[/]!");
             Dialog.Speak(Character.Clippy, $"This is where everything the [{ColorConstants.USER_COLOR}]user[/] does is processed!");
             Dialog.Speak(Character.Clippy, "It is a marvel sight!");
@@ -48,7 +49,7 @@ namespace Artefact.MapSystem.Rooms
             }));
         }
 
-        protected override void OnEnterRoom()
+        protected override void OnEnterRoom(ref bool disableSpawn)
         {
 
         }
