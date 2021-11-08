@@ -22,7 +22,7 @@ namespace Artefact.Misc
         /// Get the user to select an option from an array, they are also able to type the name of the item to select it
         /// </summary>
         /// <param name="options">The options available to choose from</param>
-        /// <returns>Returns a number between 0 and length of <paramref name="options"/> - 1</returns>
+        /// <returns>Returns a number between 0 (inclusive) and length of <paramref name="options"/> (exclusive)</returns>
         public static int GetSelection(params string[] options)
         {
             int index = -1;

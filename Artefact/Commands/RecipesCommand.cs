@@ -32,7 +32,7 @@ namespace Artefact.Commands
             bool inRecipeBook = true;
             while (inRecipeBook)
             {
-                Utils.WriteCenter(CreateBook(page));
+                Utils.WriteCenter(CreateBook());
 
                 List<string> options = new List<string>();
                 List<Action> actions = new List<Action>();
@@ -59,23 +59,22 @@ namespace Artefact.Commands
             page = 0;
         }
 
-        string CreateBook(int page)
+        string CreateBook()
         {
             List<string> leftPage = CreateBlankPage(true);
             List<string> rightPage = CreateBlankPage(false);
 
             if (page <= 0)
             {
-                rightPage = CreatePage(false, Item.CraftableItems.GetRange(page * ITEMS_PER_PAGE, Math.Min(ITEMS_PER_PAGE, Item.CraftableItems.Count - page * ITEMS_PER_PAGE)), page + 1);
+                rightPage = CreatePage(false, page);
             }
             else
             {
-                leftPage = CreatePage(true, Item.CraftableItems.GetRange((page - 1) * ITEMS_PER_PAGE, Math.Min(ITEMS_PER_PAGE, Item.CraftableItems.Count - (page - 1) * ITEMS_PER_PAGE)), page);
+                leftPage = CreatePage(true, page - 1);
                 if (Item.CraftableItems.Count > page * ITEMS_PER_PAGE)
-                    rightPage = CreatePage(false, Item.CraftableItems.GetRange(page * ITEMS_PER_PAGE, Math.Min(ITEMS_PER_PAGE, Math.Max(0, Item.CraftableItems.Count - page * ITEMS_PER_PAGE))), page + 1);
+                    rightPage = CreatePage(false, page);
             }
 
-            List<string> book = new List<string>();
             if (rightPage.Count < leftPage.Count)
             {
                 int iters = leftPage.Count - rightPage.Count;
@@ -93,6 +92,7 @@ namespace Artefact.Commands
                 }
             }
 
+            List<string> book = new List<string>();
             for (int i = 0; i < leftPage.Count; i++)
             {
                 book.Add(leftPage[i] + rightPage[i]);
@@ -126,8 +126,9 @@ namespace Artefact.Commands
             return lines;
         }
 
-        List<string> CreatePage(bool left, List<Item> items, int pageNumber)
+        List<string> CreatePage(bool left, int pageNumber)
         {
+            List<Item> items = Item.CraftableItems.GetRange(pageNumber * ITEMS_PER_PAGE, Math.Min(ITEMS_PER_PAGE, Math.Max(0, Item.CraftableItems.Count - pageNumber * ITEMS_PER_PAGE)));
             List<string> lines = new List<string>();
             string top = "";
             int toSub = left ? 0 : 1;
@@ -158,7 +159,7 @@ namespace Artefact.Commands
                 lines.Add(CreateLine(left, ""));
             }
 
-            lines.Add(CreateLine(left, pageNumber.ToString()));
+            lines.Add(CreateLine(left, (pageNumber + 1).ToString()));
 
             string bottom = "";
             if (left) bottom += "|";

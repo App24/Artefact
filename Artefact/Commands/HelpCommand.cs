@@ -1,4 +1,5 @@
 ﻿using Artefact.Commands.Misc;
+using Artefact.DialogSystem;
 using Artefact.Misc;
 using System;
 using System.Collections.Generic;
@@ -27,6 +28,7 @@ namespace Artefact.Commands
 
         public void OnRun(List<string> args)
         {
+            Dialog.Speak(Character.Clippy, "Here is a list of commands you can use:", instant: true);
             foreach (ICommand command in commands)
             {
                 Utils.WriteColor($"[{ColorConstants.COMMAND_COLOR}]{command.Name}[/] - {command.Description}");
