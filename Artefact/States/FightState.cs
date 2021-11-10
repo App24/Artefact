@@ -153,7 +153,7 @@ namespace Artefact.States
                             StateMachine.RemoveState();
                             Utils.WriteColor($"[{ColorConstants.GOOD_COLOR}]You successfully ran away!");
 #if !BYPASS
-                Thread.Sleep((int)GlobalSettings.TextSpeed * 15);
+                            Thread.Sleep((int)GlobalSettings.TextSpeed * 15);
 #endif
                             return false;
                         }

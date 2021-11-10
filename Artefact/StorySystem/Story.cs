@@ -25,18 +25,18 @@ namespace Artefact.StorySystem
 
         public static void DoStep()
         {
-            //Prevent getting softlock due to save editing shenanigans
+            //Prevent getting softlock due to save editing shenanigans/errors
             if (Step > 4)
             {
                 if (!Map.Player.Inventory.HasItem(new ItemData(Item.MapItem)))
                 {
-                    Dialog.Speak(Character.Clippy, "Where is your map? Here, you can have another!");
-                    Map.Player.Inventory.AddItem(new ItemData(Item.MapItem), announce: true);
+                    Dialog.Speak(Character.Clippy, $"Where is your [{ColorConstants.ITEM_COLOR}]{Item.MapItem.Name}[/]? Here, you can have another!");
+                    Map.Player.Inventory.AddItem(new ItemData(Item.MapItem));
                 }
                 if (!Map.Player.Inventory.HasItem(new ItemData(Item.RecipeBookItem)))
                 {
-                    Dialog.Speak(Character.Clippy, "Where is your recipe book? Here, you can have another!");
-                    Map.Player.Inventory.AddItem(new ItemData(Item.RecipeBookItem), announce: true);
+                    Dialog.Speak(Character.Clippy, $"Where is your [{ColorConstants.ITEM_COLOR}]{Item.RecipeBookItem.Name}[/]? Here, you can have another!");
+                    Map.Player.Inventory.AddItem(new ItemData(Item.RecipeBookItem));
                 }
             }
             switch (Step)
@@ -64,7 +64,7 @@ namespace Artefact.StorySystem
                             case 0:
                                 {
                                     Dialog.Speak(Character.Clippy, $"You are inside the [{ColorConstants.USER_COLOR}]user[/]'s computer.");
-                                    Dialog.Speak(Character.Clippy, "Are you another software the user deleted? ^-^");
+                                    Dialog.Speak(Character.Clippy, $"Are you another software the [{ColorConstants.USER_COLOR}]user[/] deleted? ^-^");
                                 }
                                 break;
                             case 1:
@@ -90,6 +90,7 @@ namespace Artefact.StorySystem
                             GameSettings.KnowsClippy = true;
                         }
 
+                        Dialog.Speak(Character.Clippy, "Now talk about yourself!");
                         Dialog.Speak(Character.Clippy, "May I ask what your name is?");
                         NextStep();
                     }
@@ -101,7 +102,8 @@ namespace Artefact.StorySystem
                         while (string.IsNullOrEmpty(name))
                         {
                             name = Console.ReadLine();
-                            if(!Utils.GetCharacterConfirmation(Character.Clippy, $"So your name is [{ColorConstants.CHARACTER_COLOR}]{name}[/]?")){
+                            if (!Utils.GetCharacterConfirmation(Character.Clippy, $"So your name is [{ColorConstants.CHARACTER_COLOR}]{name}[/]?"))
+                            {
                                 name = null;
                                 Dialog.Speak(Character.Clippy, "What is your name then?");
                             }
@@ -141,9 +143,9 @@ namespace Artefact.StorySystem
                     {
                         Dialog.Speak(Character.Clippy, $"If you need help or want to ask further questions, I am here, just type [{ColorConstants.COMMAND_COLOR}]HELP[/]");
                         Dialog.Speak(Character.Clippy, "Oh, before I forget, I have a map here, I do not need anymore, you can have!");
-                        Map.Player.Inventory.AddItem(new ItemData(Item.MapItem, 1), true);
+                        Map.Player.Inventory.AddItem(new ItemData(Item.MapItem));
                         Dialog.Speak(Character.Clippy, "And here is a recipe book, do not lose it, you will lose all your knowledge on recipes!");
-                        Map.Player.Inventory.AddItem(new ItemData(Item.RecipeBookItem), true);
+                        Map.Player.Inventory.AddItem(new ItemData(Item.RecipeBookItem));
                         Dialog.Speak(Character.Clippy, $"Why don't you type [{ColorConstants.COMMAND_COLOR}]MAP[/] to find out where you are?");
                         NextStep();
                     }

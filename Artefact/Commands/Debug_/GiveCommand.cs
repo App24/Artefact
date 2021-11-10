@@ -35,7 +35,7 @@ namespace Artefact.Commands
                 return;
             }
 
-            Map.Player.Inventory.AddItem(new ItemData(item, amount), true);
+            Map.Player.Inventory.AddItem(new ItemData(item, amount));
         }
     }
 }

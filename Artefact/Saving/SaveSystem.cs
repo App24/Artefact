@@ -17,7 +17,7 @@ namespace Artefact.Saving
         const string SAVE_FILE = "save.dat";
         public const string CHECKPOINT_FILE = "checkpoint.dat";
         const string SAVE_FOLDER = "saves";
-        const int SAVE_SLOTS = 3;
+        const int SAVE_SLOTS = 5;
 
         public static bool HasAnySaveGames => Directory.Exists(SAVE_FOLDER);
 
@@ -28,8 +28,17 @@ namespace Artefact.Saving
                 Directory.CreateDirectory(directory);
             FileStream stream = File.Create(fileName);
             BinaryFormatter formatter = new BinaryFormatter();
-            formatter.Serialize(stream, value);
-            stream.Close();
+            try
+            {
+                formatter.Serialize(stream, value);
+                stream.Close();
+            }
+            catch (Exception e)
+            {
+                Utils.WriteColor($"[{ColorConstants.ERROR_COLOR}]There was an error whilst saving:\n{e.Message}");
+                stream.Close();
+                File.Delete(fileName);
+            }
         }
 
         static LoadDetails<T> LoadClass<T>(string fileName) where T : class

@@ -5,6 +5,9 @@ using System.Text.RegularExpressions;
 
 namespace Artefact.Misc
 {
+    /// <summary>
+    /// Create colored strings
+    /// </summary>
     class StringColorBuilder
     {
         private string fullMessage;

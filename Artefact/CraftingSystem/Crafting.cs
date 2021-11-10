@@ -57,7 +57,7 @@ namespace Artefact.CraftingSystem
                     continue;
                 }
 
-                inventory.AddItem(new ItemData(item.Item, craftData.Amount * item.Amount), true);
+                inventory.AddItem(new ItemData(item.Item, craftData.Amount * item.Amount));
 
                 foreach (ItemData craftItem in craftData.CraftItems)
                 {

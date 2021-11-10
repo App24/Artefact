@@ -19,7 +19,7 @@ namespace Artefact.InventorySystem
         public ArmorItem Boots { get { Armor.TryGetValue(ArmorType.Boots, out ArmorItem armorItem); return armorItem; } }
         public Dictionary<ArmorType, ArmorItem> Armor { get; } = new Dictionary<ArmorType, ArmorItem>();
 
-        public void AddItem(ItemData item, bool announce = false)
+        public void AddItem(ItemData item, bool announce = true)
         {
             ItemData itemData = GetItem(item.Item);
             if (itemData.Equals(default(ItemData)))
@@ -104,7 +104,7 @@ namespace Artefact.InventorySystem
                             RemoveItem(new ItemData(item));
                             if (Weapon != null)
                             {
-                                AddItem(new ItemData(Weapon));
+                                AddItem(new ItemData(Weapon), false);
                             }
                             Weapon = (WeaponItem)item;
                         }
@@ -118,7 +118,7 @@ namespace Artefact.InventorySystem
                             RemoveItem(new ItemData(item));
                             if (Armor.TryGetValue(armorItem.ArmorType, out ArmorItem equippedArmor))
                             {
-                                AddItem(new ItemData(equippedArmor));
+                                AddItem(new ItemData(equippedArmor), false);
                             }
                             Armor.AddOrReplace(armorItem.ArmorType, armorItem);
                         }

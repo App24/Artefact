@@ -10,6 +10,7 @@ using Artefact.StorySystem;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 
 namespace Artefact.MapSystem.Rooms
 {
@@ -38,13 +39,13 @@ namespace Artefact.MapSystem.Rooms
             Dialog.Speak(Character.Clippy, "Wha-what is that?!?");
             Dialog.Speak(Character.Clippy, "RUN, IT'S A TROJAN!!!");
 #if !BYPASS
-                        Thread.Sleep((int)GlobalSettings.TextSpeed * 15);
+            Thread.Sleep((int)GlobalSettings.TextSpeed * 15);
 #endif
             Fight.StartFight(Map.Player.Location, new BattleParameters(EnemyType.Trojan, new IntRange(1, 1), 1), new FightParameters(true, true, () =>
             {
                 Dialog.Speak(Character.Clippy, $"Phew, that was a close one!");
                 Dialog.Speak(Character.Clippy, "You should use these to regenerate your health!");
-                Map.Player.Inventory.AddItem(new ItemData(Item.SmallHealthPotion, 3), true);
+                Map.Player.Inventory.AddItem(new ItemData(Item.SmallHealthPotion, 3));
                 Dialog.Speak(Character.Clippy, $"Use the command [{ColorConstants.COMMAND_COLOR}]USE[/] to utilise those potions!");
             }));
         }

@@ -1,4 +1,5 @@
 ﻿using Artefact.Commands.Misc;
+using Artefact.InventorySystem;
 using Artefact.Items;
 using Artefact.MapSystem;
 using Artefact.Misc;
@@ -43,7 +44,7 @@ namespace Artefact.Commands
 
             if (usableItem.OnUse())
             {
-                Map.Player.Inventory.RemoveItem(new InventorySystem.ItemData(item, 1));
+                Map.Player.Inventory.RemoveItem(new ItemData(item));
             }
         }
     }

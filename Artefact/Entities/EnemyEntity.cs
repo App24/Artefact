@@ -193,7 +193,7 @@ namespace Artefact.Entities
                 if (per < itemDropData.Chance)
                 {
                     int amount = random.Next((int)itemDropData.Min, (int)itemDropData.Max + 1);
-                    Map.Player.Inventory.AddItem(new ItemData(itemDropData.Item, amount), true);
+                    Map.Player.Inventory.AddItem(new ItemData(itemDropData.Item, amount));
                 }
             });
             int xpAmount = random.Next(XPRange.Min, XPRange.Min + 1);

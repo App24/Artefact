@@ -24,6 +24,7 @@ Uni Assessment, I had to create a text-based adventure, I decided to set mine in
 - [ ] Interact with stuff in each location
 - - [x] Interact Command
 - - [ ] Individual interaction in each location depending on story step
+- [ ] Finish Talk Command
 - [ ] Middle of story
 - [ ] End of story
 - [ ] Improve/balance combat
