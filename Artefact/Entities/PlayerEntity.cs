@@ -13,16 +13,16 @@ namespace Artefact.Entities
     {
         public Inventory Inventory { get; }
 
-        public override IntRange BaseHitDamage => Inventory.Weapon == null ? new IntRange(3, 5) : Inventory.Weapon.Damage;
+        public override IntRange BaseHitDamage => Inventory.Weapon == null ? new IntRange(3, 5) : ((WeaponItem)Inventory.Weapon).Damage;
 
         public override int Defense
         {
             get
             {
                 int defense = 0;
-                foreach (KeyValuePair<ArmorType, ArmorItem> keyValuePair in Inventory.Armor)
+                foreach (KeyValuePair<ArmorType, ItemData> keyValuePair in Inventory.Armor)
                 {
-                    defense += keyValuePair.Value.Defense;
+                    defense += ((ArmorItem)keyValuePair.Value).Defense;
                 }
                 return defense;
             }

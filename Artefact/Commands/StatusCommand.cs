@@ -1,4 +1,5 @@
 ﻿using Artefact.Entities;
+using Artefact.InventorySystem;
 using Artefact.Items.Equipables;
 using Artefact.MapSystem;
 using Artefact.Misc;
@@ -31,21 +32,16 @@ namespace Artefact.Commands
 
             if (player.Inventory.Weapon != null)
             {
-                Utils.WriteColor($"Weapon Equiped: [{ColorConstants.ITEM_COLOR}]{player.Inventory.Weapon}[/]");
+                Utils.WriteColor($"Weapon Equiped: [{ColorConstants.ITEM_COLOR}]{player.Inventory.Weapon.ItemName}[/]");
             }
 
             // Sort armor items to have it be from helmet to boots no matter in what order the armor was equipped
-            List<KeyValuePair<ArmorType, ArmorItem>> armorItems = player.Inventory.Armor.ToList();
-            armorItems.Sort((a, b) =>
-            {
-                int aInt = (int)a.Key;
-                int bInt = (int)b.Key;
-                return aInt.CompareTo(bInt);
-            });
+            List<KeyValuePair<ArmorType, ItemData>> armorItems = player.Inventory.Armor.ToList();
+            armorItems.Sort((a, b) => a.Key.CompareTo(b.Key));
 
-            foreach (KeyValuePair<ArmorType, ArmorItem> keyValuePair in armorItems)
+            foreach (KeyValuePair<ArmorType, ItemData> keyValuePair in armorItems)
             {
-                Utils.WriteColor($"{keyValuePair.Key} Equipped: [{ColorConstants.ITEM_COLOR}]{keyValuePair.Value}[/]");
+                Utils.WriteColor($"{keyValuePair.Key} Equipped: [{ColorConstants.ITEM_COLOR}]{keyValuePair.Value.ItemName}[/]");
             }
 
             Utils.WriteColor($"Attack Damage: [{ColorConstants.GOOD_COLOR}]{player.HitDamage}[/]");

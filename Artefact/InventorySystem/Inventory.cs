@@ -12,17 +12,17 @@ namespace Artefact.InventorySystem
     {
         List<ItemData> items = new List<ItemData>();
 
-        public WeaponItem Weapon { get; private set; }
-        public ArmorItem Helmet { get { Armor.TryGetValue(ArmorType.Helmet, out ArmorItem armorItem); return armorItem; } }
-        public ArmorItem Chestplate { get { Armor.TryGetValue(ArmorType.Chestplate, out ArmorItem armorItem); return armorItem; } }
-        public ArmorItem Leggings { get { Armor.TryGetValue(ArmorType.Leggings, out ArmorItem armorItem); return armorItem; } }
-        public ArmorItem Boots { get { Armor.TryGetValue(ArmorType.Boots, out ArmorItem armorItem); return armorItem; } }
-        public Dictionary<ArmorType, ArmorItem> Armor { get; } = new Dictionary<ArmorType, ArmorItem>();
+        public ItemData Weapon { get; private set; }
+        public ItemData Helmet { get { Armor.TryGetValue(ArmorType.Helmet, out ItemData armorItem); return armorItem; } }
+        public ItemData Chestplate { get { Armor.TryGetValue(ArmorType.Chestplate, out ItemData armorItem); return armorItem; } }
+        public ItemData Leggings { get { Armor.TryGetValue(ArmorType.Leggings, out ItemData armorItem); return armorItem; } }
+        public ItemData Boots { get { Armor.TryGetValue(ArmorType.Boots, out ItemData armorItem); return armorItem; } }
+        public Dictionary<ArmorType, ItemData> Armor { get; } = new Dictionary<ArmorType, ItemData>();
 
         public void AddItem(ItemData item, bool announce = true)
         {
             ItemData itemData = GetItem(item.Item);
-            if (itemData.Equals(default(ItemData)))
+            if (itemData == null)
             {
                 itemData = item;
             }
@@ -41,7 +41,7 @@ namespace Artefact.InventorySystem
         public void RemoveItem(ItemData item)
         {
             ItemData itemData = GetItem(item.Item);
-            if (!itemData.Equals(default(ItemData)))
+            if (itemData != null)
             {
                 itemData.Amount -= item.Amount;
                 if (itemData.Amount <= 0)
@@ -58,7 +58,7 @@ namespace Artefact.InventorySystem
         public bool HasItem(ItemData item, bool checkAmount = false)
         {
             ItemData itemData = GetItem(item.Item);
-            if (itemData.Equals(default(ItemData)))
+            if (itemData == null)
             {
                 return false;
             }
@@ -83,7 +83,7 @@ namespace Artefact.InventorySystem
         {
             ItemData i = GetItem(item.Name);
 
-            return i.Equals(default(ItemData)) ? 0 : i.Amount;
+            return i == null ? 0 : i.Amount;
         }
 
         public List<ItemData> GetItems()
@@ -104,9 +104,9 @@ namespace Artefact.InventorySystem
                             RemoveItem(new ItemData(item));
                             if (Weapon != null)
                             {
-                                AddItem(new ItemData(Weapon), false);
+                                AddItem(Weapon, false);
                             }
-                            Weapon = (WeaponItem)item;
+                            Weapon = (ItemData)item;
                         }
                     }
                     break;
@@ -116,11 +116,11 @@ namespace Artefact.InventorySystem
                         {
                             ArmorItem armorItem = (ArmorItem)item;
                             RemoveItem(new ItemData(item));
-                            if (Armor.TryGetValue(armorItem.ArmorType, out ArmorItem equippedArmor))
+                            if (Armor.TryGetValue(armorItem.ArmorType, out ItemData equippedArmor))
                             {
-                                AddItem(new ItemData(equippedArmor), false);
+                                AddItem(equippedArmor, false);
                             }
-                            Armor.AddOrReplace(armorItem.ArmorType, armorItem);
+                            Armor.AddOrReplace(armorItem.ArmorType, (ItemData)armorItem);
                         }
                     }
                     break;

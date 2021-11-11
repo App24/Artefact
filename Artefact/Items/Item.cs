@@ -88,5 +88,11 @@ namespace Artefact.Items
         {
             return Items.Find(i => i.Name.ToLower().Equals(name.ToLower()));
         }
+
+
+        public static explicit operator Item(ItemData v)
+        {
+            return v.Item;
+        }
     }
 }

@@ -20,10 +20,48 @@ namespace Artefact.Commands.Misc
         string[] noCommandResponses = new string[] {
             "You are not sure you can do that!",
             "How do you do that again?",
-            "Impossible to do that!"
+            "Walking into a brick wall is more successful!",
+            "Never gonna give you up",
+            "You accidentally cured cancer, congrats! But that isn't a command",
+            "That command activated all the nuclear ICBMs on the planet, thankfully people caught on and deactivated them, try again!",
+            "You typing that non-existing command caused an earthquake is Japan",
+            "Never gonna let you down",
+            "Doc Brown came from the future to tell you that is not a command!",
+            "Who you gonna call? Ghostbusters!",
+            "Casper the Friendly Ghost isn't very friendly after you put that invalid command!",
+            "What is love?",
+            "What is an invalid command but not a command the developer did not implement",
+            "To be or not to be, that is the question",
+            "That which we call a rose by any other name would smell as sweet",
+            "It took Phil Connors 10 years to break out of the time loop, you can take your time",
+            "Never gonna run around and desert you",
+            "Much wrong! So impress!",
+            "All your base are belong to us.",
+            "I don't always type a correct command... but when I do, I do a good damn job",
+            "I don't know, therefore aliens",
+            "One does not simply input a correct command",
+            "Oh baby, don't hurt me. Don't hurt me. No more",
+            // https://www.twitchquotes.com/copypastas/689
+            @"
+░░░░░▄▄▄▄▀▀▀▀▀▀▀▀▄▄▄▄▄▄░░░░░░░
+░░░░░█░░░░▒▒▒▒▒▒▒▒▒▒▒▒░░▀▀▄░░░░
+░░░░█░░░▒▒▒▒▒▒░░░░░░░░▒▒▒░░█░░░
+░░░█░░░░░░▄██▀▄▄░░░░░▄▄▄░░░░█░░
+░▄▀▒▄▄▄▒░█▀▀▀▀▄▄█░░░██▄▄█░░░░█░
+█░▒█▒▄░▀▄▄▄▀░░░░░░░░█░░░▒▒▒▒▒░█
+█░▒█░█▀▄▄░░░░░█▀░░░░▀▄░░▄▀▀▀▄▒█
+░█░▀▄░█▄░█▀▄▄░▀░▀▀░▄▄▀░░░░█░░█░
+░░█░░░▀▄▀█▄▄░█▀▀▀▄▄▄▄▀▀█▀██░█░░
+░░░█░░░░██░░▀█▄▄▄█▄▄█▄████░█░░░
+░░░░█░░░░▀▀▄░█░░░█░█▀██████░█░░
+░░░░░▀▄░░░░░▀▀▄▄▄█▄█▄█▄█▄▀░░█░░
+░░░░░░░▀▄▄░▒▒▒▒░░░░░░░░░░▒░░░█░
+░░░░░░░░░░▀▀▄▄░▒▒▒▒▒▒▒▒▒▒░░░░█░
+░░░░░░░░░░░░░░▀▄▄▄▄▄░░░░░░░░█░░",
+            "I am once again asking you for a correct command",
+            "Charlie bit my finger",
+            "What colour is the dress? [black]black [red]and [blue]blue[red] or [white]white [red]and [yellow]gold"
         };
-
-        int fails = 0;
 
         int pageIndex = 0;
 
@@ -59,10 +97,7 @@ namespace Artefact.Commands.Misc
         public void AddCommand(ICommand command)
         {
             commands.Add(command);
-            commands.Sort((c1, c2) =>
-            {
-                return c1.Name.CompareTo(c2.Name);
-            });
+            commands.Sort((c1, c2) => c1.Name.CompareTo(c2.Name));
         }
 
         public List<ICommand> GetCommands()
@@ -130,7 +165,7 @@ namespace Artefact.Commands.Misc
                 string commandName = commandData[0].ToLower();
                 args = commandData.GetRange(1, commandData.Count - 1);
 
-                command = commands.Find(c => c.Name.ToLower().Equals(commandName) || c.Aliases.Map((x) => x.ToLower()).Contains(commandName));
+                command = commands.Find(c => c.Name.ToLower().Equals(commandName) || c.Aliases.Map(x => x.ToLower()).Contains(commandName));
             }
 
             if (command != null)
@@ -140,7 +175,6 @@ namespace Artefact.Commands.Misc
                     Console.WriteLine($"{command.NoArgsResponse}");
                     return false;
                 }
-                fails = 0;
                 try
                 {
                     command.OnRun(args);
@@ -152,17 +186,15 @@ namespace Artefact.Commands.Misc
                     {
                         Utils.WriteColor($"[{ColorConstants.ERROR_COLOR}]{e.Message}");
                     }
-                    return false;
                 }
             }
             else
             {
                 Random random = new Random();
                 Utils.WriteColor($"[{ColorConstants.BAD_COLOR}]{noCommandResponses[random.Next(noCommandResponses.Length)]}");
-                fails++;
-                if (random.Next(101) <= fails)
+                if (random.Next(20) <= 1)
                 {
-                    Dialog.Speak(Character.Clippy, $"You seem to be struggeling, you can type [{ColorConstants.COMMAND_COLOR}]HELP[/] to get a list of commands, or switch to simple mode in [{ColorConstants.COMMAND_COLOR}]SETTINGS[/]!");
+                    Dialog.Speak(Character.Clippy, $"You seem to be struggeling, you can type [{ColorConstants.COMMAND_COLOR}]HELP[/] to get a list of commands, or switch to simple mode in [{ColorConstants.COMMAND_COLOR}]SETTINGS[/]!", instant: true);
                 }
             }
             return false;

@@ -7,14 +7,21 @@ using System.Text;
 namespace Artefact.InventorySystem
 {
     [Serializable]
-    struct ItemData
+    class ItemData
     {
-        public Item Item { get; }
+        public Item Item => Item.GetItem(ItemName);
+        public string ItemName { get; }
         public int Amount { get; set; }
 
         public ItemData(Item item, int amount = 1)
         {
-            Item = item;
+            ItemName = item.Name;
+            Amount = amount;
+        }
+
+        public ItemData(string itemName, int amount = 1)
+        {
+            ItemName = itemName;
             Amount = amount;
         }
 
@@ -34,7 +41,7 @@ namespace Artefact.InventorySystem
         {
             if (obj is ItemData itemData)
             {
-                return Item == itemData.Item;
+                return ItemName == itemData.ItemName;
             }
             return false;
         }
@@ -42,6 +49,11 @@ namespace Artefact.InventorySystem
         public static ItemData operator *(ItemData a, int b)
         {
             return new ItemData(a.Item, a.Amount * b);
+        }
+
+        public static explicit operator ItemData(Item v)
+        {
+            return new ItemData(v, 1);
         }
     }
 }
