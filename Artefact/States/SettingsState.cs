@@ -2,13 +2,11 @@
 using Artefact.Saving;
 using Artefact.Settings;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Artefact.States
 {
-    class SettingsState : State
+    internal class SettingsState : State
     {
         public override void Init()
         {

@@ -1,15 +1,13 @@
 ﻿using Artefact.Commands.Misc;
-using Artefact.Misc;
 using Artefact.Saving;
 using Artefact.Settings;
 using Artefact.States;
 using System;
-using System.Collections.Generic;
 using System.Runtime.InteropServices;
 
 namespace Artefact
 {
-    class Program
+    internal class Program
     {
         /**
          * Disable resizing and maximise button
@@ -17,9 +15,9 @@ namespace Artefact
          * Link: https://social.msdn.microsoft.com/Forums/vstudio/en-US/1aa43c6c-71b9-42d4-aa00-60058a85f0eb/c-console-window-disable-resize?forum=csharpgeneral
          */
 
-        const int MF_BYCOMMAND = 0x00000000;
-        const int SC_MAXIMIZE = 0xF030;
-        const int SC_SIZE = 0xF000;
+        private const int MF_BYCOMMAND = 0x00000000;
+        private const int SC_MAXIMIZE = 0xF030;
+        private const int SC_SIZE = 0xF000;
 
         [DllImport("user32.dll")]
         public static extern int DeleteMenu(IntPtr hMenu, int nPosition, int wFlags);
@@ -35,7 +33,7 @@ namespace Artefact
          * 
          */
 
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             Console.WindowWidth += 2;
             Console.WindowHeight += 2;

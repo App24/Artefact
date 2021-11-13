@@ -5,23 +5,21 @@ using Artefact.StorySystem;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
-using System.Text;
 
 namespace Artefact.Saving
 {
-    static class SaveSystem
+    internal static class SaveSystem
     {
-        const string SETTINGS_FILE = "settings.dat";
-        const string SAVE_FILE = "save.dat";
+        private const string SETTINGS_FILE = "settings.dat";
+        private const string SAVE_FILE = "save.dat";
         public const string CHECKPOINT_FILE = "checkpoint.dat";
-        const string SAVE_FOLDER = "saves";
-        const int SAVE_SLOTS = 5;
+        private const string SAVE_FOLDER = "saves";
+        private const int SAVE_SLOTS = 5;
 
         public static bool HasAnySaveGames => Directory.Exists(SAVE_FOLDER);
 
-        static void SaveClass<T>(string fileName, T value) where T : class
+        private static void SaveClass<T>(string fileName, T value) where T : class
         {
             string directory = Path.GetDirectoryName(fileName);
             if (!string.IsNullOrEmpty(directory))
@@ -41,7 +39,7 @@ namespace Artefact.Saving
             }
         }
 
-        static LoadDetails<T> LoadClass<T>(string fileName) where T : class
+        private static LoadDetails<T> LoadClass<T>(string fileName) where T : class
         {
             if (!File.Exists(fileName))
             {
@@ -173,7 +171,7 @@ namespace Artefact.Saving
         }
     }
 
-    class LoadDetails<T>
+    internal class LoadDetails<T>
     {
         public LoadResult LoadResult { get; }
         public T Saveable { get; }
@@ -185,7 +183,7 @@ namespace Artefact.Saving
         }
     }
 
-    enum LoadResult
+    internal enum LoadResult
     {
         Success,
         NoFile,

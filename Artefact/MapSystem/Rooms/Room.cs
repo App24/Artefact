@@ -3,13 +3,13 @@
 namespace Artefact.MapSystem.Rooms
 {
     [Serializable]
-    abstract class Room
+    internal abstract class Room
     {
         public Location Location { get; }
-        public Location North { get; }
-        public Location South { get; }
-        public Location East { get; }
-        public Location West { get; }
+        public Location North { get; protected set; }
+        public Location South { get; protected set; }
+        public Location East { get; protected set; }
+        public Location West { get; protected set; }
 
         public bool VisitedBefore { get; private set; }
 

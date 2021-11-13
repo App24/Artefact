@@ -5,18 +5,14 @@ using Artefact.GenderSystem;
 using Artefact.InventorySystem;
 using Artefact.Items;
 using Artefact.Misc;
-using Artefact.Settings;
-using Artefact.StorySystem;
 using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading;
 
 namespace Artefact.MapSystem.Rooms
 {
     [Serializable]
-    class CPURoom : Room
+    internal class CPURoom : Room
     {
+        public bool ActivatedLever { get; private set; }
 
         public CPURoom() : base(Location.CPU, south: Location.GPU, east: Location.RAM, north: Location.PSU)
         {
@@ -25,7 +21,31 @@ namespace Artefact.MapSystem.Rooms
 
         public override void OnInteract()
         {
+            if (!ActivatedLever)
+            {
+                Dialog.Speak(Character.Clippy, "There seems to be a lever over here, come check it out!");
+                if (Utils.GetCharacterConfirmation(Character.Clippy, "Do you want to pull it?"))
+                {
+                    if (!ContinueStory())
+                    {
+                        Utils.WriteColor("Nothing happened...");
+                        return;
+                    }
 
+                    Dialog.Speak(Character.Clippy, $"[{ColorConstants.BAD_COLOR}]AAAAH");
+                    Dialog.Speak(Character.Clippy, "The side panel, it fell");
+
+                    Dialog.Speak(Character.Clippy, $"We are now able to go into the [{ColorConstants.USER_COLOR}]user[/]'s room, just go [{ColorConstants.WARNING_COLOR}]WEST[/]");
+
+                    West = Location.Room;
+
+                    ActivatedLever = true;
+                }
+            }
+            else
+            {
+                Utils.WriteColor("You've done everything you can here!");
+            }
         }
 
         protected override void OnEnterFirst(ref bool disableSpawn)
@@ -53,6 +73,16 @@ namespace Artefact.MapSystem.Rooms
         protected override void OnEnterRoom(ref bool disableSpawn)
         {
 
+        }
+
+        private bool ContinueStory()
+        {
+            GPURoom gpuRoom = (GPURoom)Map.GetRoom(Location.GPU);
+            RAMRoom ramRoom = (RAMRoom)Map.GetRoom(Location.RAM);
+            HDDRoom hddRoom = (HDDRoom)Map.GetRoom(Location.HDD);
+            PSURoom psuRoom = (PSURoom)Map.GetRoom(Location.PSU);
+
+            return ramRoom.RepairedRAM;
         }
     }
 }

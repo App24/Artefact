@@ -3,14 +3,13 @@ using Artefact.Items.Equipables;
 using Artefact.Misc;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Artefact.InventorySystem
 {
     [Serializable]
-    class Inventory
+    internal class Inventory
     {
-        List<ItemData> items = new List<ItemData>();
+        private List<ItemData> items = new List<ItemData>();
 
         public ItemData Weapon { get; private set; }
         public ItemData Helmet { get { Armor.TryGetValue(ArmorType.Helmet, out ItemData armorItem); return armorItem; } }
@@ -55,18 +54,14 @@ namespace Artefact.InventorySystem
             }
         }
 
-        public bool HasItem(ItemData item, bool checkAmount = false)
+        public bool HasItem(ItemData item)
         {
             ItemData itemData = GetItem(item.Item);
             if (itemData == null)
             {
                 return false;
             }
-            if (checkAmount)
-            {
-                return itemData.Amount >= item.Amount;
-            }
-            return true;
+            return itemData.Amount >= item.Amount;
         }
 
         public ItemData GetItem(string name)

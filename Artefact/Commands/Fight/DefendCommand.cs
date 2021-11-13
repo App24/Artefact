@@ -1,11 +1,9 @@
 ﻿using Artefact.MapSystem;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Artefact.Commands.FightCommands
 {
-    class DefendCommand : ICommand
+    internal class DefendCommand : ICommand
     {
         public string Name => "defend";
 

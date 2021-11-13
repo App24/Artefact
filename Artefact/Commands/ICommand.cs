@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace Artefact.Commands
 {
-    interface ICommand
+    internal interface ICommand
     {
         string Name { get; }
         string[] Aliases { get; }

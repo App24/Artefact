@@ -1,15 +1,11 @@
 ﻿using Artefact.CraftingSystem;
-using Artefact.Entities;
-using Artefact.InventorySystem;
 using Artefact.Misc;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Artefact.Items.Equipables
 {
     [Serializable]
-    class WeaponItem : EquipableItem
+    internal class WeaponItem : EquipableItem
     {
         public IntRange Damage { get; }
 

@@ -2,17 +2,13 @@
 using Artefact.FightSystem;
 using Artefact.MapSystem.Rooms;
 using Artefact.Misc;
-using Artefact.Settings;
-using Artefact.States;
-using Artefact.StorySystem;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Artefact.MapSystem
 {
     [Serializable]
-    class Map
+    internal class Map
     {
         public const float ENCOUNTER_PROBABILITY = 1 / 25f;
 
@@ -20,20 +16,20 @@ namespace Artefact.MapSystem
 
         public static Map Instance { get; set; }
 
-        PlayerEntity player;
+        private PlayerEntity player;
 
         public static List<Room> Rooms { get { return Instance.rooms; } }
 
-        List<Room> rooms = new List<Room>()
+        private List<Room> rooms = new List<Room>()
         {
             new GPURoom(),
             new CPURoom(),
             new RAMRoom(),
             new HDDRoom(),
-            new PSURoom()
+            new PSURoom(),
+            new UserRoom()
         };
-
-        static string map = "\n" +
+        private static string map = "\n" +
  "     ___________\n" +
  "     |         |\n" +
 $"     |   [{ColorConstants.LOCATION_COLOR}]{Location.PSU}[/]   |\n" +
@@ -113,6 +109,7 @@ $"     |      |  [{ColorConstants.LOCATION_COLOR}]{Location.GPU}[/]  |\n" +
         {
             Room currentRoom = GetRoom(currentLocation);
             nextLocation = Location.None;
+            if (currentRoom == null) return false;
             switch (direction)
             {
                 case Direction.North:
@@ -137,7 +134,7 @@ $"     |      |  [{ColorConstants.LOCATION_COLOR}]{Location.GPU}[/]  |\n" +
         }
     }
 
-    enum Direction
+    internal enum Direction
     {
         North,
         South,
@@ -145,7 +142,7 @@ $"     |      |  [{ColorConstants.LOCATION_COLOR}]{Location.GPU}[/]  |\n" +
         West
     }
 
-    enum Location
+    internal enum Location
     {
         None,
         GPU,
@@ -154,6 +151,6 @@ $"     |      |  [{ColorConstants.LOCATION_COLOR}]{Location.GPU}[/]  |\n" +
         HDD,
         PSU,
 
-        Room = 50
+        Room
     }
 }

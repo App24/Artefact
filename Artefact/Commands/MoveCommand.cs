@@ -3,11 +3,10 @@ using Artefact.Misc;
 using Artefact.Settings;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Artefact.Commands
 {
-    class MoveCommand : ICommand
+    internal class MoveCommand : ICommand
     {
         public string Name => "go";
 

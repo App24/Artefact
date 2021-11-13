@@ -1,12 +1,9 @@
 ﻿using Artefact.CraftingSystem;
 using Artefact.InventorySystem;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Artefact.Items.Equipables
 {
-    static class ArmorItemFactory
+    internal static class ArmorItemFactory
     {
         public static ArmorItems CreateArmor(string name, Item craftItem, int baseDefense)
         {
@@ -18,7 +15,7 @@ namespace Artefact.Items.Equipables
         }
     }
 
-    struct ArmorItems
+    internal struct ArmorItems
     {
         public ArmorItem HelmetItem { get; }
         public ArmorItem ChestplateItem { get; }

@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Artefact.Misc
 {
-    static class ColorConstants
+    internal static class ColorConstants
     {
         public const ConsoleColor ITEM_COLOR = ConsoleColor.Magenta;
         public const ConsoleColor CHARACTER_COLOR = ConsoleColor.Cyan;

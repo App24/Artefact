@@ -1,12 +1,10 @@
 ﻿using Artefact.Misc;
 using Artefact.Settings;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Artefact.States
 {
-    class MenuState : State
+    internal class MenuState : State
     {
         public override void Init()
         {

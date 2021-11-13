@@ -1,15 +1,13 @@
-﻿using Artefact.Commands.Misc;
-using Artefact.CraftingSystem;
+﻿using Artefact.CraftingSystem;
 using Artefact.InventorySystem;
 using Artefact.Items;
 using Artefact.Misc;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Artefact.Commands
 {
-    class RecipesCommand : ICommand
+    internal class RecipesCommand : ICommand
     {
         public string Name => "recipes";
 
@@ -21,11 +19,9 @@ namespace Artefact.Commands
 
         public string Description => "Look at the recipes for items you can craft";
 
-        const int MAX_CHARS_PER_PAGE_LINE = 40;
-
-        const int ITEMS_PER_PAGE = 5;
-
-        int page = 0;
+        private const int MAX_CHARS_PER_PAGE_LINE = 40;
+        private const int ITEMS_PER_PAGE = 5;
+        private int page = 0;
 
         public void OnRun(List<string> args)
         {
@@ -59,7 +55,7 @@ namespace Artefact.Commands
             page = 0;
         }
 
-        string CreateBook()
+        private string CreateBook()
         {
             List<string> leftPage = CreateBlankPage(true);
             List<string> rightPage = CreateBlankPage(false);
@@ -100,7 +96,7 @@ namespace Artefact.Commands
             return book.Join("\n");
         }
 
-        List<string> CreateBlankPage(bool left)
+        private List<string> CreateBlankPage(bool left)
         {
             List<string> lines = new List<string>();
             string top = "";
@@ -126,7 +122,7 @@ namespace Artefact.Commands
             return lines;
         }
 
-        List<string> CreatePage(bool left, int pageNumber)
+        private List<string> CreatePage(bool left, int pageNumber)
         {
             List<Item> items = Item.CraftableItems.GetRange(pageNumber * ITEMS_PER_PAGE, Math.Min(ITEMS_PER_PAGE, Math.Max(0, Item.CraftableItems.Count - pageNumber * ITEMS_PER_PAGE)));
             List<string> lines = new List<string>();
@@ -174,7 +170,7 @@ namespace Artefact.Commands
             return lines;
         }
 
-        string CreateLine(bool left, string text)
+        private string CreateLine(bool left, string text)
         {
             string line = "";
             if (left) line += "|";

@@ -1,6 +1,4 @@
 ﻿using Artefact.DialogSystem;
-using Artefact.Entities;
-using Artefact.FightSystem;
 using Artefact.GenderSystem;
 using Artefact.InventorySystem;
 using Artefact.Items;
@@ -8,13 +6,10 @@ using Artefact.MapSystem;
 using Artefact.Misc;
 using Artefact.Settings;
 using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading;
 
 namespace Artefact.StorySystem
 {
-    static class Story
+    internal static class Story
     {
         public static int Step { get; set; }
 
@@ -158,7 +153,7 @@ namespace Artefact.StorySystem
             }
         }
 
-        static void CreateGender()
+        private static void CreateGender()
         {
             string nominative = GetGenderPronoun("____ defeated an armada of paper clips. (Nominative Case)");
             string objective = GetGenderPronoun("I defeated ____. (Objective Case)");
@@ -168,7 +163,7 @@ namespace Artefact.StorySystem
             GameSettings.Pronouns = new GenderPronouns(nominative, objective, possessiveDeterminer, possessivePronoun, reflexive);
         }
 
-        static string GetGenderPronoun(string example)
+        private static string GetGenderPronoun(string example)
         {
             string pronoun = null;
             while (string.IsNullOrEmpty(pronoun))

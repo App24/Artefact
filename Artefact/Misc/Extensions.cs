@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
 
 namespace Artefact.Misc
 {
-    static class Extensions
+    internal static class Extensions
     {
         public static string Join<T>(this IEnumerable<T> enumerable, string separator)
         {
@@ -15,17 +14,11 @@ namespace Artefact.Misc
 
         public static IEnumerable<E> Map<T, E>(this IEnumerable<T> source, Func<T, E> action)
         {
-            if (source == null) throw new ArgumentNullException("source");
-            if (action == null) throw new ArgumentNullException("action");
-
             return source.Map((item, _) => action(item));
         }
 
         public static IEnumerable<E> Map<T, E>(this IEnumerable<T> source, Func<T, int, E> action)
         {
-            if (source == null) throw new ArgumentNullException("source");
-            if (action == null) throw new ArgumentNullException("action");
-
             int index = 0;
 
             foreach (T item in source)
@@ -64,7 +57,7 @@ namespace Artefact.Misc
             }
         }
 
-        public static void AddOrReplace<T, D>(this Dictionary<T, D> dictionary, T key, D value)
+        public static void AddOrReplace<T, D>(this IDictionary<T, D> dictionary, T key, D value)
         {
             if (!dictionary.ContainsKey(key))
             {

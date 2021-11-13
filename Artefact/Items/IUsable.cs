@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Artefact.Items
+﻿namespace Artefact.Items
 {
-    interface IUsable
+    internal interface IUsable
     {
         bool OnUse();
     }

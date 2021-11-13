@@ -1,13 +1,10 @@
-﻿using Artefact.Commands.Misc;
-using Artefact.MapSystem;
+﻿using Artefact.MapSystem;
 using Artefact.Misc;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Artefact.Commands
 {
-    class MapCommand : ICommand
+    internal class MapCommand : ICommand
     {
         public string Name => "map";
         public string[] Aliases => new string[] { "location" };

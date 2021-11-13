@@ -1,15 +1,12 @@
 ﻿using Artefact.CraftingSystem;
-using Artefact.InventorySystem;
 using Artefact.MapSystem;
 using Artefact.Misc;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Artefact.Items.Potions
 {
     [Serializable]
-    class HealthPotionItem : PotionItem
+    internal class HealthPotionItem : PotionItem
     {
         public HealthPotionType HealthPotionType { get; }
 
@@ -61,7 +58,7 @@ namespace Artefact.Items.Potions
         }
     }
 
-    enum HealthPotionType
+    internal enum HealthPotionType
     {
         Small,
         Medium,

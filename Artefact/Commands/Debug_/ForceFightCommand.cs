@@ -1,13 +1,11 @@
 ﻿using Artefact.Entities;
 using Artefact.FightSystem;
 using Artefact.MapSystem;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Artefact.Commands
 {
-    class ForceFightCommand : ICommand
+    internal class ForceFightCommand : ICommand
     {
         public string Name => "ffight";
 

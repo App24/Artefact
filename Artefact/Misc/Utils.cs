@@ -1,19 +1,12 @@
 ﻿using Artefact.DialogSystem;
 using Artefact.Entities;
 using Artefact.GenderSystem;
-using Artefact.Settings;
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Reflection;
-using System.Security.Cryptography;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading;
 
 namespace Artefact.Misc
 {
-    static class Utils
+    internal static class Utils
     {
         public static List<string> ValidYes { get; } = new List<string>() { "y", "yes", "yeah", "yea" };
         public static List<string> ValidNo { get; } = new List<string>() { "n", "no", "nah" };
@@ -97,13 +90,13 @@ namespace Artefact.Misc
         /// <param name="text">The text to be written to the console window</param>
         public static void WriteCenter(string text)
         {
-            StringColorBuilder stringColorBuilder = new StringColorBuilder(text);
+            StringColorBuilder stringColorBuilder = new StringColorBuilder(GenderUtils.ReplacePronouns(text));
             foreach (List<StringColor> stringColors in stringColorBuilder.Split("\n"))
             {
                 Console.SetCursorPosition((Console.WindowWidth - stringColors.Map(s => s.Text).Join("").Length) / 2, Console.CursorTop);
                 foreach (StringColor stringColor in stringColors)
                 {
-                    Console.ForegroundColor = stringColor.Color;
+                    Console.ForegroundColor = stringColor.ForegroundColor;
                     Console.Write(stringColor.Text);
                 }
                 Console.WriteLine();
@@ -117,14 +110,14 @@ namespace Artefact.Misc
         /// <param name="text">Text with colored formatting</param>
         public static void WriteColor(string text)
         {
-            StringColorBuilder stringColorBuilder = new StringColorBuilder(text);
+            StringColorBuilder stringColorBuilder = new StringColorBuilder(GenderUtils.ReplacePronouns(text));
 
             foreach (List<StringColor> stringColors in stringColorBuilder.Split("\n"))
             {
                 foreach (StringColor stringColor in stringColors)
                 {
-                    Console.ForegroundColor = stringColor.Color;
-                    Console.Write(GenderUtils.ReplacePronouns(stringColor.Text));
+                    Console.ForegroundColor = stringColor.ForegroundColor;
+                    Console.Write(stringColor.Text);
                 }
                 Console.WriteLine();
             }
@@ -196,13 +189,13 @@ namespace Artefact.Misc
         /// <param name="text">Text to type</param>
         public static void Type(string text)
         {
-            StringColorBuilder stringColorBuilder = new StringColorBuilder(text);
+            StringColorBuilder stringColorBuilder = new StringColorBuilder(GenderUtils.ReplacePronouns(text));
             foreach (List<StringColor> stringColors in stringColorBuilder.Split("\n"))
             {
                 foreach (StringColor stringColor in stringColors)
                 {
-                    Console.ForegroundColor = stringColor.Color;
-                    foreach (char letter in GenderUtils.ReplacePronouns(stringColor.Text))
+                    Console.ForegroundColor = stringColor.ForegroundColor;
+                    foreach (char letter in stringColor.Text)
                     {
                         Console.Write(letter);
 #if !BYPASS
@@ -214,7 +207,5 @@ namespace Artefact.Misc
             }
             Console.ResetColor();
         }
-
-
     }
 }

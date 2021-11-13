@@ -1,12 +1,10 @@
 ﻿using Artefact.Commands.Misc;
 using Artefact.MapSystem;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Artefact.Commands
 {
-    class GiveXpCommand : ICommand
+    internal class GiveXpCommand : ICommand
     {
         public string Name => "givexp";
 

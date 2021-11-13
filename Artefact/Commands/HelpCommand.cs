@@ -1,13 +1,11 @@
 ﻿using Artefact.Commands.Misc;
 using Artefact.DialogSystem;
 using Artefact.Misc;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Artefact.Commands
 {
-    class HelpCommand : ICommand
+    internal class HelpCommand : ICommand
     {
         public string Name => "help";
 
@@ -19,7 +17,7 @@ namespace Artefact.Commands
 
         public string Description => "Lists the commands available";
 
-        List<ICommand> commands;
+        private List<ICommand> commands;
 
         public HelpCommand(List<ICommand> commands)
         {

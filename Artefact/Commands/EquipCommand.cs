@@ -7,11 +7,10 @@ using Artefact.Settings;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Artefact.Commands
 {
-    class EquipCommand : ICommand
+    internal class EquipCommand : ICommand
     {
         public string Name => "equip";
         public bool HasArguments => false;
@@ -57,7 +56,7 @@ namespace Artefact.Commands
                 item = availableEquipableItems[selection];
             }
 
-            if (!inventory.HasItem(new ItemData(item, 0)))
+            if (!inventory.HasItem(new ItemData(item, 1)))
             {
                 Utils.WriteColor($"[{ColorConstants.BAD_COLOR}]You do not have that item in your inventory!");
                 return;

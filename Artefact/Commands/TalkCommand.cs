@@ -3,11 +3,10 @@ using Artefact.Misc;
 using Artefact.Settings;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Artefact.Commands
 {
-    class TalkCommand : ICommand
+    internal class TalkCommand : ICommand
     {
         public string Name => "talk";
         public string[] Aliases => new string[] { "speak" };

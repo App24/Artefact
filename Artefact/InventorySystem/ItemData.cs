@@ -1,22 +1,18 @@
 ﻿using Artefact.Items;
 using Artefact.Misc;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Artefact.InventorySystem
 {
     [Serializable]
-    class ItemData
+    internal class ItemData
     {
         public Item Item => Item.GetItem(ItemName);
         public string ItemName { get; }
         public int Amount { get; set; }
 
-        public ItemData(Item item, int amount = 1)
+        public ItemData(Item item, int amount = 1) : this(item.Name, amount)
         {
-            ItemName = item.Name;
-            Amount = amount;
         }
 
         public ItemData(string itemName, int amount = 1)
@@ -35,15 +31,6 @@ namespace Artefact.InventorySystem
             }
 
             return text;
-        }
-
-        public override bool Equals(object obj)
-        {
-            if (obj is ItemData itemData)
-            {
-                return ItemName == itemData.ItemName;
-            }
-            return false;
         }
 
         public static ItemData operator *(ItemData a, int b)

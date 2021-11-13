@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace Artefact.States
 {
-    static class StateMachine
+    internal static class StateMachine
     {
-        static Stack<State> states = new Stack<State>();
-        static State newState;
-        static bool isAdd, isRemove, isReplace;
+        private static Stack<State> states = new Stack<State>();
+        private static State newState;
+        private static bool isAdd, isRemove, isReplace;
 
         public static State ActiveState { get { if (IsEmpty) return null; return states.Peek(); } }
         public static bool IsEmpty { get { return states.Count <= 0; } }

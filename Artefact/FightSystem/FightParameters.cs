@@ -2,7 +2,7 @@
 
 namespace Artefact.FightSystem
 {
-    class FightParameters
+    internal class FightParameters
     {
         public Action OnFightEnd { get; set; }
         public bool PreventDeath { get; set; }

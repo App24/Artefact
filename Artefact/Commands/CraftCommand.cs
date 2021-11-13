@@ -5,11 +5,10 @@ using Artefact.Settings;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Artefact.Commands
 {
-    class CraftCommand : ICommand
+    internal class CraftCommand : ICommand
     {
         public string Name => "craft";
         public string[] Aliases => new string[] { "create" };

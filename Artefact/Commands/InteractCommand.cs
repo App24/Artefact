@@ -1,13 +1,11 @@
 ﻿using Artefact.MapSystem;
 using Artefact.MapSystem.Rooms;
 using Artefact.Misc;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Artefact.Commands
 {
-    class InteractCommand : ICommand
+    internal class InteractCommand : ICommand
     {
         public string Name => "interact";
 

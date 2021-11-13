@@ -3,14 +3,12 @@ using Artefact.Saving;
 using Artefact.Settings;
 using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Threading;
 
 namespace Artefact.States
 {
-    class StartState : State
+    internal class StartState : State
     {
-        bool saveSlot = false;
+        private bool saveSlot = false;
 
         public override void Init()
         {

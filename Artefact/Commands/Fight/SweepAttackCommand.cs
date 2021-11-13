@@ -1,11 +1,9 @@
 ﻿using Artefact.MapSystem;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Artefact.Commands.FightCommands
 {
-    class SweepAttackCommand : ICommand
+    internal class SweepAttackCommand : ICommand
     {
         public string Name => "sweepattack";
 

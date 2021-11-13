@@ -5,7 +5,7 @@ using System.Collections.Generic;
 namespace Artefact.GenderSystem
 {
     [Serializable]
-    class GenderPronouns : IEnumerable<GenderPronounData>
+    internal class GenderPronouns : IEnumerable<GenderPronounData>
     {
         public GenderPronouns(string nominative, string objective, string possessiveDeterminer, string possessivePronoun, string reflexive)
         {
@@ -37,7 +37,7 @@ namespace Artefact.GenderSystem
         }
     }
 
-    struct GenderPronounData
+    internal struct GenderPronounData
     {
         public GenderPronounData(PronounType pronounType, string text)
         {

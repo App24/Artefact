@@ -1,13 +1,11 @@
 ﻿using Artefact.MapSystem;
 using Artefact.Misc;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Artefact.Entities
 {
     [Serializable]
-    abstract class Entity
+    internal abstract class Entity
     {
         public string UUID { get; }
 
@@ -121,7 +119,8 @@ namespace Artefact.Entities
             Heal(MaxHealth);
         }
     }
-    enum Move
+
+    internal enum Move
     {
         Attack,
         Defend,

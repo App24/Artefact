@@ -3,14 +3,12 @@ using Artefact.InventorySystem;
 using Artefact.Items;
 using Artefact.MapSystem;
 using Artefact.Misc;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Artefact.Commands
 {
-    class UseCommand : ICommand
+    internal class UseCommand : ICommand
     {
         public string Name => "use";
 

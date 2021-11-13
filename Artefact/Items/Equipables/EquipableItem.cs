@@ -1,13 +1,10 @@
 ﻿using Artefact.CraftingSystem;
-using Artefact.InventorySystem;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Artefact.Items.Equipables
 {
     [Serializable]
-    abstract class EquipableItem : Item
+    internal abstract class EquipableItem : Item
     {
         public EquipableType EquipableType { get; }
 
@@ -17,7 +14,7 @@ namespace Artefact.Items.Equipables
         }
     }
 
-    enum EquipableType
+    internal enum EquipableType
     {
         Weapon,
         Armor

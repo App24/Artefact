@@ -1,14 +1,12 @@
 ﻿using Artefact.InventorySystem;
-using Artefact.Items;
 using Artefact.MapSystem;
 using Artefact.Misc;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Artefact.Commands
 {
-    class InventoryCommand : ICommand
+    internal class InventoryCommand : ICommand
     {
         public string Name => "inventory";
         public string[] Aliases => new string[] { "inv" };

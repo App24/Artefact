@@ -1,17 +1,15 @@
 ﻿using Artefact.CraftingSystem;
-using Artefact.Entities;
 using Artefact.InventorySystem;
 using Artefact.Items.Equipables;
 using Artefact.Items.Potions;
 using Artefact.Misc;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Artefact.Items
 {
     [Serializable]
-    class Item
+    internal class Item
     {
         public string Name { get; }
 

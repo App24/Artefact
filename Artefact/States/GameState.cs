@@ -2,15 +2,12 @@
 using Artefact.Misc;
 using Artefact.Settings;
 using Artefact.StorySystem;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Artefact.States
 {
-    class GameState : State
+    internal class GameState : State
     {
-        CommandHandler instance;
+        private CommandHandler instance;
 
         public override void Init()
         {

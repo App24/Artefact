@@ -1,12 +1,9 @@
-﻿using Artefact.Saving;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System;
 
 namespace Artefact.Settings
 {
     [Serializable]
-    class GlobalSettings
+    internal class GlobalSettings
     {
         public static bool Running { get; set; } = true;
         public static bool JustLoaded { get; set; }
@@ -16,8 +13,8 @@ namespace Artefact.Settings
 
         public static GlobalSettings Instance { get; set; }
 
-        TextSpeed textSpeed = TextSpeed.Normal;
-        bool simpleMode;
+        private TextSpeed textSpeed = TextSpeed.Normal;
+        private bool simpleMode;
 
 
         public GlobalSettings()

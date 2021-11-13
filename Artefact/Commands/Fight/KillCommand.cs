@@ -1,11 +1,9 @@
 ﻿using Artefact.MapSystem;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Artefact.Commands.FightCommands
 {
-    class KillCommand : ICommand
+    internal class KillCommand : ICommand
     {
         public string Name => "instakill";
 

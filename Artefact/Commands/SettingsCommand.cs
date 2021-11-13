@@ -1,11 +1,10 @@
 ﻿using Artefact.States;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Artefact.Commands
 {
-    class SettingsCommand : ICommand
+    internal class SettingsCommand : ICommand
     {
         public string Name => "settings";
         public string[] Aliases => new string[] { "setting" };

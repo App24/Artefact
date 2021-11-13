@@ -2,14 +2,11 @@
 using Artefact.Saving;
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading;
 
 namespace Artefact.Commands
 {
-    class LoadCommand : ICommand
+    internal class LoadCommand : ICommand
     {
         public string Name => "load";
 

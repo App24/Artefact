@@ -1,14 +1,11 @@
 ﻿using Artefact.Settings;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Artefact.GenderSystem
 {
-    static class GenderUtils
+    internal static class GenderUtils
     {
-
-        static Dictionary<Gender, GenderPronouns> genderPronouns = new Dictionary<Gender, GenderPronouns>()
+        private static Dictionary<Gender, GenderPronouns> genderPronouns = new Dictionary<Gender, GenderPronouns>()
         {
             { Gender.Male, new GenderPronouns("he", "him", "his", "his", "himself") },
             { Gender.Female, new GenderPronouns("she", "her", "her", "hers", "herself") },
@@ -32,7 +29,7 @@ namespace Artefact.GenderSystem
         }
     }
 
-    enum PronounType
+    internal enum PronounType
     {
         Nominative,
         Objective,
@@ -41,7 +38,7 @@ namespace Artefact.GenderSystem
         Reflexive
     }
 
-    enum Gender
+    internal enum Gender
     {
         Male,
         Female,

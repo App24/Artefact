@@ -1,13 +1,10 @@
 ﻿using Artefact.CraftingSystem;
-using Artefact.InventorySystem;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Artefact.Items.Equipables
 {
     [Serializable]
-    class ArmorItem : EquipableItem
+    internal class ArmorItem : EquipableItem
     {
         public int Defense { get; }
         public ArmorType ArmorType { get; }
@@ -19,7 +16,7 @@ namespace Artefact.Items.Equipables
         }
     }
 
-    enum ArmorType
+    internal enum ArmorType
     {
         Helmet,
         Chestplate,

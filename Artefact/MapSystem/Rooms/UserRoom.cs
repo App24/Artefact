@@ -1,14 +1,14 @@
-﻿using System;
+﻿using Artefact.Settings;
+using System;
+using System.Collections.Generic;
+using System.Text;
 
 namespace Artefact.MapSystem.Rooms
 {
-    [Serializable]
-    internal class GPURoom : Room
+    class UserRoom : Room
     {
-
-        public GPURoom() : base(Location.GPU, Location.CPU, east: Location.HDD)
+        public UserRoom() : base(Location.Room, east: Location.CPU)
         {
-
         }
 
         public override void OnInteract()
@@ -18,7 +18,7 @@ namespace Artefact.MapSystem.Rooms
 
         protected override void OnEnterFirst(ref bool disableSpawn)
         {
-
+            GameSettings.ExitedComputer = true;
         }
 
         protected override void OnEnterRoom(ref bool disableSpawn)

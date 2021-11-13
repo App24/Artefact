@@ -3,7 +3,7 @@
 namespace Artefact.Misc
 {
     [Serializable]
-    struct IntRange
+    internal struct IntRange
     {
         public int Min { get; }
         public int Max { get; }

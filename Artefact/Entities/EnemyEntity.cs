@@ -4,12 +4,11 @@ using Artefact.MapSystem;
 using Artefact.Misc;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Artefact.Entities
 {
     [Serializable]
-    class EnemyEntity : Entity
+    internal class EnemyEntity : Entity
     {
         public EnemyType EnemyType { get; }
 
@@ -202,7 +201,7 @@ namespace Artefact.Entities
     }
 
     [Flags]
-    enum EnemyType
+    internal enum EnemyType
     {
         Virus = 1,
         Trojan = 2,
@@ -213,7 +212,7 @@ namespace Artefact.Entities
     }
 
     [Serializable]
-    struct ItemDropData
+    internal struct ItemDropData
     {
         public Item Item { get; }
         public float Chance { get; }

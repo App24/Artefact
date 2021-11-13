@@ -2,13 +2,11 @@
 using Artefact.Items;
 using Artefact.MapSystem;
 using Artefact.Misc;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Artefact.Commands
 {
-    class GiveCommand : ICommand
+    internal class GiveCommand : ICommand
     {
         public string Name => "give";
 

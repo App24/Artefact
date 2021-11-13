@@ -2,13 +2,11 @@
 using Artefact.Saving;
 using Artefact.Settings;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading;
 
 namespace Artefact.States
 {
-    class GameOverState : State
+    internal class GameOverState : State
     {
         public override void Init()
         {

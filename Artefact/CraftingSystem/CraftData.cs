@@ -1,10 +1,10 @@
-﻿using System;
-using Artefact.InventorySystem;
+﻿using Artefact.InventorySystem;
+using System;
 
 namespace Artefact.CraftingSystem
 {
     [Serializable]
-    struct CraftData
+    internal struct CraftData
     {
         public int Amount { get; }
         public ItemData[] CraftItems { get; }

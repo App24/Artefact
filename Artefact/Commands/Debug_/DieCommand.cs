@@ -1,11 +1,9 @@
 ﻿using Artefact.MapSystem;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Artefact.Commands
 {
-    class DieCommand : ICommand
+    internal class DieCommand : ICommand
     {
         public string Name => "die";
 

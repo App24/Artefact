@@ -2,13 +2,11 @@
 using Artefact.Items;
 using Artefact.MapSystem;
 using Artefact.Misc;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Artefact.CraftingSystem
 {
-    static class Crafting
+    internal static class Crafting
     {
         public static void CraftItem(string itemName, int amount)
         {
@@ -44,7 +42,7 @@ namespace Artefact.CraftingSystem
                 foreach (ItemData craftItem in craftData.CraftItems)
                 {
                     ItemData itemData = craftItem * item.Amount;
-                    if (!inventory.HasItem(itemData, true))
+                    if (!inventory.HasItem(itemData))
                     {
                         int inventoryAmount = inventory.GetAmount(itemData.Item);
                         missingItems.Add(new ItemData(itemData.Item, itemData.Amount - inventoryAmount));

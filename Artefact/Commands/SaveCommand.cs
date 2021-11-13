@@ -1,13 +1,11 @@
 ﻿using Artefact.Misc;
 using Artefact.Saving;
 using Artefact.Settings;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Artefact.Commands
 {
-    class SaveCommand : ICommand
+    internal class SaveCommand : ICommand
     {
         public string Name => "save";
 

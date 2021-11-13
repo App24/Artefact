@@ -2,22 +2,18 @@
 using Artefact.Misc;
 using Artefact.Settings;
 using System;
-using System.Linq;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 using System.Text.RegularExpressions;
-using System.Threading;
 
 namespace Artefact.Commands.Misc
 {
-    class CommandHandler
+    internal class CommandHandler
     {
-        List<ICommand> commands = new List<ICommand>();
-
-        const string RE_ARG_MATCHER_PATTERN = @"""[^""\\]*(?:\\.[^""\\]*)*""|'[^'\\]*(?:\\.[^'\\]*)*'|\S+";
-        const string RE_QUOTE_STRIP_PATTERN = @"^""+|""+$|^'+|'+$";
-
-        string[] noCommandResponses = new string[] {
+        private List<ICommand> commands = new List<ICommand>();
+        private const string RE_ARG_MATCHER_PATTERN = @"""[^""\\]*(?:\\.[^""\\]*)*""|'[^'\\]*(?:\\.[^'\\]*)*'|\S+";
+        private const string RE_QUOTE_STRIP_PATTERN = @"^""+|""+$|^'+|'+$";
+        private string[] noCommandResponses = new string[] {
             "You are not sure you can do that!",
             "How do you do that again?",
             "Walking into a brick wall is more successful!",
@@ -41,31 +37,12 @@ namespace Artefact.Commands.Misc
             "I don't know, therefore aliens",
             "One does not simply input a correct command",
             "Oh baby, don't hurt me. Don't hurt me. No more",
-            // https://www.twitchquotes.com/copypastas/689
-            @"
-░░░░░▄▄▄▄▀▀▀▀▀▀▀▀▄▄▄▄▄▄░░░░░░░
-░░░░░█░░░░▒▒▒▒▒▒▒▒▒▒▒▒░░▀▀▄░░░░
-░░░░█░░░▒▒▒▒▒▒░░░░░░░░▒▒▒░░█░░░
-░░░█░░░░░░▄██▀▄▄░░░░░▄▄▄░░░░█░░
-░▄▀▒▄▄▄▒░█▀▀▀▀▄▄█░░░██▄▄█░░░░█░
-█░▒█▒▄░▀▄▄▄▀░░░░░░░░█░░░▒▒▒▒▒░█
-█░▒█░█▀▄▄░░░░░█▀░░░░▀▄░░▄▀▀▀▄▒█
-░█░▀▄░█▄░█▀▄▄░▀░▀▀░▄▄▀░░░░█░░█░
-░░█░░░▀▄▀█▄▄░█▀▀▀▄▄▄▄▀▀█▀██░█░░
-░░░█░░░░██░░▀█▄▄▄█▄▄█▄████░█░░░
-░░░░█░░░░▀▀▄░█░░░█░█▀██████░█░░
-░░░░░▀▄░░░░░▀▀▄▄▄█▄█▄█▄█▄▀░░█░░
-░░░░░░░▀▄▄░▒▒▒▒░░░░░░░░░░▒░░░█░
-░░░░░░░░░░▀▀▄▄░▒▒▒▒▒▒▒▒▒▒░░░░█░
-░░░░░░░░░░░░░░▀▄▄▄▄▄░░░░░░░░█░░",
             "I am once again asking you for a correct command",
             "Charlie bit my finger",
             "What colour is the dress? [black]black [red]and [blue]blue[red] or [white]white [red]and [yellow]gold"
         };
-
-        int pageIndex = 0;
-
-        const int MAX_COMMANDS_PER_PAGE = 5;
+        private int pageIndex = 0;
+        private const int MAX_COMMANDS_PER_PAGE = 5;
 
         public static CommandHandler Instance { get; set; }
 

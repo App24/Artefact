@@ -1,14 +1,10 @@
 ﻿using Artefact.GenderSystem;
-using Artefact.Misc;
-using Artefact.Saving;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Artefact.Settings
 {
     [Serializable]
-    class GameSettings
+    internal class GameSettings
     {
         #region Player Info
         public static string PlayerName { get { return Instance.playerName; } set { Instance.playerName = value; } }
@@ -19,6 +15,7 @@ namespace Artefact.Settings
         #region Misc
         public static bool EnableCommands { get { return Instance.enableCommands; } set { Instance.enableCommands = value; } }
         public static bool KnowsClippy { get { return Instance.knowsClippy; } set { Instance.knowsClippy = value; } }
+        public static bool ExitedComputer { get { return Instance.exitedComputer; } set { Instance.exitedComputer = value; } }
         public static int SaveSlot { get { return Instance.slot; } set { Instance.slot = value; } }
         #endregion
 
@@ -30,12 +27,14 @@ namespace Artefact.Settings
 
         public static GameSettings Instance { get; set; }
 
-        bool knowsClippy;
+        private bool knowsClippy;
         public string playerName { get; private set; }
-        Gender playerGender = Gender.Other;
-        GenderPronouns pronouns;
-        bool enableCommands;
-        int slot = 1;
+
+        private Gender playerGender = Gender.Other;
+        private GenderPronouns pronouns;
+        private bool enableCommands;
+        private bool exitedComputer;
+        private int slot = 1;
         public long gameTime { get; private set; }
 
         public GameSettings()

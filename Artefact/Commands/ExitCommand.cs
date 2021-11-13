@@ -4,11 +4,10 @@ using Artefact.Settings;
 using Artefact.States;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Artefact.Commands
 {
-    class ExitCommand : ICommand
+    internal class ExitCommand : ICommand
     {
         public string Name => "exit";
         public string[] Aliases => new string[] { "quit" };

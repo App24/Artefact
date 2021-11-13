@@ -4,14 +4,12 @@ using Artefact.Items.Equipables;
 using Artefact.MapSystem;
 using Artefact.Misc;
 using Artefact.Settings;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Artefact.Commands
 {
-    class StatusCommand : ICommand
+    internal class StatusCommand : ICommand
     {
         public string Name => "status";
         public string[] Aliases => new string[] { "player" };

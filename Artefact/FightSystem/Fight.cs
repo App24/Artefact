@@ -7,11 +7,10 @@ using Artefact.States;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Artefact.FightSystem
 {
-    static class Fight
+    internal static class Fight
     {
         public static void StartFight(Location location, BattleParameters battleParameters, FightParameters fightParameters = null)
         {
@@ -32,7 +31,7 @@ namespace Artefact.FightSystem
         }
     }
 
-    struct BattleParameters
+    internal struct BattleParameters
     {
         public EnemyType AllowedEnemies { get; }
         public int MaxEnemyAmount { get; }

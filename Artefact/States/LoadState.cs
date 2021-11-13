@@ -2,14 +2,11 @@
 using Artefact.Saving;
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading;
 
 namespace Artefact.States
 {
-    class LoadState : State
+    internal class LoadState : State
     {
         public override void Init()
         {

@@ -1,12 +1,9 @@
 ﻿using Artefact.Misc;
 using Artefact.Settings;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Artefact.DialogSystem
 {
-    static class Dialog
+    internal static class Dialog
     {
         public static string GetCharacterVoiceLine(Character character, string text, bool showName = true)
         {
@@ -41,7 +38,7 @@ namespace Artefact.DialogSystem
         }
     }
 
-    enum Character
+    internal enum Character
     {
         Clippy,
         Player

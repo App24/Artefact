@@ -4,28 +4,21 @@ using Artefact.Commands.Misc;
 using Artefact.DialogSystem;
 using Artefact.Entities;
 using Artefact.FightSystem;
-using Artefact.InventorySystem;
-using Artefact.Items;
 using Artefact.MapSystem;
 using Artefact.Misc;
-using Artefact.Saving;
 using Artefact.Settings;
-using Artefact.StorySystem;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading;
 
 namespace Artefact.States
 {
-    class FightState : State
+    internal class FightState : State
     {
         public static List<EnemyEntity> Enemies { get; private set; }
 
         public const float RUN_PROBABILITY = 0.15f;
-
-        FightParameters fightParameters;
+        private FightParameters fightParameters;
 
         public FightState(FightParameters fightParameters, params EnemyEntity[] enemies)
         {
@@ -104,7 +97,7 @@ namespace Artefact.States
             }
         }
 
-        bool PlayerTurn()
+        private bool PlayerTurn()
         {
             Map.Player.DefenseModifier = 1f;
             while (true)
@@ -175,7 +168,7 @@ namespace Artefact.States
             return true;
         }
 
-        void EnemiesTurn()
+        private void EnemiesTurn()
         {
             Move[] allowedMoves = new Move[] { Move.Attack, Move.Defend };
             Enemies.ForEach(enemy =>
@@ -212,7 +205,7 @@ namespace Artefact.States
             });
         }
 
-        void KillEnemy(EnemyEntity enemy)
+        private void KillEnemy(EnemyEntity enemy)
         {
             if (Enemies.Contains(enemy))
             {
@@ -229,7 +222,7 @@ namespace Artefact.States
                 fightParameters.OnFightEnd();
         }
 
-        bool CanHaveRunCommand()
+        private bool CanHaveRunCommand()
         {
             return !fightParameters.PreventRun;
         }

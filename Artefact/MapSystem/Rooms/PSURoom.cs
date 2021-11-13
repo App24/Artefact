@@ -2,16 +2,12 @@
 using Artefact.Entities;
 using Artefact.FightSystem;
 using Artefact.Misc;
-using Artefact.Settings;
-using Artefact.StorySystem;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Artefact.MapSystem.Rooms
 {
     [Serializable]
-    class PSURoom : Room
+    internal class PSURoom : Room
     {
 
         public PSURoom() : base(Location.PSU, south: Location.CPU)

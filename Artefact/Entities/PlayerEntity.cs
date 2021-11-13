@@ -4,12 +4,11 @@ using Artefact.Misc;
 using Artefact.States;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Artefact.Entities
 {
     [Serializable]
-    class PlayerEntity : Entity
+    internal class PlayerEntity : Entity
     {
         public Inventory Inventory { get; }
 
