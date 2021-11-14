@@ -42,7 +42,7 @@ namespace Artefact.StorySystem
                         Utils.Type("You look around and find yourself surrounded by short black building and tall black skyscrappers");
                         Utils.Type("You hear metal scraping behind you, you turn around and see a paperclip with eyes");
 
-                        Dialog.Speak(Character.Clippy, "It looks like you're writi-lost. Would you like help?");
+                        Dialog.Speak(Character.Clippy, "It looks like you're writing[backspace=7]lost. Would you like help?");
 
                         NextStep();
 #if BYPASS
@@ -64,6 +64,8 @@ namespace Artefact.StorySystem
                                 break;
                             case 1:
                                 {
+                                    Dialog.Speak(Character.Clippy, $"I am [{ColorConstants.CHARACTER_COLOR}]GO");
+                                    Utils.ClearPreviousLines();
                                     Dialog.Speak(Character.Clippy, $"I am [{ColorConstants.CHARACTER_COLOR}]Clippy");
                                     GameSettings.KnowsClippy = true;
                                     Dialog.Speak(Character.Clippy, $"I am, or was, a helpful piece of software that helped the [{ColorConstants.USER_COLOR}]user[/] whenever them needed!");

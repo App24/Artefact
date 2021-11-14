@@ -26,7 +26,7 @@ namespace Artefact.Commands.Misc
             "Who you gonna call? Ghostbusters!",
             "Casper the Friendly Ghost isn't very friendly after you put that invalid command!",
             "What is love?",
-            "What is an invalid command but not a command the developer did not implement",
+            "What is an invalid command but a command the developer did not implement",
             "To be or not to be, that is the question",
             "That which we call a rose by any other name would smell as sweet",
             "It took Phil Connors 10 years to break out of the time loop, you can take your time",
@@ -39,7 +39,7 @@ namespace Artefact.Commands.Misc
             "Oh baby, don't hurt me. Don't hurt me. No more",
             "I am once again asking you for a correct command",
             "Charlie bit my finger",
-            "What colour is the dress? [black]black [red]and [blue]blue[red] or [white]white [red]and [yellow]gold"
+            "What colour is the dress? [black][b=white]black[/][/] and [blue]blue[/] or [white]white[/] and [yellow]gold"
         };
         private int pageIndex = 0;
         private const int MAX_COMMANDS_PER_PAGE = 5;

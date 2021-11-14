@@ -83,7 +83,7 @@ namespace Artefact.Entities
 
         public float GetNormalisedDefense()
         {
-            return 1 - ((Defense / 100f) * DefenseModifier);
+            return 1 - ((Math.Min(Defense, 99) / 100f) * DefenseModifier);
         }
 
         public int GetRandomDamage()

@@ -4,6 +4,6 @@
     {
         Slow = 80,
         Normal = 35,
-        Fast = 15,
+        Fast = 20,
     }
 }

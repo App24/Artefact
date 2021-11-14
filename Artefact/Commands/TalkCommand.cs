@@ -41,6 +41,9 @@ namespace Artefact.Commands
                     break;
                 case Character.Clippy:
                     {
+                        Dialog.Speak(Character.Clippy, $"*mumbling* I will defeat the [{ColorConstants.USER_COLOR}]us[/]-");
+                        Utils.ClearPreviousLines();
+                        Dialog.Speak(Character.Clippy, "How may I help you?");
                         int selection = Utils.GetSelection("How did I get here?", "How did you get here?", "Is there anyway to leave this place?", "Finish Talking");
 
                         switch (selection)

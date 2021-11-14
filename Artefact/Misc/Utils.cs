@@ -1,8 +1,10 @@
 ﻿using Artefact.DialogSystem;
 using Artefact.Entities;
 using Artefact.GenderSystem;
+using Artefact.Settings;
 using System;
 using System.Collections.Generic;
+using System.Threading;
 
 namespace Artefact.Misc
 {
@@ -97,7 +99,27 @@ namespace Artefact.Misc
                 foreach (StringColor stringColor in stringColors)
                 {
                     Console.ForegroundColor = stringColor.ForegroundColor;
-                    Console.Write(stringColor.Text);
+                    Console.BackgroundColor = stringColor.BackgroundColor;
+                    TextEffectBuilder textEffectBuilder = new TextEffectBuilder(stringColor.Text);
+                    foreach (List<TextEffect> textEffects in textEffectBuilder.Split("\n"))
+                    {
+                        foreach (TextEffect textEffect in textEffects)
+                        {
+                            Console.Write(textEffect.Text);
+                            switch (textEffect.TextEffectType)
+                            {
+                                case TextEffectType.Backspace:
+                                    {
+#if !BYPASS
+                                        ClearPreviousCharacters(textEffect.Value, true);
+#else
+                                        ClearPreviousCharacters(textEffect.Value, false);
+#endif
+                                    }
+                                    break;
+                            }
+                        }
+                    }
                 }
                 Console.WriteLine();
             }
@@ -117,7 +139,27 @@ namespace Artefact.Misc
                 foreach (StringColor stringColor in stringColors)
                 {
                     Console.ForegroundColor = stringColor.ForegroundColor;
-                    Console.Write(stringColor.Text);
+                    Console.BackgroundColor = stringColor.BackgroundColor;
+                    TextEffectBuilder textEffectBuilder = new TextEffectBuilder(stringColor.Text);
+                    foreach (List<TextEffect> textEffects in textEffectBuilder.Split("\n"))
+                    {
+                        foreach (TextEffect textEffect in textEffects)
+                        {
+                            Console.Write(textEffect.Text);
+                            switch (textEffect.TextEffectType)
+                            {
+                                case TextEffectType.Backspace:
+                                    {
+#if !BYPASS
+                                        ClearPreviousCharacters(textEffect.Value, true);
+#else
+                                        ClearPreviousCharacters(textEffect.Value, false);
+#endif
+                                    }
+                                    break;
+                            }
+                        }
+                    }
                 }
                 Console.WriteLine();
             }
@@ -137,9 +179,9 @@ namespace Artefact.Misc
             for (int i = 0; i < width - 2; i++)
             {
                 if ((i / (float)width) < percentage)
-                    text += $"[{barColor}]#[/]";
+                    text += $"[{barColor}][b={barColor}]#[/][/]";
                 else
-                    text += "-";
+                    text += $"[{barColor}]-[/]";
             }
             return $"[{text}]";
         }
@@ -195,17 +237,65 @@ namespace Artefact.Misc
                 foreach (StringColor stringColor in stringColors)
                 {
                     Console.ForegroundColor = stringColor.ForegroundColor;
-                    foreach (char letter in stringColor.Text)
+                    Console.BackgroundColor = stringColor.BackgroundColor;
+                    TextEffectBuilder textEffectBuilder = new TextEffectBuilder(stringColor.Text);
+                    foreach (List<TextEffect> textEffects in textEffectBuilder.Split("\n"))
                     {
-                        Console.Write(letter);
+                        foreach (TextEffect textEffect in textEffects)
+                        {
+                            foreach (char letter in textEffect.Text)
+                            {
+                                Console.Write(letter);
 #if !BYPASS
-                        Thread.Sleep((int)GlobalSettings.TextSpeed);
+                                Thread.Sleep((int)GlobalSettings.TextSpeed);
 #endif
+                            }
+                            switch (textEffect.TextEffectType)
+                            {
+                                case TextEffectType.Backspace:
+                                    {
+#if !BYPASS
+                                        ClearPreviousCharacters(textEffect.Value, true);
+#else
+                                        ClearPreviousCharacters(textEffect.Value, false);
+#endif
+                                    }
+                                    break;
+                            }
+                        }
                     }
                 }
                 Console.WriteLine();
             }
             Console.ResetColor();
+        }
+
+        public static void ClearPreviousLines(int amount = 1)
+        {
+            int currentCursorPos = Console.CursorTop;
+            for (int i = 1; i < amount + 1; i++)
+            {
+                Console.SetCursorPosition(0, currentCursorPos - i);
+                Console.Write(new string(' ', Console.WindowWidth));
+            }
+            Console.SetCursorPosition(0, currentCursorPos - amount);
+        }
+
+        private static void ClearPreviousCharacters(int amount, bool delay = false)
+        {
+            int currentCursorPos = Console.CursorLeft;
+            for (int i = 1; i < amount + 1; i++)
+            {
+                Console.SetCursorPosition(Math.Max(0, currentCursorPos - i), Console.CursorTop);
+                Console.Write(' ');
+                if (delay)
+                {
+#if !BYPASS
+                    Thread.Sleep((int)GlobalSettings.TextSpeed);
+#endif
+                }
+            }
+            Console.SetCursorPosition(Math.Max(0, currentCursorPos - amount), Console.CursorTop);
         }
     }
 }

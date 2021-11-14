@@ -5,7 +5,8 @@ using System.Text;
 
 namespace Artefact.MapSystem.Rooms
 {
-    class UserRoom : Room
+    [Serializable]
+    internal class UserRoom : Room
     {
         public UserRoom() : base(Location.Room, east: Location.CPU)
         {

@@ -5,7 +5,9 @@ using Artefact.GenderSystem;
 using Artefact.InventorySystem;
 using Artefact.Items;
 using Artefact.Misc;
+using Artefact.Settings;
 using System;
+using System.Threading;
 
 namespace Artefact.MapSystem.Rooms
 {
