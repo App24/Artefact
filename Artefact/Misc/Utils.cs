@@ -2,6 +2,7 @@
 using Artefact.Entities;
 using Artefact.GenderSystem;
 using Artefact.Settings;
+using Artefact.TextBuilders;
 using System;
 using System.Collections.Generic;
 using System.Threading;

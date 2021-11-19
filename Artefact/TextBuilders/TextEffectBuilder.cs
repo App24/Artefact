@@ -3,28 +3,21 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace Artefact.Misc
+namespace Artefact.TextBuilders
 {
-    internal class TextEffectBuilder
+    internal class TextEffectBuilder : BaseTextBuilder<TextEffect>
     {
-        public string Text { get { return strText; } set { strText = value; BuildString(); } }
-
-        private string strText;
-
-        public List<TextEffect> TextEffects { get; private set; }
-
         public const string RE_COLOR_SPLITTER_PATTERN = @"(\[[^\[][^\]]*\])";
         public const string RE_COLOR_START_PATTERN = @"\[([^\[\/][^\]]*)\]";
 
-        public TextEffectBuilder(string text)
+        public TextEffectBuilder(string text) : base(text)
         {
-            Text = text;
         }
 
-        private void BuildString()
+        protected override void BuildString()
         {
             string[] pieces = Regex.Split(Text, RE_COLOR_SPLITTER_PATTERN);
-            TextEffects = new List<TextEffect>();
+            BuildData = new List<TextEffect>();
 
             string currentText = "";
             foreach (string piece in pieces)
@@ -55,7 +48,7 @@ namespace Artefact.Misc
                                     currentText += piece;
                                     continue;
                                 }
-                                TextEffects.Add(new TextEffect(currentText, textEffectType, value));
+                                BuildData.Add(new TextEffect(currentText, textEffectType, value));
                                 currentText = "";
                             }
                             break;
@@ -68,45 +61,25 @@ namespace Artefact.Misc
             }
 
             if (!string.IsNullOrEmpty(currentText))
-                TextEffects.Add(new TextEffect(currentText, TextEffectType.None, 0));
-        }
-
-        public List<List<TextEffect>> Split(string separtor)
-        {
-            List<List<TextEffect>> toReturn = new List<List<TextEffect>>();
-            List<TextEffect> currentLine = new List<TextEffect>();
-
-            foreach (TextEffect textEffect in TextEffects)
-            {
-                string[] texts = textEffect.Text.Split(separtor);
-                for (int i = 0; i < texts.Length; i++)
-                {
-                    if (i > 0)
-                    {
-                        toReturn.Add(currentLine);
-                        currentLine = new List<TextEffect>();
-                    }
-                    currentLine.Add(new TextEffect(texts[i], textEffect.TextEffectType, textEffect.Value));
-                }
-            }
-            toReturn.Add(currentLine);
-
-            return toReturn;
+                BuildData.Add(new TextEffect(currentText, TextEffectType.None, 0));
         }
     }
 
-    internal struct TextEffect
+    internal class TextEffect : BaseTextBuildData<TextEffect>
     {
-        public TextEffect(string text, TextEffectType textEffectType, int value)
+        public TextEffectType TextEffectType { get; }
+        public int Value { get; }
+
+        public TextEffect(string text, TextEffectType textEffectType, int value) : base(text)
         {
-            Text = text;
             TextEffectType = textEffectType;
             Value = value;
         }
 
-        public string Text { get; }
-        public TextEffectType TextEffectType { get; }
-        public int Value { get; }
+        public override TextEffect Clone()
+        {
+            return new TextEffect(Text, TextEffectType, Value);
+        }
     }
 
     internal enum TextEffectType

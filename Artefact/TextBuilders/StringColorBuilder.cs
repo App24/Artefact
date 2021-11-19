@@ -2,33 +2,26 @@
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
-namespace Artefact.Misc
+namespace Artefact.TextBuilders
 {
     /// <summary>
     /// Separate an input string into a <see cref="List{T}"/> of <see cref="StringColor"/> which can then be used to
     /// print out text in different colors
     /// </summary>
-    internal class StringColorBuilder
+    internal class StringColorBuilder : BaseTextBuilder<StringColor>
     {
-        public string Text { get { return strText; } set { strText = value; BuildString(); } }
-
-        private string strText;
-
-        public List<StringColor> StringColors { get; private set; }
-
         public const string RE_COLOR_SPLITTER_PATTERN = @"(\[[^\[][^\]]*\])";
         public const string RE_COLOR_START_PATTERN = @"\[([^\[\/][^\]]*)\]";
         public const string RE_COLOR_END_PATTERN = @"(\[[\/][^\]]*\])";
 
-        public StringColorBuilder(string str)
+        public StringColorBuilder(string text) : base(text)
         {
-            Text = str;
         }
 
-        private void BuildString()
+        protected override void BuildString()
         {
             string[] pieces = Regex.Split(Text, RE_COLOR_SPLITTER_PATTERN);
-            StringColors = new List<StringColor>();
+            BuildData = new List<StringColor>();
 
             List<ConsoleColor> previousForegroundColors = new List<ConsoleColor>();
             List<ConsoleColor> previousBackgroundColors = new List<ConsoleColor>();
@@ -42,7 +35,7 @@ namespace Artefact.Misc
             {
                 if (Regex.IsMatch(piece, RE_COLOR_END_PATTERN))
                 {
-                    StringColors.Add(new StringColor(currentText, currentForegroundColor, currentBackgroundColor));
+                    BuildData.Add(new StringColor(currentText, currentForegroundColor, currentBackgroundColor));
                     currentText = "";
                     if (colorTypes.Count > 0)
                     {
@@ -117,7 +110,7 @@ namespace Artefact.Misc
                                 }
                                 break;
                         }
-                        StringColors.Add(new StringColor(currentText, currentForegroundColor, currentBackgroundColor));
+                        BuildData.Add(new StringColor(currentText, currentForegroundColor, currentBackgroundColor));
                         currentText = "";
                         switch (colorType)
                         {
@@ -146,44 +139,24 @@ namespace Artefact.Misc
             }
 
             if (!string.IsNullOrEmpty(currentText))
-                StringColors.Add(new StringColor(currentText, currentForegroundColor, currentBackgroundColor));
-        }
-
-        public List<List<StringColor>> Split(string separtor)
-        {
-            List<List<StringColor>> toReturn = new List<List<StringColor>>();
-            List<StringColor> currentLine = new List<StringColor>();
-
-            foreach (StringColor stringColor in StringColors)
-            {
-                string[] texts = stringColor.Text.Split(separtor);
-                for (int i = 0; i < texts.Length; i++)
-                {
-                    if (i > 0)
-                    {
-                        toReturn.Add(currentLine);
-                        currentLine = new List<StringColor>();
-                    }
-                    currentLine.Add(new StringColor(texts[i], stringColor.ForegroundColor, stringColor.BackgroundColor));
-                }
-            }
-            toReturn.Add(currentLine);
-
-            return toReturn;
+                BuildData.Add(new StringColor(currentText, currentForegroundColor, currentBackgroundColor));
         }
     }
 
-    internal struct StringColor
+    internal class StringColor : BaseTextBuildData<StringColor>
     {
-        public string Text { get; }
         public ConsoleColor ForegroundColor { get; }
         public ConsoleColor BackgroundColor { get; }
 
-        public StringColor(string text, ConsoleColor foregroundColor, ConsoleColor backgroundColor)
+        public StringColor(string text, ConsoleColor foregroundColor, ConsoleColor backgroundColor) : base(text)
         {
-            Text = text;
             ForegroundColor = foregroundColor;
             BackgroundColor = backgroundColor;
+        }
+
+        public override StringColor Clone()
+        {
+            return new StringColor(Text, ForegroundColor, BackgroundColor);
         }
     }
 
