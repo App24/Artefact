@@ -25,7 +25,7 @@ namespace Artefact.GenderSystem
         public IEnumerator<GenderPronounData> GetEnumerator()
         {
             yield return new GenderPronounData(PronounType.Nominative, nominative);
-            yield return new GenderPronounData(PronounType.Nominative, objective);
+            yield return new GenderPronounData(PronounType.Objective, objective);
             yield return new GenderPronounData(PronounType.Possessive_Determiner, possessiveDeterminer);
             yield return new GenderPronounData(PronounType.Possessive_Pronoun, possessivePronoun);
             yield return new GenderPronounData(PronounType.Reflexive, reflexive);

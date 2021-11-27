@@ -64,7 +64,7 @@ namespace Artefact.StorySystem
                                 break;
                             case 1:
                                 {
-                                    Dialog.Speak(Character.Clippy, $"I am [{ColorConstants.CHARACTER_COLOR}]GO");
+                                    Dialog.Speak(Character.Clippy, $"I am [{ColorConstants.CHARACTER_COLOR}]GO-");
                                     Utils.ClearPreviousLines();
                                     Dialog.Speak(Character.Clippy, $"I am [{ColorConstants.CHARACTER_COLOR}]Clippy");
                                     GameSettings.KnowsClippy = true;

@@ -179,7 +179,7 @@ namespace Artefact.Misc
             string text = "";
             for (int i = 0; i < width - 2; i++)
             {
-                if ((i / (float)width) < percentage)
+                if ((i / (float)(width-2)) < percentage)
                     text += $"[{barColor}][b={barColor}]#[/][/]";
                 else
                     text += $"[{barColor}]-[/]";

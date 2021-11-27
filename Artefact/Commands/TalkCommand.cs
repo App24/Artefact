@@ -24,7 +24,9 @@ namespace Artefact.Commands
             if (!Enum.TryParse(characterName, true, out Character character))
             {
                 if (characterName.ToLower() == GameSettings.PlayerName.ToLower())
+                {
                     character = Character.Player;
+                }
                 else
                 {
                     Utils.WriteColor($"[{ColorConstants.BAD_COLOR}]That character is not near the vicinity");

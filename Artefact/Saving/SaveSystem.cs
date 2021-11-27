@@ -19,7 +19,7 @@ namespace Artefact.Saving
 
         public static bool HasAnySaveGames => Directory.Exists(SAVE_FOLDER);
 
-        private static void SaveClass<T>(string fileName, T value) where T : class
+        private static void SaveClass(string fileName, object value)
         {
             string directory = Path.GetDirectoryName(fileName);
             if (!string.IsNullOrEmpty(directory))
@@ -60,13 +60,13 @@ namespace Artefact.Saving
             {
                 BinaryFormatter formatter = new BinaryFormatter();
                 value = (T)formatter.Deserialize(stream);
+                stream.Close();
             }
             catch
             {
                 stream.Close();
                 return new LoadDetails<T>(LoadResult.InvalidFile, null);
             }
-            stream.Close();
 
             return new LoadDetails<T>(LoadResult.Success, value);
         }
