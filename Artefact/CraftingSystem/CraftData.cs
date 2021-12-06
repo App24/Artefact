@@ -6,12 +6,12 @@ namespace Artefact.CraftingSystem
     [Serializable]
     internal struct CraftData
     {
-        public int Amount { get; }
+        public int CraftAmount { get; }
         public ItemData[] CraftItems { get; }
 
-        public CraftData(int amount, params ItemData[] craftItems)
+        public CraftData(int craftAmount, params ItemData[] craftItems)
         {
-            Amount = amount;
+            CraftAmount = craftAmount;
             CraftItems = craftItems;
         }
 

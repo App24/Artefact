@@ -98,9 +98,11 @@ $"     |      |  [{ColorConstants.LOCATION_COLOR}]{Location.GPU}[/]  |\n" +
             {
                 Random random = new Random();
                 float probability = (float)random.NextDouble();
+                EnemyType spawnableEnemies = EnemyType.Virus | EnemyType.Trojan | EnemyType.RansomWare;
+                if (currentRoom != null) spawnableEnemies = currentRoom.SpawnableEnemies;
                 if (probability < ENCOUNTER_PROBABILITY || forceSpawn)
                 {
-                    Fight.StartFight(location, new BattleParameters(EnemyType.Virus | EnemyType.Trojan | EnemyType.RansomWare));
+                    Fight.StartFight(location, new BattleParameters(spawnableEnemies));
                 }
             }
         }

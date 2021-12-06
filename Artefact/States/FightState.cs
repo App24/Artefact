@@ -51,6 +51,8 @@ namespace Artefact.States
 
             CommandHandler.Instance = commandHandler;
 
+            GameSettings.InFight = true;
+
             Utils.WriteColor($"[{ColorConstants.BAD_COLOR}]{Enemies.Count}[/] enem{(Enemies.Count == 1 ? "y" : "ies")} appear{(Enemies.Count == 1 ? "s" : "")}!");
             Enemies.ForEach(enemy =>
             {
@@ -166,6 +168,7 @@ namespace Artefact.States
                     }
                     break;
             }
+            Map.Player.Move = Move.None;
             return true;
         }
 
@@ -218,6 +221,7 @@ namespace Artefact.States
 
         public override void Remove()
         {
+            GameSettings.InFight = false;
             GameSettings.EnableCommands = true;
             if (fightParameters.OnFightEnd != null)
                 fightParameters.OnFightEnd();

@@ -36,7 +36,7 @@ namespace Artefact.Commands
             }
             else
             {
-                List<Item> availableEquipableItems = inventory.GetItems().Map(i => i.Item).ToList().FindAll(i => i is EquipableItem);
+                List<Item> availableEquipableItems = inventory.GetItems().Map(i => i.Item).ToList().FindAll(i => i is IEquipable);
 
                 if (availableEquipableItems.Count <= 0)
                 {
@@ -62,7 +62,7 @@ namespace Artefact.Commands
                 return;
             }
 
-            if (!(item is EquipableItem))
+            if (!(item is IEquipable))
             {
                 Utils.WriteColor($"[{ColorConstants.BAD_COLOR}]That item is not equipable!");
                 return;

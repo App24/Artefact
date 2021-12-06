@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Artefact.Entities;
+using System;
 
 namespace Artefact.MapSystem.Rooms
 {
@@ -13,6 +14,8 @@ namespace Artefact.MapSystem.Rooms
 
         public bool VisitedBefore { get; private set; }
 
+        public virtual EnemyType SpawnableEnemies => EnemyType.Virus | EnemyType.Trojan | EnemyType.RansomWare;
+
         public Room(Location location, Location north = Location.None, Location south = Location.None, Location east = Location.None, Location west = Location.None)
         {
             Location = location;
@@ -22,7 +25,7 @@ namespace Artefact.MapSystem.Rooms
             West = west;
         }
 
-        public abstract void OnInteract();
+        public abstract void OnInteract(ref bool success);
 
         public void OnEnter(ref bool disableSpawn)
         {

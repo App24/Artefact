@@ -22,11 +22,13 @@ namespace Artefact.Commands
             Room currentRoom = Map.GetRoom(Map.Player.Location);
             if (currentRoom != null)
             {
-                currentRoom.OnInteract();
+                bool success = false;
+                currentRoom.OnInteract(ref success);
+                if (!success) Utils.WriteColor("There is [red]nothing[/] to interact in this room!");
             }
             else
             {
-                Utils.WriteColor($"[{ColorConstants.BAD_COLOR}]There is nothing here to interact with!");
+                Utils.WriteColor($"[{ColorConstants.BAD_COLOR}]There is nothing here to interact with in this room!");
             }
         }
     }

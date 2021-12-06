@@ -17,6 +17,8 @@ namespace Artefact.Settings
         public static bool KnowsClippy { get { return Instance.knowsClippy; } set { Instance.knowsClippy = value; } }
         public static bool ExitedComputer { get { return Instance.exitedComputer; } set { Instance.exitedComputer = value; } }
         public static int SaveSlot { get { return Instance.slot; } set { Instance.slot = value; } }
+
+        public static bool InFight { get; set; }
         #endregion
 
         #region Session Timing

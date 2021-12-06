@@ -19,7 +19,7 @@ namespace Artefact.Commands
 
         public string Description => "Look at the recipes for items you can craft";
 
-        private const int MAX_CHARS_PER_PAGE_LINE = 40;
+        private const int MAX_CHARS_PER_PAGE_LINE = 45;
         private const int ITEMS_PER_PAGE = 5;
         private int page = 0;
 
@@ -140,6 +140,7 @@ namespace Artefact.Commands
                 itemName = itemName.Substring(0, Math.Min(itemName.Length, MAX_CHARS_PER_PAGE_LINE - 2 - toSub));
 
                 lines.Add(CreateLine(left, $"[{ColorConstants.ITEM_COLOR}]{itemName}"));
+                lines.Add(CreateLine(left, item.Description));
 
                 for (int i = 0; i < item.CraftData.Count; i++)
                 {
@@ -149,7 +150,7 @@ namespace Artefact.Commands
                     {
                         lines.Add(CreateLine(left, $"- {itemData.ToColoredString()}"));
                     }
-                    lines.Add(CreateLine(left, $"Crafted Amount: [{ColorConstants.GOOD_COLOR}]{craftData.Amount}"));
+                    lines.Add(CreateLine(left, $"Crafted Amount: [{ColorConstants.GOOD_COLOR}]{craftData.CraftAmount}"));
                 }
 
                 lines.Add(CreateLine(left, ""));
@@ -174,6 +175,11 @@ namespace Artefact.Commands
         {
             string line = "";
             if (left) line += "|";
+            if (text.TrimColor().Length > MAX_CHARS_PER_PAGE_LINE)
+            {
+                int toSubLine = left ? 2 : 1;
+                text = text.Substring(0, MAX_CHARS_PER_PAGE_LINE - toSubLine);
+            }
             line += $"{text}[/]";
             int lineLength = line.TrimColor().Length;
 

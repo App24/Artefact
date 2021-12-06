@@ -1,6 +1,7 @@
 ﻿using Artefact.CraftingSystem;
 using Artefact.InventorySystem;
 using Artefact.Items.Equipables;
+using Artefact.Items.Fighting;
 using Artefact.Items.Potions;
 using Artefact.Misc;
 using System;
@@ -16,28 +17,28 @@ namespace Artefact.Items
         public List<CraftData> CraftData { get; }
 
         #region Normal Items
-        public static Item MapItem { get; } = new Item("Map");
-        public static Item RecipeBookItem { get; } = new Item("Recipe Book");
-        public static Item ElectronItem { get; } = new Item("Electron");
-        public static Item BitItem { get; } = new Item("Bit");
-        public static Item ByteItem { get; } = new Item("Byte", new CraftData(new ItemData(BitItem, 8)));
-        public static Item KiloByteItem { get; } = new Item("KiloByte", new CraftData(new ItemData(ByteItem, 8)));
+        public static Item MapItem { get; } = new Item("Map", "Find your way around the world");
+        public static Item RecipeBookItem { get; } = new Item("Recipe Book", "Learn all the recipes available");
+        public static Item ElectronItem { get; } = new Item("Electron", "The power of electricity at your finger tips"); // UNLIMITED POWER
+        public static Item BitItem { get; } = new Item("Bit", "The founding block of data");
+        public static Item ByteItem { get; } = new Item("Byte", "8 bits", new CraftData(new ItemData(BitItem, 8)));
+        public static Item KiloByteItem { get; } = new Item("KiloByte", "1024 bits", new CraftData(new ItemData(ByteItem, 8)));
 
-        public static Item RAMChipItem { get; } = new Item("RAM Chip", new CraftData(2, new ItemData(KiloByteItem, 3), new ItemData(ElectronItem, 3)));
+        public static Item RAMChipItem { get; } = new Item("RAM Chip", "Important in allowing RAM to work", new CraftData(2, new ItemData(KiloByteItem, 3), new ItemData(ElectronItem, 3)));
         #endregion
 
         #region Weapons
-        public static WeaponItem BitSwordItem { get; } = new WeaponItem("Bit Sword", new IntRange(8, 10), new CraftData(new ItemData(BitItem, 3)));
-        public static WeaponItem ByteSwordItem { get; } = new WeaponItem("Byte Sword", new IntRange(12, 15), new CraftData(new ItemData(ByteItem, 3)));
-        public static WeaponItem KiloByteSwordItem { get; } = new WeaponItem("KiloByte Sword", new IntRange(18, 25), new CraftData(new ItemData(KiloByteItem, 3)));
+        public static WeaponItem BitSwordItem { get; } = new WeaponItem("Bit Sword", "Sword made of bits", new IntRange(8, 10), new CraftData(new ItemData(BitItem, 3)));
+        public static WeaponItem ByteSwordItem { get; } = new WeaponItem("Byte Sword", "Sword made of bytes", new IntRange(12, 15), new CraftData(new ItemData(ByteItem, 3)));
+        public static WeaponItem KiloByteSwordItem { get; } = new WeaponItem("KiloByte Sword", "Sword made of kilobytes", new IntRange(18, 25), new CraftData(new ItemData(KiloByteItem, 3)));
 
-        public static WeaponItem RAMSwordItem { get; } = new WeaponItem("RAM Stick", new IntRange(50, 60), new CraftData(new ItemData(RAMChipItem, 6)));
+        public static WeaponItem RAMSwordItem { get; } = new WeaponItem("RAM Stick", "Whack Google Chrome for using all the RAM", new IntRange(50, 60), new CraftData(new ItemData(RAMChipItem, 6)));
         #endregion
 
         #region Armor
-        public static ArmorItems BitArmor { get; } = ArmorItemFactory.CreateArmor("Bit", BitItem, 2);
-        public static ArmorItems ByteArmor { get; } = ArmorItemFactory.CreateArmor("Byte", ByteItem, 8);
-        public static ArmorItems KiloByteArmor { get; } = ArmorItemFactory.CreateArmor("KiloByte", KiloByteItem, 12);
+        public static ArmorItems BitArmor { get; } = ArmorItem.CreateArmor("Bit", BitItem, 2);
+        public static ArmorItems ByteArmor { get; } = ArmorItem.CreateArmor("Byte", ByteItem, 8);
+        public static ArmorItems KiloByteArmor { get; } = ArmorItem.CreateArmor("KiloByte", KiloByteItem, 12);
         #endregion
 
         #region Potions
@@ -47,15 +48,22 @@ namespace Artefact.Items
         public static HealthPotionItem GinormousHealthPotion { get; } = new HealthPotionItem(HealthPotionType.Ginormous, new CraftData(new ItemData(ByteItem, 6)));
         #endregion
 
+        #region Fighting Items
+        public static LightingBolt LightingBoltItem { get; } = new LightingBolt();
+        #endregion
+
         public bool IsCraftable { get { return CraftData.Count > 0; } }
 
         public static List<Item> Items { get; private set; }
 
         public static List<Item> CraftableItems { get { return Items.FindAll(i => i.IsCraftable); } }
 
-        public Item(string name, params CraftData[] craftData)
+        public string Description { get; }
+
+        public Item(string name, string description, params CraftData[] craftData)
         {
             Name = name;
+            Description = description;
             CraftData = new List<CraftData>(craftData);
             if (Items == null) Items = new List<Item>();
             Items.Add(this);

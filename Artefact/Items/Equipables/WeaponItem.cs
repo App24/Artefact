@@ -5,11 +5,13 @@ using System;
 namespace Artefact.Items.Equipables
 {
     [Serializable]
-    internal class WeaponItem : EquipableItem
+    internal class WeaponItem : Item, IEquipable
     {
         public IntRange Damage { get; }
 
-        public WeaponItem(string name, IntRange damage, params CraftData[] craftData) : base(name, EquipableType.Weapon, craftData)
+        public EquipableType EquipableType => EquipableType.Weapon;
+
+        public WeaponItem(string name, string description, IntRange damage, params CraftData[] craftData) : base(name, description, craftData)
         {
             Damage = damage;
         }

@@ -6,7 +6,9 @@ namespace Artefact.Items.Potions
     [Serializable]
     internal abstract class PotionItem : Item, IUsable
     {
-        public PotionItem(string name, params CraftData[] craftData) : base(name, craftData) { }
+        public bool IsUsable => true;
+
+        public PotionItem(string name, string description, params CraftData[] craftData) : base(name, description, craftData) { }
 
         public abstract bool OnUse();
     }

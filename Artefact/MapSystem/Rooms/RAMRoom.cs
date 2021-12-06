@@ -17,15 +17,16 @@ namespace Artefact.MapSystem.Rooms
 
         }
 
-        public override void OnInteract()
+        public override void OnInteract(ref bool sucess)
         {
+            sucess = true;
             if (!RepairedRAM)
             {
                 Utils.WriteColor("You notice some of the RAM is missing its chips");
                 Utils.WriteColor($"It will cost 6 [{ColorConstants.ITEM_COLOR}]{Item.RAMChipItem}[/]");
                 if (!Map.Player.Inventory.HasItem(new ItemData(Item.RAMChipItem, 6)))
                 {
-                    Utils.WriteColor("You do not have enough!");
+                    Utils.WriteColor("[red]You do not have enough!");
                     return;
                 }
                 if (Utils.GetConfirmation("Do you want to repair it?"))
@@ -41,7 +42,7 @@ namespace Artefact.MapSystem.Rooms
             }
             else
             {
-                Utils.WriteColor("There is nothing of unusual around here");
+                sucess = false;
             }
         }
 

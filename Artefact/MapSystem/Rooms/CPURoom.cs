@@ -21,19 +21,23 @@ namespace Artefact.MapSystem.Rooms
 
         }
 
-        public override void OnInteract()
+        public override void OnInteract(ref bool sucess)
         {
+            sucess = true;
             if (!ActivatedLever)
             {
                 Dialog.Speak(Character.Clippy, "There seems to be a lever over here, come check it out!");
                 if (Utils.GetCharacterConfirmation(Character.Clippy, "Do you want to pull it?"))
                 {
+                    Utils.Type("....................");
                     if (!ContinueStory())
                     {
                         Utils.WriteColor("Nothing happened...");
+                        Dialog.Speak(Character.Clippy, $"Maybe we have to [{ColorConstants.COMMAND_COLOR}]INTERACT[/] with the other rooms first?!");
                         return;
                     }
 
+                    Utils.WriteColor("[darkgray]*CLANK*");
                     Dialog.Speak(Character.Clippy, $"[{ColorConstants.BAD_COLOR}]AAAAH");
                     Dialog.Speak(Character.Clippy, "The side panel, it fell");
 
@@ -46,7 +50,7 @@ namespace Artefact.MapSystem.Rooms
             }
             else
             {
-                Utils.WriteColor("You've done everything you can here!");
+                sucess = false;
             }
         }
 
@@ -84,7 +88,7 @@ namespace Artefact.MapSystem.Rooms
             HDDRoom hddRoom = (HDDRoom)Map.GetRoom(Location.HDD);
             PSURoom psuRoom = (PSURoom)Map.GetRoom(Location.PSU);
 
-            return ramRoom.RepairedRAM;
+            return ramRoom.RepairedRAM && psuRoom.RepairedPSU;
         }
     }
 }

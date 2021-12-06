@@ -122,6 +122,7 @@ namespace Artefact.Entities
 
     internal enum Move
     {
+        None,
         Attack,
         Defend,
         SweepAttack,

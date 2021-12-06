@@ -22,7 +22,7 @@ namespace Artefact.Commands
 
         public void OnRun(List<string> args)
         {
-            List<Item> usableItems = Map.Player.Inventory.GetItems().FindAll(i => i.Item is IUsable).Map(i => i.Item).ToList();
+            List<Item> usableItems = Map.Player.Inventory.GetItems().FindAll(i => i.Item is IUsable usable && usable.IsUsable).Map(i => i.Item).ToList();
             if (usableItems.Count <= 0)
             {
                 Utils.WriteColor($"[{ColorConstants.BAD_COLOR}]You do not have any usable items in your inventory!");

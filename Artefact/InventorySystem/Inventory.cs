@@ -88,7 +88,7 @@ namespace Artefact.InventorySystem
 
         public void EquipItem(Item item)
         {
-            if (!(item is EquipableItem equipableItem)) return;
+            if (!(item is IEquipable equipableItem)) return;
 
             switch (equipableItem.EquipableType)
             {
