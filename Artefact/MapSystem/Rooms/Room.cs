@@ -14,7 +14,9 @@ namespace Artefact.MapSystem.Rooms
 
         public bool VisitedBefore { get; private set; }
 
-        public virtual EnemyType SpawnableEnemies => EnemyType.Virus | EnemyType.Trojan | EnemyType.RansomWare;
+        public static EnemyType DefaultSpawnableEnemies => EnemyType.Virus | EnemyType.Trojan | EnemyType.RansomWare | EnemyType.AdWare | EnemyType.SpyWare;
+
+        public virtual EnemyType SpawnableEnemies => SpawnableEnemies;
 
         public Room(Location location, Location north = Location.None, Location south = Location.None, Location east = Location.None, Location west = Location.None)
         {

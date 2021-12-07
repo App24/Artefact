@@ -177,9 +177,10 @@ namespace Artefact.Misc
         public static string CreateProgressBar(float percentage, int width = 30, ConsoleColor barColor = ConsoleColor.Green)
         {
             string text = "";
-            for (int i = 0; i < width - 2; i++)
+            width -= 2;
+            for (int i = 0; i < width; i++)
             {
-                if ((i / (float)(width-2)) < percentage)
+                if ((i / (float)width) < percentage)
                     text += $"[{barColor}][b={barColor}]#[/][/]";
                 else
                     text += $"[{barColor}]-[/]";

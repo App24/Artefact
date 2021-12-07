@@ -13,11 +13,10 @@ namespace Artefact.MapSystem.Rooms
     [Serializable]
     internal class PSURoom : Room
     {
-
-        bool battledElectricity;
+        private bool battledElectricity;
         public bool RepairedPSU { get; private set; }
 
-        public override EnemyType SpawnableEnemies => base.SpawnableEnemies | EnemyType.Electricity;
+        public override EnemyType SpawnableEnemies => EnemyType.Electricity;
 
         public PSURoom() : base(Location.PSU, south: Location.CPU)
         {
@@ -68,7 +67,7 @@ namespace Artefact.MapSystem.Rooms
             else
             {
                 Dialog.Speak(Character.Clippy, "I TOLD YOU NOT TO TOUCH IT!!!");
-                Fight.StartFight(Map.Player.Location, new BattleParameters(EnemyType.Electricity, new IntRange(1, 1), 1), new FightParameters(true, true, () =>
+                Fight.StartFight(Map.Player.Location, new BattleParameters(EnemyType.Electricity, new IntRange(1), 1), new FightParameters(true, true, () =>
                 {
                     battledElectricity = true;
                     Dialog.Speak(Character.Clippy, "Oh, look what you have gone and done, it is broken now");

@@ -38,7 +38,7 @@ namespace Artefact.Entities
                         MaxHealth = 50;
                         Defense = 1;
                         HitDamage = new IntRange(5, 8);
-                        ItemDrops.Add(new ItemDropData(Item.BitItem, 8));
+                        ItemDrops.Add(new ItemDropData(Item.ByteItem, 8));
                         ASCIIRepresentation = @"
      ,-^-.
      |\/\|
@@ -55,7 +55,7 @@ namespace Artefact.Entities
                         MaxHealth = 60;
                         Defense = 0;
                         HitDamage = new IntRange(5, 7);
-                        ItemDrops.Add(new ItemDropData(Item.BitItem, 13));
+                        ItemDrops.Add(new ItemDropData(Item.ByteItem, 13));
                         ASCIIRepresentation = @"
                _(\
       _____   /  .|
@@ -71,7 +71,7 @@ namespace Artefact.Entities
                         MaxHealth = 30;
                         Defense = 3;
                         HitDamage = new IntRange(7, 10);
-                        ItemDrops.Add(new ItemDropData(Item.BitItem, 18, 5));
+                        ItemDrops.Add(new ItemDropData(Item.ByteItem, 18, 5));
 
                         ASCIIRepresentation = @"
      .--------.
@@ -94,7 +94,7 @@ namespace Artefact.Entities
                         MaxHealth = 20;
                         Defense = 1;
                         HitDamage = new IntRange(3, 4);
-                        ItemDrops.Add(new ItemDropData(Item.BitItem, 6, 3));
+                        ItemDrops.Add(new ItemDropData(Item.ByteItem, 6, 3));
 
                         ASCIIRepresentation = @"
   _____             _                 
@@ -125,9 +125,9 @@ namespace Artefact.Entities
                         MaxHealth = 30;
                         Defense = 7;
                         HitDamage = new IntRange(2, 4);
-                        ItemDrops.Add(new ItemDropData(Item.BitItem, 20, 10));
+                        ItemDrops.Add(new ItemDropData(Item.ByteItem, 20, 10));
 
-                        ASCIIRepresentation = @"
+                        ASCIIRepresentation = @"[red]
                 ████████████              
               ██▓▓▓▓▓▓▓▓▓▓▓▓██            
             ██▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓██          

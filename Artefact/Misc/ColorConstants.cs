@@ -10,6 +10,7 @@ namespace Artefact.Misc
         public const ConsoleColor COMMAND_COLOR = ConsoleColor.Blue;
         public const ConsoleColor LOCATION_COLOR = ConsoleColor.DarkCyan;
         public const ConsoleColor USER_COLOR = ConsoleColor.DarkRed;
+        public const ConsoleColor THOUGHT_COLOR = ConsoleColor.DarkGray;
 
         public const ConsoleColor ERROR_COLOR = ConsoleColor.DarkRed;
         public const ConsoleColor BAD_COLOR = ConsoleColor.Red;

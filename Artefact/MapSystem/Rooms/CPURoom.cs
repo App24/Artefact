@@ -88,7 +88,11 @@ namespace Artefact.MapSystem.Rooms
             HDDRoom hddRoom = (HDDRoom)Map.GetRoom(Location.HDD);
             PSURoom psuRoom = (PSURoom)Map.GetRoom(Location.PSU);
 
+#if !INSTA_CPU
             return ramRoom.RepairedRAM && psuRoom.RepairedPSU;
+#else
+            return true;
+#endif
         }
     }
 }
