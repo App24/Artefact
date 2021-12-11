@@ -21,11 +21,11 @@ namespace Artefact.MapSystem.Rooms
 
         }
 
-        public override void OnInteract(ref bool sucess)
+        public override void OnInteract(ref bool success)
         {
-            sucess = true;
             if (!ActivatedLever)
             {
+                success = true;
                 Dialog.Speak(Character.Clippy, "There seems to be a lever over here, come check it out!");
                 if (Utils.GetCharacterConfirmation(Character.Clippy, "Do you want to pull it?"))
                 {
@@ -47,10 +47,6 @@ namespace Artefact.MapSystem.Rooms
 
                     ActivatedLever = true;
                 }
-            }
-            else
-            {
-                sucess = false;
             }
         }
 
@@ -89,7 +85,7 @@ namespace Artefact.MapSystem.Rooms
             PSURoom psuRoom = (PSURoom)Map.GetRoom(Location.PSU);
 
 #if !INSTA_CPU
-            return ramRoom.RepairedRAM && psuRoom.RepairedPSU;
+            return ramRoom.RepairedRAM && psuRoom.RepairedPSU && gpuRoom.GPUStarted;
 #else
             return true;
 #endif

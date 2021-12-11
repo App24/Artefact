@@ -57,7 +57,7 @@ namespace Artefact.Commands.Misc
             commandHandler.AddCommand(new InventoryCommand());
             commandHandler.AddCommand(new CraftCommand());
             commandHandler.AddCommand(new EquipCommand());
-            commandHandler.AddCommand(new TalkCommand());
+            // commandHandler.AddCommand(new TalkCommand());
             commandHandler.AddCommand(new MoveCommand());
             commandHandler.AddCommand(new UseCommand());
             commandHandler.AddCommand(new RecipesCommand());

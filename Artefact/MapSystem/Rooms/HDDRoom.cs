@@ -13,7 +13,7 @@ namespace Artefact.MapSystem.Rooms
 
         }
 
-        public override void OnInteract(ref bool sucess)
+        public override void OnInteract(ref bool success)
         {
 
         }

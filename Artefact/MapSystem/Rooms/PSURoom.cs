@@ -23,9 +23,9 @@ namespace Artefact.MapSystem.Rooms
 
         }
 
-        public override void OnInteract(ref bool sucess)
+        public override void OnInteract(ref bool success)
         {
-            sucess = true;
+            success = true;
             if (battledElectricity)
             {
                 if (!RepairedPSU)
@@ -61,7 +61,7 @@ namespace Artefact.MapSystem.Rooms
                 }
                 else
                 {
-                    sucess = false;
+                    success = false;
                 }
             }
             else

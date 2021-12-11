@@ -1,4 +1,6 @@
-﻿using Artefact.DialogSystem;
+﻿// Didnt know exactly what to do with this command, or how to implement it in a meaningful way
+
+using Artefact.DialogSystem;
 using Artefact.Misc;
 using Artefact.Settings;
 using System;

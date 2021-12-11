@@ -17,6 +17,7 @@ namespace Artefact.Items
         public List<CraftData> CraftData { get; }
 
         #region Normal Items
+        public static Item MagnetItem { get; } = new Item("Magnet", "Erase all your search history and data from the hard drive");
         public static Item MapItem { get; } = new Item("Map", "Find your way around the world");
         public static Item RecipeBookItem { get; } = new Item("Recipe Book", "Learn all the recipes available");
         public static Item ElectronItem { get; } = new Item("Electron", "The power of electricity at your finger tips");
