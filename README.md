@@ -16,21 +16,21 @@ Uni Assessment, I had to create a text-based adventure, I decided to set mine in
 - [x] Crafting Improvement
 - [x] Finish Recipes Command
 - [x] Finish Help Command
-- [ ] Levels and XP
+- [x] Levels and XP
 - - [x] Level Up
 - - [x] Health Increasing
 - - [x] Damage Increasing
-- - [ ] Balancing
+- - [x] Balancing
 - [x] Interact with stuff in each location
 - - [x] Interact Command
 - [x] Middle of story
-- [ ] End of story
-- [ ] Improve/balance combat
+- [x] End of story
+- [x] Improve/balance combat
 - [x] Item Expansion
 - [x] Map Expansion/Improvements
 - [x] More Characters
-- [ ] More Enemies
-- [ ] Implement Simple Mode everywhere
+- [x] More Enemies
 
 ## Deprecated
 - [ ] Finish Talk Command
+- [ ] Implement Simple Mode everywhere

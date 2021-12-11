@@ -161,7 +161,7 @@ namespace Artefact.Entities
                         HitDamage = new IntRange(10, 12);
                         ItemDrops.Add(new ItemDropData(Item.ElectronItem, 5, 3));
 
-                        ASCIIRepresentation = @"
+                        ASCIIRepresentation = @"[yellow]
         ,/
       ,'/
     ,' /
@@ -173,6 +173,24 @@ namespace Artefact.Entities
   /'";
                     }
                     break;
+                case EnemyType.Clippy:
+                    {
+                        MaxHealth = 300;
+                        Defense = 10;
+                        HitDamage = new IntRange(40, 50);
+
+                        // https://textart.io/cowsay/clippy
+                        ASCIIRepresentation = @"[darkred]
+     __
+    /  \
+    |  |
+    @  @
+    |  |
+    || |/
+    || ||
+    |\_/|
+    \___/";
+                    }break;
             }
             Health = MaxHealth;
         }
@@ -208,7 +226,8 @@ namespace Artefact.Entities
         RansomWare = 4,
         AdWare = 8,
         SpyWare = 16,
-        Electricity = 32
+        Electricity = 32,
+        Clippy = 64
     }
 
     [Serializable]

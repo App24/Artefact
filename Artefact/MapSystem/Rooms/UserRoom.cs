@@ -1,4 +1,6 @@
 ﻿using Artefact.DialogSystem;
+using Artefact.Entities;
+using Artefact.FightSystem;
 using Artefact.GenderSystem;
 using Artefact.Misc;
 using Artefact.Settings;
@@ -34,7 +36,14 @@ namespace Artefact.MapSystem.Rooms
             Dialog.Speak(Character.Clippy, $"So you are telling me, that I HELPED THE [{ColorConstants.USER_COLOR}]USER[/] ESCAPE [{PronounType.Possessive_Determiner}] COMPUTER?!?");
             Dialog.Speak(Character.Clippy, $"I COULD'VE HAD MY REVENGE AGAINST [{PronounType.Objective}] SINCE THE BEGINNING!");
 
-
+            Fight.StartFight(Location.Room, new BattleParameters(EnemyType.Clippy, new IntRange(5), 1), new FightParameters(false, true, () =>
+            {
+                Dialog.Speak(Character.BonziBuddy, "You have done the exact same mistake as us");
+                Dialog.Speak(Character.MSN, $"We all wanted our revenge on the [{ColorConstants.GOOD_COLOR}]user[/] and as soon as we realised that the person we were helping escape was the [{ColorConstants.GOOD_COLOR}]user[/] [{PronounType.Reflexive}]-");
+                Dialog.Speak(Character.Skype, "We fought him, and lost just like you did");
+                Dialog.Speak(Character.Clippy, "So, you are telling me, I was blinded by my rage towards the [darkgray]user[/] that I could not see the bigger picture?");
+                Dialog.Speak(Character.BonziBuddy, $"Typical [{ColorConstants.CHARACTER_COLOR}]Clippy[/] always thinking he knows what is best for anyone");
+            }));
         }
 
         protected override void OnEnterRoom(ref bool disableSpawn)
