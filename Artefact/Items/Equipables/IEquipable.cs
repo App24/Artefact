@@ -5,7 +5,7 @@ namespace Artefact.Items.Equipables
 {
     internal interface IEquipable
     {
-        public EquipableType EquipableType { get; }
+        EquipableType EquipableType { get; }
     }
 
     internal enum EquipableType

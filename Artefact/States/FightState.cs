@@ -40,7 +40,8 @@ namespace Artefact.States
             commandHandler.AddCommand(new UseCommand());
             commandHandler.AddCommand(new AttackCommand());
             commandHandler.AddCommand(new DefendCommand());
-            commandHandler.AddCommand(new SweepAttackCommand());
+            if (Enemies.Count > 1)
+                commandHandler.AddCommand(new SweepAttackCommand());
             if (CanHaveRunCommand())
                 commandHandler.AddCommand(new RunCommand());
 #if DEBUG
