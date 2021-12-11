@@ -43,7 +43,6 @@ namespace Artefact.DialogSystem
         Clippy,
         Player,
         BonziBuddy,
-        Memz,
         MSN,
         Skype
     }

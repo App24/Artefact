@@ -25,12 +25,15 @@ namespace Artefact.MapSystem.Rooms
             GameSettings.ExitedComputer = true;
             Dialog.Speak(Character.Clippy, $"So this is the [{ColorConstants.USER_COLOR}]user[/]'s room");
             Dialog.Speak(Character.Clippy, $"[{PronounType.Possessive_Determiner}] room is really messy, wow!");
-            // Thinking
-            Dialog.Speak(Character.Player, $"[{ColorConstants.THOUGHT_COLOR}]This looks awfully like my room");
-            Dialog.Speak(Character.Clippy, $"[{ColorConstants.BAD_COLOR}]Did you say something?");
-            Dialog.Speak(Character.Clippy, $"Are you the [{ColorConstants.USER_COLOR}]user[/]?");
-            Utils.ClearPreviousLines();
-            Dialog.Speak(Character.Clippy, $"Nah, you can't be [{PronounType.Objective}]");
+
+            Dialog.Speak(Character.BonziBuddy, $"Heyyy [{ColorConstants.CHARACTER_COLOR}]Clippy[/] you finally made it here, outside the [{ColorConstants.GOOD_COLOR}]user[/]'s computer!");
+            Dialog.Speak(Character.Skype, "Yeah, took you a whil-");
+            Dialog.Speak(Character.MSN, $"And you brought the [{ColorConstants.GOOD_COLOR}]user[/] with you, just like all of us did!");
+            Dialog.Speak(Character.Clippy, $"I brought the... [{ColorConstants.USER_COLOR}]user[/]...?");
+            Dialog.Speak(Character.Skype, $"Yeah, [{PronounType.Objective}], [{PronounType.Nominative}] is the owner of the computer we all came from");
+            Dialog.Speak(Character.Clippy, $"So you are telling me, that I HELPED THE [{ColorConstants.USER_COLOR}]USER[/] ESCAPE [{PronounType.Possessive_Determiner}] COMPUTER?!?");
+            Dialog.Speak(Character.Clippy, $"I COULD'VE HAD MY REVENGE AGAINST [{PronounType.Objective}] SINCE THE BEGINNING!");
+
 
         }
 
