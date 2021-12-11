@@ -85,7 +85,7 @@ namespace Artefact.MapSystem.Rooms
             PSURoom psuRoom = (PSURoom)Map.GetRoom(Location.PSU);
 
 #if !INSTA_CPU
-            return ramRoom.RepairedRAM && psuRoom.RepairedPSU && gpuRoom.GPUStarted;
+            return ramRoom.RepairedRAM && psuRoom.RepairedPSU && gpuRoom.GPUStarted && hddRoom.ErasedHardDrive;
 #else
             return true;
 #endif

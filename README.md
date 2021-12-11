@@ -21,15 +21,14 @@ Uni Assessment, I had to create a text-based adventure, I decided to set mine in
 - - [x] Health Increasing
 - - [x] Damage Increasing
 - - [ ] Balancing
-- [ ] Interact with stuff in each location
+- [x] Interact with stuff in each location
 - - [x] Interact Command
-- - [ ] Individual interaction in each location depending on story step
-- [ ] Middle of story
+- [x] Middle of story
 - [ ] End of story
 - [ ] Improve/balance combat
-- [ ] Item Expansion
-- [ ] Map Expansion/Improvements
-- [ ] More Characters
+- [x] Item Expansion
+- [x] Map Expansion/Improvements
+- [x] More Characters
 - [ ] More Enemies
 - [ ] Implement Simple Mode everywhere
 

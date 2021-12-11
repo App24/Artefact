@@ -16,7 +16,7 @@ namespace Artefact.MapSystem.Rooms
 
         public static EnemyType DefaultSpawnableEnemies => EnemyType.Virus | EnemyType.Trojan | EnemyType.RansomWare | EnemyType.AdWare | EnemyType.SpyWare;
 
-        public virtual EnemyType SpawnableEnemies => SpawnableEnemies;
+        public virtual EnemyType SpawnableEnemies => DefaultSpawnableEnemies;
 
         public Room(Location location, Location north = Location.None, Location south = Location.None, Location east = Location.None, Location west = Location.None)
         {

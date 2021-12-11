@@ -41,6 +41,10 @@ namespace Artefact.DialogSystem
     internal enum Character
     {
         Clippy,
-        Player
+        Player,
+        BonziBuddy,
+        Memz,
+        MSN,
+        Skype
     }
 }
