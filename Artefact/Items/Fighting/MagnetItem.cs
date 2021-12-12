@@ -23,7 +23,7 @@ namespace Artefact.Items.Fighting
         public bool OnUse()
         {
             HDDRoom hddRoom = (HDDRoom)Map.GetRoom(Location.HDD);
-            if (!GameSettings.InFight && (Map.Player.Location != Location.HDD || (Map.Player.Location==Location.HDD && hddRoom.ErasedHardDrive)))
+            if (!GameSettings.InFight && (Map.Player.Location != Location.HDD || (Map.Player.Location == Location.HDD && hddRoom.ErasedHardDrive)))
             {
                 Utils.WriteColor("You can't use this here!");
                 return false;
@@ -36,7 +36,8 @@ namespace Artefact.Items.Fighting
                 {
                     enemy.Damage(enemy.Health / 2);
                 });
-            }else if(Map.Player.Location == Location.HDD && !hddRoom.ErasedHardDrive)
+            }
+            else if (Map.Player.Location == Location.HDD && !hddRoom.ErasedHardDrive)
             {
                 Dialog.Speak(Character.Clippy, $"Oh look, the [{ColorConstants.USER_COLOR}]user[/]'s hard drive!");
                 Dialog.Speak(Character.Clippy, "Get closer!");

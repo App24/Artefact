@@ -10,7 +10,7 @@ namespace Artefact.Items.Potions
     {
         public HealthPotionType HealthPotionType { get; }
 
-        public HealthPotionItem(HealthPotionType healthPotionType, params CraftData[] craftData) : base($"{healthPotionType} Health Potion", "Regenerate Health", craftData)
+        public HealthPotionItem(HealthPotionType healthPotionType, params CraftData[] craftData) : base($"{healthPotionType} Health Potion", $"Regenerate {healthPotionType} Portion of Health", craftData)
         {
             HealthPotionType = healthPotionType;
         }

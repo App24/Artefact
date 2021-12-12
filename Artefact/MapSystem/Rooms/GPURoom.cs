@@ -23,7 +23,7 @@ namespace Artefact.MapSystem.Rooms
                 Dialog.Speak(Character.Clippy, $"Maybe a little force will fix it");
                 while (true)
                 {
-                    if(!Utils.GetConfirmation("Want to use force on it?"))
+                    if (!Utils.GetConfirmation("Want to use force on it?"))
                     {
                         Dialog.Speak(Character.Player, "Maybe some time later...");
                         break;

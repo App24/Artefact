@@ -24,7 +24,7 @@ namespace Artefact.Items
         public static Item ByteItem { get; } = new Item("Byte", "The founding block of data");
         public static Item KiloByteItem { get; } = new Item("KiloByte", "8 bytes", new CraftData(new ItemData(ByteItem, 8)));
 
-        public static Item RAMChipItem { get; } = new Item("RAM Chip", "Important in allowing RAM to work", new CraftData(2, new ItemData(KiloByteItem, 3), new ItemData(ElectronItem, 3)));
+        public static Item RAMChipItem { get; } = new Item("RAM Chip", "Important in allowing RAM to work", new CraftData(2, new ItemData(ByteItem, 3), new ItemData(ElectronItem, 3)));
         #endregion
 
         #region Weapons

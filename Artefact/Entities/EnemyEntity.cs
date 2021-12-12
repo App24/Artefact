@@ -175,9 +175,9 @@ namespace Artefact.Entities
                     break;
                 case EnemyType.Clippy:
                     {
-                        MaxHealth = 300;
-                        Defense = 10;
-                        HitDamage = new IntRange(40, 50);
+                        MaxHealth = 100;
+                        Defense = 2;
+                        HitDamage = new IntRange(5, 12);
 
                         // https://textart.io/cowsay/clippy
                         ASCIIRepresentation = @"[darkred]
@@ -190,7 +190,8 @@ namespace Artefact.Entities
     || ||
     |\_/|
     \___/";
-                    }break;
+                    }
+                    break;
             }
             Health = MaxHealth;
         }

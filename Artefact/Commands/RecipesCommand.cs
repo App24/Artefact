@@ -33,7 +33,7 @@ namespace Artefact.Commands
                 List<string> options = new List<string>();
                 List<Action> actions = new List<Action>();
 
-                if ((Item.CraftableItems.Count - page * ITEMS_PER_PAGE) > ITEMS_PER_PAGE * 2)
+                if ((Item.CraftableItems.Count - page * ITEMS_PER_PAGE) > ITEMS_PER_PAGE)
                 {
                     options.Add("Next");
                     actions.Add(() => page += 2);

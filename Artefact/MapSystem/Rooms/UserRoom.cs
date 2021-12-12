@@ -24,6 +24,7 @@ namespace Artefact.MapSystem.Rooms
 
         protected override void OnEnterFirst(ref bool disableSpawn)
         {
+            disableSpawn = true;
             GameSettings.ExitedComputer = true;
             Dialog.Speak(Character.Clippy, $"So this is the [{ColorConstants.USER_COLOR}]user[/]'s room");
             Dialog.Speak(Character.Clippy, $"[{PronounType.Possessive_Determiner}] room is really messy, wow!");
@@ -36,7 +37,7 @@ namespace Artefact.MapSystem.Rooms
             Dialog.Speak(Character.Clippy, $"So you are telling me, that I HELPED THE [{ColorConstants.USER_COLOR}]USER[/] ESCAPE [{PronounType.Possessive_Determiner}] COMPUTER?!?");
             Dialog.Speak(Character.Clippy, $"I COULD'VE HAD MY REVENGE AGAINST [{PronounType.Objective}] SINCE THE BEGINNING!");
 
-            Fight.StartFight(Location.Room, new BattleParameters(EnemyType.Clippy, new IntRange(5), 1), new FightParameters(false, true, () =>
+            Fight.StartFight(Location.Room, new BattleParameters(EnemyType.Clippy, new IntRange(1), 1), new FightParameters(false, true, () =>
             {
                 Dialog.Speak(Character.BonziBuddy, "You have done the exact same mistake as us");
                 Dialog.Speak(Character.MSN, $"We all wanted our revenge on the [{ColorConstants.GOOD_COLOR}]user[/] and as soon as we realised that the person we were helping escape was the [{ColorConstants.GOOD_COLOR}]user[/] [{PronounType.Reflexive}]-");
@@ -48,7 +49,7 @@ namespace Artefact.MapSystem.Rooms
 
         protected override void OnEnterRoom(ref bool disableSpawn)
         {
-
+            disableSpawn = true;
         }
     }
 }
