@@ -11,6 +11,11 @@ namespace Artefact.Commands.Misc
     internal class CommandHandler
     {
         private List<ICommand> commands = new List<ICommand>();
+        // Used to separate what the user enters into valid parameters
+        // Example: craft "ram chip" 6, will turn into
+        // craft
+        // ram chip
+        // 6
         private const string RE_ARG_MATCHER_PATTERN = @"""[^""\\]*(?:\\.[^""\\]*)*""|'[^'\\]*(?:\\.[^'\\]*)*'|\S+";
         private const string RE_QUOTE_STRIP_PATTERN = @"^""+|""+$|^'+|'+$";
         private string[] noCommandResponses = new string[] {

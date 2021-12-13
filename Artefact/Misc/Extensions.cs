@@ -44,6 +44,12 @@ namespace Artefact.Misc
             }
         }
 
+        /// <summary>
+        /// Adds or inserts an item into a list at a specific index if it already exists
+        /// </summary>
+        /// <typeparam name="T">The type of the object stored in the <paramref name="list"/></typeparam>
+        /// <param name="list">Source list</param>
+        /// <param name="value">Value to be added/replaced</param>
         public static void AddOrInsert<T>(this IList<T> list, T value)
         {
             if (!list.Contains(value))
@@ -58,6 +64,14 @@ namespace Artefact.Misc
             }
         }
 
+        /// <summary>
+        /// Adds or replaces a value in a dictionary
+        /// </summary>
+        /// <typeparam name="T">The type of the key</typeparam>
+        /// <typeparam name="D">The type of the value</typeparam>
+        /// <param name="dictionary">The source dictionary</param>
+        /// <param name="key">The key</param>
+        /// <param name="value">The value to be added or replaced</param>
         public static void AddOrReplace<T, D>(this IDictionary<T, D> dictionary, T key, D value)
         {
             if (!dictionary.ContainsKey(key))

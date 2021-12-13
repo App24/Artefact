@@ -12,6 +12,12 @@ namespace Artefact.FightSystem
 {
     internal static class Fight
     {
+        /// <summary>
+        /// Start a fight
+        /// </summary>
+        /// <param name="location">The location at which the fight starts</param>
+        /// <param name="battleParameters">Battle parameters for the battle</param>
+        /// <param name="fightParameters">Fight parameters for the battle</param>
         public static void StartFight(Location location, BattleParameters battleParameters, FightParameters fightParameters = null)
         {
             SaveSystem.SaveGame(SaveSystem.CHECKPOINT_FILE);

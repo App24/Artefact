@@ -272,6 +272,10 @@ namespace Artefact.Misc
             Console.ResetColor();
         }
 
+        /// <summary>
+        /// Clears a certain amount of previous lines
+        /// </summary>
+        /// <param name="amount">Amount of lines to clear</param>
         public static void ClearPreviousLines(int amount = 1)
         {
             int currentCursorPos = Console.CursorTop;
@@ -283,6 +287,11 @@ namespace Artefact.Misc
             Console.SetCursorPosition(0, currentCursorPos - amount);
         }
 
+        /// <summary>
+        /// Clear a certain amount of characters
+        /// </summary>
+        /// <param name="amount">Amount of characters to delete</param>
+        /// <param name="delay">Whether it is instantaneous or has a delay</param>
         private static void ClearPreviousCharacters(int amount, bool delay = false)
         {
             int currentCursorPos = Console.CursorLeft;

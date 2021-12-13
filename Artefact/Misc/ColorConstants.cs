@@ -2,6 +2,9 @@
 
 namespace Artefact.Misc
 {
+    /// <summary>
+    /// Where constants for different uses are stored, allows for easy changing of colors for different objects
+    /// </summary>
     internal static class ColorConstants
     {
         public const ConsoleColor ITEM_COLOR = ConsoleColor.Magenta;

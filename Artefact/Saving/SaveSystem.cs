@@ -19,6 +19,11 @@ namespace Artefact.Saving
 
         public static bool HasAnySaveGames => Directory.Exists(SAVE_FOLDER);
 
+        /// <summary>
+        /// Save an object to a file by converting it into binary
+        /// </summary>
+        /// <param name="fileName">File path for the file</param>
+        /// <param name="value">Object to be turned into a file</param>
         private static void SaveClass(string fileName, object value)
         {
             string directory = Path.GetDirectoryName(fileName);
@@ -39,6 +44,12 @@ namespace Artefact.Saving
             }
         }
 
+        /// <summary>
+        /// Load an object into a class
+        /// </summary>
+        /// <typeparam name="T">Type of object to be loaded</typeparam>
+        /// <param name="fileName">File path of the file</param>
+        /// <returns><see cref="LoadDetails{T}"/> showing whether the loading failed or succeeded and the loaded object</returns>
         private static LoadDetails<T> LoadClass<T>(string fileName) where T : class
         {
             if (!File.Exists(fileName))

@@ -65,11 +65,23 @@ $"     |      |  [{ColorConstants.LOCATION_COLOR}]{Location.GPU}[/]  |\n" +
             return enemyEntity;
         }
 
+        /// <summary>
+        /// Get map in string format
+        /// </summary>
+        /// <param name="location">The location where the entity is</param>
+        /// <returns>A map with the <paramref name="location"/> replaced with x's</returns>
         public static string GetMapLocation(Location location)
         {
             return map.Replace(location.ToString(), new string[location.ToString().Length].Map(x => "x").Join(""));
         }
 
+        /// <summary>
+        /// Move the player in a certain direction
+        /// </summary>
+        /// <param name="direction">The direction to move the player</param>
+        /// <param name="disableSpawn">Whether to disable spawning when the player moves</param>
+        /// <param name="forceSpawn">Whether to force spawning when the player moves</param>
+        /// <returns>If the player moved or not</returns>
         public static bool MovePlayer(Direction direction, bool disableSpawn = false, bool forceSpawn = false)
         {
             bool moved = Move(direction, Player.Location, out Location location);
@@ -107,6 +119,13 @@ $"     |      |  [{ColorConstants.LOCATION_COLOR}]{Location.GPU}[/]  |\n" +
             }
         }
 
+        /// <summary>
+        /// Get the location that is depending on the direction
+        /// </summary>
+        /// <param name="direction">Direction to go</param>
+        /// <param name="currentLocation">Current location</param>
+        /// <param name="nextLocation">The next location</param>
+        /// <returns>Whether it was able to move or not</returns>
         public static bool Move(Direction direction, Location currentLocation, out Location nextLocation)
         {
             Room currentRoom = GetRoom(currentLocation);

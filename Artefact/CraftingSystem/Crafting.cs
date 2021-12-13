@@ -39,6 +39,7 @@ namespace Artefact.CraftingSystem
 
                 List<ItemData> missingItems = new List<ItemData>();
 
+                // Check each recipe
                 foreach (ItemData craftItem in craftData.CraftItems)
                 {
                     ItemData itemData = craftItem * item.Amount;

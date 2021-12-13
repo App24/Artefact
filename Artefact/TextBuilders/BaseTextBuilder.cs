@@ -17,6 +17,9 @@ namespace Artefact.TextBuilders
             Text = text;
         }
 
+        /// <summary>
+        /// Turn a string into a <see cref="List{T}"/> of <typeparamref name="T"/>
+        /// </summary>
         protected abstract void BuildString();
 
         public List<List<T>> Split(string separator)

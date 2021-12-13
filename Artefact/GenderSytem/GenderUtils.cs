@@ -12,6 +12,11 @@ namespace Artefact.GenderSystem
             { Gender.Other, new GenderPronouns("they", "them", "their", "theirs", "themselves") }
         };
 
+        /// <summary>
+        /// Replace a string with the valid pronoun
+        /// </summary>
+        /// <param name="text">The string to be replaced</param>
+        /// <returns>A replaced string with the valid pronouns</returns>
         public static string ReplacePronouns(string text)
         {
             if (GameSettings.Instance != null)
